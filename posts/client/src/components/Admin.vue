@@ -1,13 +1,13 @@
 <template>
-	<div id="admin">
-		<form>
-			<h1>Admin Login</h1>
-			<input type="text" placeholder="email address/username">
-			<input type="password" placeholder="password">
-			Forgot your login? Click <a href="#">here.</a>
-			<button type="submit">Submit</button>
-		</form>
-	</div>
+    <div id="admin">
+        <form>
+            <h1>Admin Login</h1>
+            <input type="text" placeholder="email address/username">
+            <input type="password" placeholder="password">
+            Forgot your login? Click <a href="#">here.</a>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
 </template>
 
@@ -18,58 +18,65 @@ export default{
 </script>
 
 <style>
-	#admin{
-		width: 300px;
-		margin: auto;
-		text-align: center;
-		border-radius: 10px;
-		background-color: #ffffff;
-		font-size: 12px;
- 		margin-top: 100px;
-	}
+    #admin{
+        width: 300px;
+        margin: auto;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #ffffff;
+        font-size: 12px;
+        margin-top: 100px;
+    }
 
-	form{
-		text-align: left;
-		margin: auto;
-		width: 300px;
-		padding: 15px 25px;
-		box-sizing: border-box;
-	}
+    body{
+        background-color:  rgba(41, 128, 185, 0.5);
+        color: #34495e;
+        margin: 0;
+        overflow: hidden;
+    }
 
-	input{
-		display: block;
-		width: 100%;
-		height: 30px;
-		margin: 5px 0px 10px 0px;
-		padding: 0px 5px;
-		box-sizing: border-box;
-		border: solid rgba(41, 128, 185, 0.5) 1px;
-		color: #34495e;
-	}
+    form{
+        text-align: left;
+        margin: auto;
+        width: 300px;
+        padding: 15px 25px;
+        box-sizing: border-box;
+    }
 
-	a{
-		color: #2980b9;
-	}
+    input{
+        display: block;
+        width: 100%;
+        height: 30px;
+        margin: 5px 0px 10px 0px;
+        padding: 0px 5px;
+        box-sizing: border-box;
+        border: solid rgba(41, 128, 185, 0.5) 1px;
+        color: #34495e;
+    }
 
-	h1{
-		display: block;
-		padding: 15px 10px;
-		text-align: center;
-		color: #2980b9;
-		font-size: 30px;
-		font-weight: 400;
-	}
+    a{
+        color: #2980b9;
+    }
 
-	button{
-		background-color: rgba(41, 128, 185);
-		border: none;
-		display: block;
-		margin: auto;
-		width: 80px;
-		height: 30px;
-		color: #ffffff;
-		font-size: 14px;
-		margin-top: 30px;
-		margin-bottom: 15px;
-	}
+    h1{
+        display: block;
+        padding: 15px 10px;
+        text-align: center;
+        color: #2980b9;
+        font-size: 30px;
+        font-weight: 400;
+    }
+
+    button{
+        background-color: rgba(41, 128, 185);
+        border: none;
+        display: block;
+        margin: auto;
+        width: 80px;
+        height: 30px;
+        color: #ffffff;
+        font-size: 14px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
 </style>
