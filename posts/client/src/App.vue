@@ -18,6 +18,25 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+body{
+    background-color:  rgba(41, 128, 185, 0.5);
+    color: #34495e;
+    margin: 0;
+    overflow: hidden;
+}
+
+button{
+    background-color: rgba(41, 128, 185);
+    border: none;
+    display: block;
+    margin: auto;
+    width: 80px;
+    height: 30px;
+    color: #ffffff;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 </style>
