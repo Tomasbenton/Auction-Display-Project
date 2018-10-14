@@ -1,5 +1,6 @@
 <template>
 	<div id="admin">
+        <img src="../assets/logo.png">
 		<form>
 			<h1>Admin Login</h1>
 			<input type="text" placeholder="email address/username">
