@@ -50,7 +50,6 @@ export default{
 
 <style>
 	#display{
-		background-color: #ffffff;
 		font-size: 25px;
 	}
 
