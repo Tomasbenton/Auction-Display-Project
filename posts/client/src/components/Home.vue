@@ -14,7 +14,11 @@ export default{
 </script>
 
 <style>
- #home{
-  margin-top: 100px;
- }
+#home{
+    margin-top: 100px;
+}
+
+a{
+    text-decoration: none;
+}
 </style>

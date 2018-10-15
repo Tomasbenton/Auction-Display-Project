@@ -9,13 +9,13 @@
                     <h4>Tag Number: 123456</h4>
                 </div>
                 <!-- <img src="https://via.placeholder.com/500x450"> -->
-                <img src="../assets/Sample_Auction.jpg">
+                <img src="../assets/Sample_Auction.jpg" alt="Shower" class="responsive">
             </div>
 
             <div class="column">
                 <div id="buyer">
                     <h2>Buyer</h2>
-                    <img src="../assets/City Market Logo.png">
+                    <img src="../assets/City Market Logo.png" alt="City Market" class="responsive">
                     <h1>$10,000</h1>
                 </div>
                 <div id="addon">
@@ -59,6 +59,11 @@ export default{
 
 #addon ul{
     list-style: none;
+}
+
+.responsive {
+    max-width: 100%;
+    height: auto;
 }
 
 .column {
