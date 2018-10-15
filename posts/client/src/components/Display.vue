@@ -49,27 +49,27 @@ export default{
 </script>
 
 <style>
-	#display{
-		font-size: 25px;
-	}
+#display{
+    font-size: 25px;
+}
 
-    #buyer h1{
-        font-size: 65px;
-    }
+#buyer h1{
+    font-size: 65px;
+}
 
-    #addon ul{
-        list-style: none;
-    }
+#addon ul{
+    list-style: none;
+}
 
-    .column {
-        float: left;
-        width: 50%;
-    }
+.column {
+    float: left;
+    width: 50%;
+}
 
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 </style>
