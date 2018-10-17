@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
+import Manage from '@/components/Manage'
 // import Posts from '@/components/Posts'
 // import NewPost from '@/components/NewPost'
 // import EditPost from '@/components/EditPost'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/display',
       name: 'Display',
       component: Display
+    },
+    {
+      path: '/manage',
+      name: 'Manage',
+      component: Manage
     }
 
     // {

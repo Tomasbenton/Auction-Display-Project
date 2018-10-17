@@ -18,6 +18,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    height: 100%;
 }
 
 body{
@@ -31,7 +32,6 @@ body{
 button{
     background-color: #339966;
     border: none;
-    display: block;
     margin: auto;
     width: 80px;
     height: 30px;
@@ -40,4 +40,23 @@ button{
     margin-top: 30px;
     margin-bottom: 15px;
 }
+
+ input{
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    margin: 5px 0px 10px 0px;
+    margin: auto;
+    padding: 0px 5px;
+    box-sizing: border-box;
+    border: solid #808080 1px;
+    color: #34495e;
+ }
+
+ a{
+    color: #2980b9;
+    color:#34495e;
+    margin-right: 10px;
+ }
 </style>
