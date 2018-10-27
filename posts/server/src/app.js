@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-var Post = require("../models/post");
+// var Post = require("../models/post");
 
 const app = express()
 app.use(morgan('combined'))

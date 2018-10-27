@@ -26,6 +26,8 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow tabs
-    'no-tabs': 'off'
+    'no-tabs': 'off', 
+    // tabs will be converted to 2 spaces
+    'indent': [2, 2]
   }
 }
