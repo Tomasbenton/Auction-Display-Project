@@ -26,6 +26,10 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow tabs
-    'no-tabs': 'off'
+    'no-tabs': 'off',
+    // allow empty lines
+    'no-multiple-empty-lines': 'off',
+    // allow trailing spaces
+    'no-trailing-spaces': 'off'
   }
 }
