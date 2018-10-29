@@ -1,5 +1,5 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 var ExhibitorSchema = new Schema({
   saleNum: Number,
@@ -9,7 +9,9 @@ var ExhibitorSchema = new Schema({
   species: String,
   fairWeight: Number,
   clubName: String
+},{
+    collection: 'Exhibitor'
 });
 
-var Exhibitor = mongoose.model("Exhibitor", ExhibitorSchema);
+var Exhibitor = mongoose.model('Exhibitor', ExhibitorSchema);
 module.exports = Exhibitor;

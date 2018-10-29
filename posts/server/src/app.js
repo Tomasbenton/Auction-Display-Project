@@ -1,31 +1,48 @@
+// Define Constants
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-var Post = require("../models/post");
-var Exhibitor = require("../models/exhibitor");
+// const Exhibitor = require("../models/exhibitor")
+// const Post = require("../models/post")
+const exhibitorRoutes = require('../exproutes/exhibitor.route');
 
+// Express.js
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+app.use('/exhibitor', exhibitorRoutes);
 
+// Mongodb / Mongoose
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/auctiondb');
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){
-  console.log("Connection Succeeded");
+  console.log("Database connection Succeeded");
 });
 
-app.get('/Exhibitor', (req, res) => {
-  Exhibitor.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, exhibitor) {
-    if (error) { console.error(error); }
-    res.send({
-      exhibitor: exhibitor
-    })
-  })
-})
+// Node API endpoint
+var port = process.env.PORT || 8081
+app.listen(port, function(){
+  console.log('Node.js is listening on port', port);
+});
+
+
+
+
+
+
+// app.get('/exhibitor', (req, res) => {
+//   Exhibitor.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, exhibitor) {
+//     if (error) { console.error(error); }
+//     // res.send({
+//     //   exhibitor: exhibitor
+//     // })
+//     res.send(exhibitor)
+//   })
+// })
 
 // // Fetch all posts
 // app.get('/posts', (req, res) => {
@@ -99,5 +116,3 @@ app.get('/Exhibitor', (req, res) => {
 //     })
 //   })
 // })
-
-app.listen(process.env.PORT || 8081)

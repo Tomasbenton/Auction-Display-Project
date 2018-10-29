@@ -5,13 +5,40 @@
             <div class="column">
                 <h2>Jane Doe</h2>
                 <!-- BROKEN! -->
-                <!-- <h2>{{ Exhibitor.firstName }}</h2> -->
+                <!-- <h2>{{ exhibitor.firstName }}</h2> -->
                 <div id="animal">
                     <h3>Goat</h3>
                     <h4>Tag Number: 123456</h4>
                 </div>
                 <!-- <img src="https://via.placeholder.com/500x450"> -->
                 <img src="../assets/Sample_Auction.jpg" alt="Shower" class="responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Sale Num</td>
+                        <td>Tag Num</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Species</td>
+                        <td>Fair Weight</td>
+                        <td>Club Name</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
+                            <td>{{ exhibitor._id }}</td>
+                            <td>{{ exhibitor.saleNum }}</td>
+                            <td>{{ exhibitor.tagName }}</td>
+                            <td>{{ exhibitor.firstName }}</td>
+                            <td>{{ exhibitor.lastName }}</td>
+                            <td>{{ exhibitor.species }}</td>
+                            <td>{{ exhibitor.fairWeight }}</td>
+                            <td>{{ exhibitor.clubName }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="column">
@@ -45,31 +72,24 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  name: 'Exhibitor',
   data() {
     return {
-      saleNum: null,
-      tagNum: null,
-      firstName: null,
-      lastName: null,
-      species: null,
-      fairWeight: null,
-      clubName: null
+      exhibitors: []
     }
   },
-  created() {
-    axios
-      .get('http://localhost:27017/auctiondb/Exhibitor')
-      .then(response => {
-        this.Exhibitor = response.data
+
+  created: function() {
+    this.fetchItems()
+  },
+
+  methods: {
+    fetchItems() {
+      let uri = 'http://localhost:8081/exhibitor'
+      this.axios.get(uri).then(response => {
+        this.exhibitors = response.data
       })
-      .catch(e => {
-        this.errors.push(e)
-        this.$router.push({ name: 'Home' })
-      })
+    }
   }
 }
 </script>
