@@ -30,6 +30,8 @@ module.exports = {
     // allow empty lines
     'no-multiple-empty-lines': 'off',
     // allow trailing spaces
-    'no-trailing-spaces': 'off'
+    'no-trailing-spaces': 'off',
+    // allow no space before function parenthesis
+    'space-before-function-paren': 'off'
   }
 }

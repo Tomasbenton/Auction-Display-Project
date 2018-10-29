@@ -4,6 +4,8 @@
         <div class="row">
             <div class="column">
                 <h2>Jane Doe</h2>
+                <!-- BROKEN! -->
+                <!-- <h2>{{ Exhibitor.firstName }}</h2> -->
                 <div id="animal">
                     <h3>Goat</h3>
                     <h4>Tag Number: 123456</h4>
@@ -43,38 +45,62 @@
 </template>
 
 <script>
-export default{
+import axios from 'axios'
 
+export default {
+  name: 'Exhibitor',
+  data() {
+    return {
+      saleNum: null,
+      tagNum: null,
+      firstName: null,
+      lastName: null,
+      species: null,
+      fairWeight: null,
+      clubName: null
+    }
+  },
+  created() {
+    axios
+      .get('http://localhost:27017/auctiondb/Exhibitor')
+      .then(response => {
+        this.Exhibitor = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.$router.push({ name: 'Home' })
+      })
+  }
 }
 </script>
 
 <style>
-#display{
-    font-size: 25px;
+#display {
+  font-size: 25px;
 }
 
-#buyer h1{
-    font-size: 65px;
+#buyer h1 {
+  font-size: 65px;
 }
 
-#addon ul{
-    list-style: none;
+#addon ul {
+  list-style: none;
 }
 
 .responsive {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .column {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
 
 /* Clear floats after the columns */
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 </style>

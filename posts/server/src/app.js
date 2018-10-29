@@ -18,6 +18,15 @@ db.once("open", function(callback){
   console.log("Connection Succeeded");
 });
 
+app.get('/Exhibitor', (req, res) => {
+  Exhibitor.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, exhibitor) {
+    if (error) { console.error(error); }
+    res.send({
+      exhibitor: exhibitor
+    })
+  })
+})
+
 // // Fetch all posts
 // app.get('/posts', (req, res) => {
 //   Post.find({}, 'title description', function (error, posts) {
