@@ -18,6 +18,7 @@
             <div class="column">
                 <div id="buyer">
                     <h2>Buyer</h2>
+                    <h2>{{ buyers[0].businessName }}</h2>
                     <img src="../assets/City_Market_Logo.png" alt="City Market" class="responsive">
                     <h1>$10,000</h1>
                 </div>
@@ -49,19 +50,28 @@
 export default {
   data() {
     return {
-      exhibitors: []
-    }
+      exhibitors: [],
+      buyers: []
+    };
   },
 
   created: function() {
-    this.fetchItems()
+    this.fetchExhibitors(),
+    this.fetchBuyers()
   },
 
   methods: {
-    fetchItems() {
+    fetchExhibitors() {
       let uri = 'http://localhost:8081/exhibitor'
       this.axios.get(uri).then(response => {
         this.exhibitors = response.data
+      })
+    },
+
+    fetchBuyers() {
+      let uri = 'http://localhost:8081/buyer'
+      this.axios.get(uri).then(response => {
+        this.buyers = response.data
       })
     },
 

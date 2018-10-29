@@ -1,5 +1,5 @@
 const express = require('express')
-const exhibitorRoutes = express.Router()
+const buyerRoutes = express.Router()
 
 const Buyer = require('../models/Buyer')
 

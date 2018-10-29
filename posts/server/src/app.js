@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
+const buyerRoutes = require('../exproutes/buyer.route');
 
 // Express.js
 const app = express()
@@ -11,6 +12,7 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 app.use('/exhibitor', exhibitorRoutes);
+app.use('/buyer', buyerRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');
