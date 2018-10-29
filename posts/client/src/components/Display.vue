@@ -3,6 +3,7 @@
         <!-- Nice banner up here? Fair logo/name? -->
         <!-- <h1>Display Page</h1> -->
         <div class="row">
+            <!-- Left Side of Page -->
             <div class="column">
                 <h2>{{ exhibitors[0].firstName }} {{ exhibitors[0].lastName }}</h2>
                 <div id="animal">
@@ -13,10 +14,11 @@
                 <img :src="getImgUrl(exhibitors[0].picture)" v-bind:alt="Exhibitor-Picture" class="responsive">
             </div>
 
+            <!-- Right Side of Page -->
             <div class="column">
                 <div id="buyer">
                     <h2>Buyer</h2>
-                    <img src="../assets/City Market Logo.png" alt="City Market" class="responsive">
+                    <img src="../assets/City_Market_Logo.png" alt="City Market" class="responsive">
                     <h1>$10,000</h1>
                 </div>
                 <div id="addon">
@@ -64,7 +66,7 @@ export default {
     },
 
     getImgUrl(pic) {
-        return require('../assets/'+pic)
+      return require('../assets/' + pic)
     }
   }
 }
