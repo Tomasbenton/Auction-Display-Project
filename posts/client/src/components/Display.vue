@@ -1,44 +1,16 @@
 <template>
     <div id="display">
+        <!-- Nice banner up here? Fair logo/name? -->
         <!-- <h1>Display Page</h1> -->
         <div class="row">
             <div class="column">
-                <h2>Jane Doe</h2>
-                <!-- BROKEN! -->
-                <!-- <h2>{{ exhibitor.firstName }}</h2> -->
+                <h2>{{ exhibitors[0].firstName }} {{ exhibitors[0].lastName }}</h2>
                 <div id="animal">
-                    <h3>Goat</h3>
-                    <h4>Tag Number: 123456</h4>
+                    <h3>{{ exhibitors[0].species }}</h3>
+                    <h4>Tag Number: {{ exhibitors[0].tagNum }}</h4>
                 </div>
                 <!-- <img src="https://via.placeholder.com/500x450"> -->
-                <img src="../assets/Sample_Auction.jpg" alt="Shower" class="responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <td>ID</td>
-                        <td>Sale Num</td>
-                        <td>Tag Num</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Species</td>
-                        <td>Fair Weight</td>
-                        <td>Club Name</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
-                            <td>{{ exhibitor._id }}</td>
-                            <td>{{ exhibitor.saleNum }}</td>
-                            <td>{{ exhibitor.tagName }}</td>
-                            <td>{{ exhibitor.firstName }}</td>
-                            <td>{{ exhibitor.lastName }}</td>
-                            <td>{{ exhibitor.species }}</td>
-                            <td>{{ exhibitor.fairWeight }}</td>
-                            <td>{{ exhibitor.clubName }}</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <img :src="getImgUrl(exhibitors[0].picture)" v-bind:alt="Exhibitor-Picture" class="responsive">
             </div>
 
             <div class="column">
@@ -89,6 +61,10 @@ export default {
       this.axios.get(uri).then(response => {
         this.exhibitors = response.data
       })
+    },
+
+    getImgUrl(pic) {
+        return require('../assets/'+pic)
     }
   }
 }

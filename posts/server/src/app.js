@@ -3,8 +3,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-// const Exhibitor = require("../models/exhibitor")
-// const Post = require("../models/post")
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 
 // Express.js
@@ -33,17 +31,7 @@ app.listen(port, function(){
 
 
 
-
-// app.get('/exhibitor', (req, res) => {
-//   Exhibitor.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, exhibitor) {
-//     if (error) { console.error(error); }
-//     // res.send({
-//     //   exhibitor: exhibitor
-//     // })
-//     res.send(exhibitor)
-//   })
-// })
-
+/* OLD STUFF FROM POSTS TUTORIAL*/
 // // Fetch all posts
 // app.get('/posts', (req, res) => {
 //   Post.find({}, 'title description', function (error, posts) {
