@@ -11,7 +11,7 @@
                     <h4>Tag Number: {{ exhibitors[0].tagNum }}</h4>
                 </div>
                 <!-- <img src="https://via.placeholder.com/500x450"> -->
-                <img :src="getImgUrl(exhibitors[0].picture)" v-bind:alt="Exhibitor-Picture" class="responsive">
+                <img :src="getImgUrl(exhibitors[0].picture)" alt="Exhibitor-Picture" class="responsive">
             </div>
 
             <!-- Right Side of Page -->
@@ -19,25 +19,27 @@
                 <div id="buyer">
                     <h2>Buyer</h2>
                     <h2>{{ buyers[0].businessName }}</h2>
-                    <img src="../assets/City_Market_Logo.png" alt="City Market" class="responsive">
-                    <h1>$10,000</h1>
+                    <img :src="getImgUrl(buyers[0].logoImage)" alt="Business-Logo" class="responsive">
+                    <h1>${{ getNumWithCommas(buyers[0].purchaseAmount) }}</h1>
                 </div>
                 <div id="addon">
                     <h2>Addon Buyers</h2>
                     <div class="column">
                         <ul>
                             <li>Simply Mac</li>
-                            <li>Chick-fil-A</li>
+                            <li>{{buyers[1].businessName}}</li>
                             <li>Qdoba</li>
                             <li>Lowe's</li>
+                            <li>{{buyers[2].firstName}} {{buyers[2].lastName}}</li>
                         </ul>
                     </div>
                     <div class="column">
                         <ul>
                             <li>$200</li>
-                            <li>$300</li>
+                            <li>${{ getNumWithCommas(buyers[1].purchaseAmount) }}</li>
                             <li>$100</li>
                             <li>$50</li>
+                            <li>${{ getNumWithCommas(buyers[2].purchaseAmount) }}</li>
                         </ul>
                     </div>
                 </div>
@@ -52,12 +54,14 @@ export default {
     return {
       exhibitors: [],
       buyers: []
-    };
+    }
   },
 
   created: function() {
-    this.fetchExhibitors(),
+    this.fetchExhibitors()
     this.fetchBuyers()
+    this.getImgUrl()
+    this.getNumWithCommas()
   },
 
   methods: {
@@ -75,8 +79,12 @@ export default {
       })
     },
 
-    getImgUrl(pic) {
+    getImgUrl: function(pic) {
       return require('../assets/' + pic)
+    },
+
+    getNumWithCommas: function (num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 }
