@@ -41,6 +41,4 @@ export default{
  input{
  margin-bottom: 7px;
  }
-
-
 </style>

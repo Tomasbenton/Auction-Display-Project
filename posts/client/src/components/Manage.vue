@@ -95,9 +95,7 @@ export default{
 
     input{
         width: 200px;
-        
     }
-    
     .col{
         display: inline-block;
         width: 30%;
