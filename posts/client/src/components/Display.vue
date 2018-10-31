@@ -5,13 +5,13 @@
         <div class="row">
             <!-- Left Side of Page -->
             <div class="column">
-                <h2>{{ exhibitors[0].firstName }} {{ exhibitors[0].lastName }}</h2>
+                <h2>{{ exhibitors[index].firstName }} {{ exhibitors[index].lastName }}</h2>
                 <div id="animal">
-                    <h3>{{ exhibitors[0].species }}</h3>
-                    <h4>Tag Number: {{ exhibitors[0].tagNum }}</h4>
+                    <h3>{{ exhibitors[index].species }}</h3>
+                    <h4>Tag Number: {{ exhibitors[index].tagNum }}</h4>
                 </div>
                 <!-- <img src="https://via.placeholder.com/500x450"> -->
-                <img :src="getImgUrl(exhibitors[0].picture)" alt="Exhibitor-Picture" class="responsive">
+                <img :src="getImgUrl(exhibitors[index].picture)" alt="Exhibitor-Picture" class="responsive">
             </div>
 
             <!-- Right Side of Page -->
@@ -44,6 +44,8 @@
                     </div>
                 </div>
             </div>
+            <button v-on:click="incrementLeft">Left</button>
+            <button v-on:click="incrementRight">Right</button>
         </div>
     </div>
 </template>
@@ -53,15 +55,14 @@ export default {
   data() {
     return {
       exhibitors: [],
-      buyers: []
+      buyers: [],
+      index: 0
     }
   },
 
   created: function() {
     this.fetchExhibitors()
     this.fetchBuyers()
-    this.getImgUrl()
-    this.getNumWithCommas()
   },
 
   methods: {
@@ -85,6 +86,20 @@ export default {
 
     getNumWithCommas: function (num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+
+    incrementRight: function() {
+      // Note that '%' operator in JS is remainder and NOT modulo
+      this.index = ++this.index % this.exhibitors.length
+    },
+
+    incrementLeft: function() {
+      // Note that '%' operator in JS is remainder and NOT modulo
+      if (this.index === 0) {
+        this.index = this.exhibitors.length - 1
+      } else {
+        this.index = --this.index % this.exhibitors.length
+      }
     }
   }
 }
