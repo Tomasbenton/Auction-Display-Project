@@ -5,6 +5,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
+// var Post = require("../models/post");
 
 // Express.js
 const app = express()
