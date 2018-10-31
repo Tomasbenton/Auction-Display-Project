@@ -1,65 +1,13 @@
 <template>
 	<div id="manage">
         <h1>Manage Data</h1>
-        <input type="text" placeholder="Search tag #">
+        <input v-model="newItem" type="text" placeholder="Search tag #">
         <button>Submit</button>
-        <button class="add">Add</button>
+        <button id="addButton" @click="addNewItem" class="add">Add</button>
         <div class="searchResults">
-            <div class="row">
-                <div class="col">
-                    <strong>Company Name</strong>
-                </div>
-                <div class="col">
-                    <strong>Tag Number</strong>
-                </div>
-                <div class="col">
-                    <strong>Action</strong>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    City Market
-                </div>
-                <div class="col">
-                    12345
-                </div>
-                <div class="col">
-                    <a href="#">Edit</a> <a href="#">Delete</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    City Market
-                </div>
-                <div class="col">
-                    12345
-                </div>
-                <div class="col">
-                    <a href="#">Edit</a> <a href="#">Delete</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    City Market
-                </div>
-                <div class="col">
-                    12345
-                </div>
-                <div class="col">
-                    <a href="#">Edit</a> <a href="#">Delete</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    City Market
-                </div>
-                <div class="col">
-                    12345
-                </div>
-                <div class="col">
-                    <a href="#">Edit</a> <a href="#">Delete</a>
-                </div>
-            </div>
+            <ul>
+                <li v-for="item in database">{{ item }}</li>
+            </ul>
         </div>
 	</div>
 
@@ -67,7 +15,19 @@
 
 <script>
 export default{
-
+    name: 'test',
+    data () {
+        return {
+            database: ['City Market', 'Simply Mac', 'Chipotle'],
+            newItem: ''
+        }
+    },
+    methods: {
+        addNewItem() {
+            this.database.push(this.newItem);
+            this.newItem = '';
+        }
+    }
 }
 </script>
 

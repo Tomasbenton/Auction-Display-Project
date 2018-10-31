@@ -6,20 +6,13 @@
    <input type="text" placeholder="email address/username">
    <input type="password" placeholder="password"><br>
    Forgot your login? Click <a href="#">here.</a>
-   <button type="submit">Submit</button>
+   <button id="submitButton" type="submit">Submit</button>
   </form>
-  <br><br>
-  {{ dataProp }}
  </div>
 </template>
 
 <script>
 export default{
-  data () {
-    return {
-      dataProp: 'Data Text'
-    }
-  }
 }
 </script>
 
