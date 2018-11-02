@@ -33,7 +33,5 @@ module.exports = {
     'no-trailing-spaces': 'off',
     // allow no space before function parenthesis
     'space-before-function-paren': 'off'
-    // tabs will be converted to 2 spaces
-    'indent': [2, 2]
   }
 }
