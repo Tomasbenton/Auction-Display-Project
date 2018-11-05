@@ -1,3 +1,24 @@
+Skip to content
+Features
+Business
+Explore
+Marketplace
+Pricing
+
+Search
+
+Sign in or Sign up
+5 0 0 Cahough/Auction-Display-Project
+ Code  Issues 0  Pull requests 0  Projects 0  Insights
+Join GitHub today
+GitHub is home to over 28 million developers working together to host and review code, manage projects, and build software together.
+
+Auction-Display-Project/posts/client/src/components/Posts.vue
+50d2bda  4 days ago
+@Cahough Cahough Fixed Posts.vue, removed more useless ruels from eslint, Display.vue …
+@jennicar @Cahough
+
+94 lines (92 sloc)  1.96 KB
 <template>
   <div class="posts">
     <h1>Posts</h1>
@@ -11,7 +32,10 @@
           <td width="550">Description</td>
           <td width="100" align="center">Action</td>
         </tr>
-        <tr v-for="post in posts">
+        <tr
+          v-for="post in posts"
+          :key="post.id"
+        >
           <td>{{ post.title }}</td>
           <td>{{ post.description }}</td>
           <td align="center">

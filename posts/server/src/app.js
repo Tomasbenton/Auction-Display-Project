@@ -9,6 +9,7 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/posts');
 var db = mongoose.connection;
@@ -19,7 +20,7 @@ db.once("open", function(callback){
 
 // Fetch all posts
 app.get('/posts', (req, res) => {
-  Post.find({}, 'title description', function (error, posts) {
+  Post.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, posts) {
     if (error) { console.error(error); }
     res.send({
       posts: posts
@@ -30,11 +31,25 @@ app.get('/posts', (req, res) => {
 // Add new post
 app.post('/posts', (req, res) => {
   var db = req.db;
-  var title = req.body.title;
-  var description = req.body.description;
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  var saleNum = req.body.saleNum;
+  var tagNum = req.body.tagNum;
+  var species = req.body.species;
+  var fairWeight = req.body.fairWeight;
+  var clubName = req.body.clubName;
+  //var picture = req.body.picture;
+
+
   var new_post = new Post({
-    title: title,
-    description: description
+    firstName: firstName,
+    lastName: lastName,
+    saleNum : saleNum,
+	  tagNum : tagNum,
+	  species : species,
+	  fairWeight : fairWeight,
+	  clubName : clubName
+	  //,picture : picture
   })
 
   new_post.save(function (error) {
@@ -51,20 +66,26 @@ app.post('/posts', (req, res) => {
 // Fetch single post
 app.get('/post/:id', (req, res) => {
   var db = req.db;
-  Post.findById(req.params.id, 'title description', function (error, post) {
+  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
     if (error) { console.error(error); }
     res.send(post)
   })
 })
 
-// Update a post
+// Update an post
 app.put('/posts/:id', (req, res) => {
   var db = req.db;
-  Post.findById(req.params.id, 'title description', function (error, post) {
+  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
     if (error) { console.error(error); }
 
-    post.title = req.body.title
-    post.description = req.body.description
+    post.firstName = req.body.firstName;
+    post.lastName = req.body.lastName;
+    post.saleNum= req.body.saleNum;
+    post.tagNum = req.body.tagNum;
+    post.species = req.body.species;
+    post.fairWeight = req.body.fairWeight;
+    post.clubName = req.body.clubName;
+    //post.picture = req.body.picture;
     post.save(function (error) {
       if (error) {
         console.log(error)
