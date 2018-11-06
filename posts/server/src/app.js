@@ -3,19 +3,24 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 var Post = require("../models/post");
+const exhibitorRoutes = require('../exproutes/exhibitor.route');
+const buyerRoutes = require('../exproutes/buyer.route');
 
+// Express.js
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+app.use('/exhibitor', exhibitorRoutes);
+app.use('/buyer', buyerRoutes);
 
-
+// Mongodb / Mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/posts');
+mongoose.connect('mongodb://localhost:27017/auctiondb');
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){
-  console.log("Connection Succeeded");
+  console.log("Database connection Succeeded");
 });
 
 // Fetch all posts
@@ -72,7 +77,7 @@ app.get('/post/:id', (req, res) => {
   })
 })
 
-// Update an post
+// Update a post
 app.put('/posts/:id', (req, res) => {
   var db = req.db;
   Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
@@ -111,4 +116,8 @@ app.delete('/posts/:id', (req, res) => {
   })
 })
 
-app.listen(process.env.PORT || 8081)
+// Node API endpoint
+var port = process.env.PORT || 8081
+app.listen(port, function(){
+  console.log('Node.js is listening on port', port);
+});
