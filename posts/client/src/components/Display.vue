@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       exhibitors: [],
       buyers: [],
@@ -60,27 +60,27 @@ export default {
     }
   },
 
-  created: function () {
+  created: function() {
     this.fetchExhibitors()
     this.fetchBuyers()
   },
 
   methods: {
-    fetchExhibitors () {
+    fetchExhibitors() {
       let uri = 'http://localhost:8081/exhibitor'
       this.axios.get(uri).then(response => {
         this.exhibitors = response.data
       })
     },
 
-    fetchBuyers () {
+    fetchBuyers() {
       let uri = 'http://localhost:8081/buyer'
       this.axios.get(uri).then(response => {
         this.buyers = response.data
       })
     },
 
-    getImgUrl: function (pic) {
+    getImgUrl: function(pic) {
       return require('../assets/' + pic)
     },
 
@@ -88,12 +88,12 @@ export default {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
 
-    incrementRight: function () {
+    incrementRight: function() {
       // Note that '%' operator in JS is remainder and NOT modulo
       this.index = ++this.index % this.exhibitors.length
     },
 
-    incrementLeft: function () {
+    incrementLeft: function() {
       // Note that '%' operator in JS is remainder and NOT modulo
       if (this.index === 0) {
         this.index = this.exhibitors.length - 1
