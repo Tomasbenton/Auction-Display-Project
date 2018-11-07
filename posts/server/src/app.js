@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+var Post = require("../models/post");
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 
@@ -44,7 +45,6 @@ app.post('/posts', (req, res) => {
   var fairWeight = req.body.fairWeight;
   var clubName = req.body.clubName;
   //var picture = req.body.picture;
-
 
   var new_post = new Post({
     firstName: firstName,
