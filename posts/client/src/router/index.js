@@ -7,7 +7,7 @@ import Manage from '@/components/Manage'
 import Posts from '@/components/Posts'
 import NewPost from '@/components/NewPost'
 import EditPost from '@/components/EditPost'
-import Search from '@/components/Search'
+// import Search from '@/components/Search'
 
 Vue.use(Router)
 
@@ -34,11 +34,11 @@ export default new Router({
       name: 'Manage',
       component: Manage
     },
-    {
+    /* {
       path: '/search',
       name: 'Search',
       component: Search
-    },
+    }, */
     {
       path: '/posts',
       name: 'Posts',
