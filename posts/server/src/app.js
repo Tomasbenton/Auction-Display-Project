@@ -57,15 +57,16 @@ app.post('/posts', (req, res) => {
 	  //,picture : picture
   })
 
-// // Add new post
-// app.post('/posts', (req, res) => {
-//   var db = req.db;
-//   var title = req.body.title;
-//   var description = req.body.description;
-//   var new_post = new Post({
-//     title: title,
-//     description: description
-//   })
+  new_post.save(function (error) {
+    if (error) {
+      console.log(error)
+    }
+    res.send({
+      success: true,
+      message: 'Post saved successfully!'
+    })
+  })
+})
 
 // Fetch single post
 app.get('/post/:id', (req, res) => {
@@ -101,18 +102,19 @@ app.put('/posts/:id', (req, res) => {
   })
 })
 
-//     post.title = req.body.title
-//     post.description = req.body.description
-//     post.save(function (error) {
-//       if (error) {
-//         console.log(error)
-//       }
-//       res.send({
-//         success: true
-//       })
-//     })
-//   })
-// })
+// Delete a post
+app.delete('/posts/:id', (req, res) => {
+  var db = req.db;
+  Post.remove({
+    _id: req.params.id
+  }, function(err, post){
+    if (err)
+      res.send(err)
+    res.send({
+      success: true
+    })
+  })
+})
 
 // Node API endpoint
 var port = process.env.PORT || 8081
