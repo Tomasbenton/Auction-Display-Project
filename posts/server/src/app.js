@@ -23,26 +23,39 @@ db.once("open", function(callback){
   console.log("Database connection Succeeded");
 });
 
-// Node API endpoint
-var port = process.env.PORT || 8081
-app.listen(port, function(){
-  console.log('Node.js is listening on port', port);
-});
+// Fetch all posts
+app.get('/posts', (req, res) => {
+  Post.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, posts) {
+    if (error) { console.error(error); }
+    res.send({
+      posts: posts
+    })
+  }).sort({_id:-1})
+})
+
+// Add new post
+app.post('/posts', (req, res) => {
+  var db = req.db;
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  var saleNum = req.body.saleNum;
+  var tagNum = req.body.tagNum;
+  var species = req.body.species;
+  var fairWeight = req.body.fairWeight;
+  var clubName = req.body.clubName;
+  //var picture = req.body.picture;
 
 
-
-
-
-/* OLD STUFF FROM POSTS TUTORIAL*/
-// // Fetch all posts
-// app.get('/posts', (req, res) => {
-//   Post.find({}, 'title description', function (error, posts) {
-//     if (error) { console.error(error); }
-//     res.send({
-//       posts: posts
-//     })
-//   }).sort({_id:-1})
-// })
+  var new_post = new Post({
+    firstName: firstName,
+    lastName: lastName,
+    saleNum : saleNum,
+	  tagNum : tagNum,
+	  species : species,
+	  fairWeight : fairWeight,
+	  clubName : clubName
+	  //,picture : picture
+  })
 
 // // Add new post
 // app.post('/posts', (req, res) => {
@@ -54,31 +67,39 @@ app.listen(port, function(){
 //     description: description
 //   })
 
-//   new_post.save(function (error) {
-//     if (error) {
-//       console.log(error)
-//     }
-//     res.send({
-//       success: true,
-//       message: 'Post saved successfully!'
-//     })
-//   })
-// })
+// Fetch single post
+app.get('/post/:id', (req, res) => {
+  var db = req.db;
+  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
+    if (error) { console.error(error); }
+    res.send(post)
+  })
+})
 
-// // Fetch single post
-// app.get('/post/:id', (req, res) => {
-//   var db = req.db;
-//   Post.findById(req.params.id, 'title description', function (error, post) {
-//     if (error) { console.error(error); }
-//     res.send(post)
-//   })
-// })
+// Update a post
+app.put('/posts/:id', (req, res) => {
+  var db = req.db;
+  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
+    if (error) { console.error(error); }
 
-// // Update a post
-// app.put('/posts/:id', (req, res) => {
-//   var db = req.db;
-//   Post.findById(req.params.id, 'title description', function (error, post) {
-//     if (error) { console.error(error); }
+    post.firstName = req.body.firstName;
+    post.lastName = req.body.lastName;
+    post.saleNum= req.body.saleNum;
+    post.tagNum = req.body.tagNum;
+    post.species = req.body.species;
+    post.fairWeight = req.body.fairWeight;
+    post.clubName = req.body.clubName;
+    //post.picture = req.body.picture;
+    post.save(function (error) {
+      if (error) {
+        console.log(error)
+      }
+      res.send({
+        success: true
+      })
+    })
+  })
+})
 
 //     post.title = req.body.title
 //     post.description = req.body.description
@@ -93,16 +114,8 @@ app.listen(port, function(){
 //   })
 // })
 
-// // Delete a post
-// app.delete('/posts/:id', (req, res) => {
-//   var db = req.db;
-//   Post.remove({
-//     _id: req.params.id
-//   }, function(err, post){
-//     if (err)
-//       res.send(err)
-//     res.send({
-//       success: true
-//     })
-//   })
-// })
+// Node API endpoint
+var port = process.env.PORT || 8081
+app.listen(port, function(){
+  console.log('Node.js is listening on port', port);
+});

@@ -1,14 +1,29 @@
 <template>
   <div class="posts">
     <h1>Edit Post</h1>
-      <div class="form">
-        <div>
-          <input type="text" name="title" placeholder="TITLE" v-model="title">
-        </div>
-        <div>
-          <textarea rows="15" cols="15" placeholder="DESCRIPTION" v-model="description"></textarea>
-        </div>
-        <div>
+    <div class=form>
+      <div>
+        <input type=text name=tagNum placeholder=TAG_NUMBER v-model=tagNum>
+      </div>
+      <div>
+        <input type=text name=species placeholder=SPECIES v-model=species>
+      </div>
+      <div>
+        <input type=text name=saleNum placeholder=SALE_NUMBER v-model=saleNum>
+      </div>
+      <div>
+        <input type=text name=firstName placeholder=FIRST_NAME v-model=firstName>
+      </div>
+      <div>
+        <input type=text name=lastName placeholder=LAST_NAME v-model=lastName>
+      </div>
+      <div>
+        <input type=text name=fairWeight placeholder=FAIR_WEIGHT v-model=fairWeight>
+      </div>
+      <div>
+        <input type=text name=clubName placeholder=CLUB_NAME v-model=clubName>
+      </div>
+      <div>
           <button class="app_post_btn" @click="updatePost">Update</button>
         </div>
       </div>
@@ -21,8 +36,13 @@ export default {
   name: 'EditPost',
   data () {
     return {
-      title: '',
-      description: ''
+      tagNum: '',
+      species: '',
+      saleNum: '',
+      firstName: '',
+      lastName: '',
+      fairWeight: '',
+      clubName: ''
     }
   },
   mounted () {
@@ -33,16 +53,26 @@ export default {
       const response = await PostsService.getPost({
         id: this.$route.params.id
       })
-      this.title = response.data.title
-      this.description = response.data.description
+      this.tagNum = response.data.tagNum
+      this.species = response.data.species
+      this.saleNum = response.data.saleNum
+      this.firstName = response.data.firstName
+      this.lastName = response.data.lastName
+      this.fairWeight = response.data.fairWeight
+      this.clubName = response.data.clubName
     },
     async updatePost () {
       await PostsService.updatePost({
         id: this.$route.params.id,
-        title: this.title,
-        description: this.description
+        tagNum: this.tagNum,
+        species: this.species,
+        saleNum: this.saleNum,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        fairWeight: this.fairWeight,
+        clubName: this.clubName
       })
-      this.$router.push({ name: 'Posts' })
+      this.$router.push({ name: 'Manage' })
     }
   }
 }

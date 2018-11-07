@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Hello from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
 import Manage from '@/components/Manage'
-// import Posts from '@/components/Posts'
-// import NewPost from '@/components/NewPost'
-// import EditPost from '@/components/EditPost'
+import Posts from '@/components/Posts'
+import NewPost from '@/components/NewPost'
+import EditPost from '@/components/EditPost'
+import Search from '@/components/Search'
 
 Vue.use(Router)
 
@@ -33,22 +33,26 @@ export default new Router({
       path: '/manage',
       name: 'Manage',
       component: Manage
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
+    },
+    {
+      path: '/posts',
+      name: 'Posts',
+      component: Posts
+    },
+    {
+      path: '/posts/new',
+      name: 'NewPost',
+      component: NewPost
+    },
+    {
+      path: '/posts/:id',
+      name: 'EditPost',
+      component: EditPost
     }
-
-    // {
-    //   path: '/posts',
-    //   name: 'Posts',
-    //   component: Posts
-    // },
-    // {
-    //   path: '/posts/new',
-    //   name: 'NewPost',
-    //   component: NewPost
-    // },
-    // {
-    //   path: '/posts/:id',
-    //   name: 'EditPost',
-    //   component: EditPost
-    // }
   ]
 })
