@@ -3,26 +3,35 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-var Post = require("../models/post");
-const exhibitorRoutes = require('../exproutes/exhibitor.route');
-const buyerRoutes = require('../exproutes/buyer.route');
+var Post = require("../models/post")
+const exhibitorRoutes = require('../exproutes/exhibitor.route')
+const buyerRoutes = require('../exproutes/buyer.route')
+const session = require('express-session');
 
 // Express.js
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
-app.use('/exhibitor', exhibitorRoutes);
-app.use('/buyer', buyerRoutes);
+app.use('/exhibitor', exhibitorRoutes)
+app.use('/buyer', buyerRoutes)
+app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }))
 
 // Mongodb / Mongoose
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/auctiondb');
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/auctiondb')
+var db = mongoose.connection
+db.on("error", console.error.bind(console, "connection error"))
 db.once("open", function(callback){
-  console.log("Database connection Succeeded");
-});
+  console.log("Database connection Succeeded")
+})
+
+// Models & Routes
+require('../models/user')
+require('../config/passport')
+app.use(require('../routes'))
+
+
 
 // Fetch all posts
 app.get('/posts', (req, res) => {
