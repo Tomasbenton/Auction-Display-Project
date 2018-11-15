@@ -1,12 +1,10 @@
 <template>
-    <div>
-      <header class="left small_pad">
-        <h1>{{ exhibitors[index].firstName }} {{ exhibitors[index].lastName }}</h1><br>
+    <div id="exhibitor">
+      <section class="exhibitor_info">
+        <h1 class="exhibitor_name">{{ exhibitors[index].firstName }} {{ exhibitors[index].lastName }}</h1>
         <h2>Tag Number: {{ exhibitors[index].tagNum }} <em>{{ exhibitors[index].species }}</em></h2>
-      </header>
-      <main class="left column">
-        <div class="frame"><img :src="getImgUrl(exhibitors[index].picture)" alt="Exhibitor-Picture" class="image"></div>
-      </main>
+      </section>
+      <div class="frame"><img :src="getImgUrl(exhibitors[index].picture)" alt="Exhibitor-Picture" class="image"></div>
     </div>
 </template>
 

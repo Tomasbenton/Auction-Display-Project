@@ -1,11 +1,13 @@
 <template>
- <div id="home">
-     <img src="../assets/logo.png">
-  <h1>Welcome Admin</h1>
-  <router-link to="/display"><button>Configure Display Layout</button></router-link>
-  <router-link to="/display"><button>Display Monitor</button></router-link><br>
-  <router-link to="/manage"><button>Manage Data</button></router-link>
-  <button id="logout">Logout</button>
+ <div id="admin">
+ 	<img class="logo" src="../assets/4H_logo.png">
+	<h1>Admin Dashboard</h1>
+	<router-link to="/manage"><button class="button">Manage Data</button></router-link>
+	<router-link to="/control"><button class="button">Display Control Panel</button></router-link>
+	<router-link to="/display"><button class="button">Main Display Page</button></router-link>
+	<router-link to="/exhibitor"><button class="button">Exhibitor Display</button></router-link>
+	<router-link to="/buyer"><button class="button">Buyer Display</button></router-link>
+	<button class="button">Logout</button>
  </div>
 </template>
 
@@ -13,20 +15,3 @@
 export default{
 }
 </script>
-
-<style>
-#home{
-    margin-top: 100px;
-    font-family: monospace;
-}
-button{
-    font-size: 14px;
-    padding: 0px 10px;
-    width: 250px;
-    height: 70px;
-    font-family: monospace;
-}
-#logout{
-    background-color:#35495e;
-}
-</style>

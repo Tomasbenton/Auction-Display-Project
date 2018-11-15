@@ -14,6 +14,5 @@
       'exhibitor': Exhibitor,
       'buyer': Buyer
     }
-
   }
 </script>

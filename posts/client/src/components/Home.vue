@@ -1,16 +1,14 @@
 <template>
-    <div id="admin">
-        <img src="../assets/logo.png">
-        <form>
-            <h1>Admin Login</h1>
-            <input type="text" placeholder="email address/username">
-            <input type="password" placeholder="password">
-   <br>
-            Forgot your login? Click <a href="#">here.</a>
-            <router-link to="/admin"><button type="submit">Submit</button></router-link>
-        </form>
-    </div>
-
+	<div id="home">
+		<img class="logo" src="../assets/4H_Logo.png">
+		<h1>Admin Login</h1>
+		<form>
+			<input type="text" placeholder="Email Address/Username">
+			<input type="password" placeholder="password">
+			<router-link to="/admin"><button type="submit">Submit</button></router-link>
+			<p class="text">Forgot your login? Click <a href="#">here</a>.</p>
+		</form>
+	</div>
 </template>
 
 <script>
@@ -19,30 +17,63 @@ export default{
 </script>
 
 <style>
- #admin{
-    width: 320px;
-    margin: auto;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #CFD8DC;
-    font-size: 14px;
-    margin-top: 100px;
-    font-family: monospace;
- }
- form{
-    text-align: left;
-    margin: auto;
-    width: 100%;
-    padding: 15px 25px;
-    box-sizing: border-box;
- }
- input{
- margin-bottom: 7px;
- font-family: monospace;
- }
- button{
-    font-family: monospace;
-    height: 50px;
-    width: 100%;
- }
+	#home, form{
+		width: 100%;
+		height: 100%;
+		text-align: center;
+	}
+	.logo{
+		width: 150px;
+		height: auto;
+		margin-top: 50px;
+	}
+
+	form{
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	input{
+		width: 100%;
+		max-width: 400px;
+		height: 40px;
+		display: block;
+		margin-bottom: 20px;
+	}
+
+	button{
+		width: 150px;
+		height: 50px;
+		float: right;
+		cursor: pointer;
+	}
+
+	h1, button, a{ color: #339966; }
+
+	h1{ font-family: Lato, Arial, sans-serif; }
+	.text{ font-family: 'Open Sans', Arial, sans-serif; }
+
+	.text{ text-align: left; }
+
+	h1{ font-size: 40px; }
+	.text{ font-size: 13px; }
+	input{ font-size: 14px; }
+
+	input{
+		border: none;
+		border-bottom: 1px solid #808080;
+	}
+
+	button{
+		border: none;
+		border-radius: 5px;
+		background-color: #f1f1f1;
+	}
+
+	a, button{
+		text-transform: uppercase;
+		text-decoration: none;
+		font-weight: 600;
+		letter-spacing: 1px;
+	}
 </style>
