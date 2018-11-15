@@ -3,10 +3,13 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
+import Exhibitor from '@/components/Exhibitor'
+import Buyer from '@/components/Buyer'
 import Manage from '@/components/Manage'
 import Posts from '@/components/Posts'
 import NewPost from '@/components/NewPost'
 import EditPost from '@/components/EditPost'
+import Control from '@/components/Control'
 // import Search from '@/components/Search'
 
 Vue.use(Router)
@@ -28,6 +31,16 @@ export default new Router({
       path: '/display',
       name: 'Display',
       component: Display
+    },
+    {
+      path: '/exhibitor',
+      name: 'Exhibitor',
+      component: Exhibitor
+    },
+    {
+      path: '/buyer',
+      name: 'Buyer',
+      component: Buyer
     },
     {
       path: '/manage',
@@ -53,6 +66,11 @@ export default new Router({
       path: '/posts/:id',
       name: 'EditPost',
       component: EditPost
+    },
+    {
+      path: '/control',
+      name: 'Control',
+      component: Control
     }
   ]
 })
