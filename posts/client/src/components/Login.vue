@@ -3,10 +3,9 @@
 		<img class='logo' src='../assets/4H_Logo.png'>
 		<h1>Admin Login</h1>
 		<form>
-			<input type="text" placeholder="Username">
-			<input type="password" placeholder="Password">
+			<input type="text" name="username" v-model="input.username" placeholder="Username">
+			<input type="password" name="password" v-model="input.password" placeholder="Password">
 			<button type="button" v-on:click="login()">Login</button>
-			<!-- <router-link to="/admin"><button type="submit">Submit</button></router-link> -->
 			<!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
 		</form>
 	</div>
