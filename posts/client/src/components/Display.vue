@@ -1,18 +1,38 @@
 <template>
     <div id="display">
-      <exhibitor></exhibitor>
-      <buyer></buyer>
+      <exhibitors v-on:exhibitorsLen="setLength">
+        {{ i + 1 }}
+      </exhibitors>
+      <exhibitors>
+        <p slot-scope="{ exhibitors }">{{ exhibitors[i].firstName }}</p>
+      </exhibitors>
+      <exhibitors>
+        <p slot-scope="{ exhibitors }">{{ exhibitors[i].lastName }}</p>
+      </exhibitors>
+      <exhibitors>
+        <p slot-scope="{ exhibitors }">{{ exhibitors[i].tagNum }}</p>
+      </exhibitors>
+      <exhibitors>
+        <p slot-scope="{ exhibitors }">{{ exhibitors[i].species }}</p>
+      </exhibitors>
     </div>
 </template>
 
 <script>
-  import Exhibitor from './Exhibitor.vue';
-  import Buyer from './Buyer.vue';
-
-  export default {
-    components: {
-      'exhibitor': Exhibitor,
-      'buyer': Buyer
+import Exhibitor from './Exhibitor.vue'
+export default {
+  components: {
+    'exhibitors': Exhibitor
+  },
+  props: ['i'],
+  data: () => ({
+    exhibitorsLen: null
+  }),
+  methods: {
+    setLength(e) {
+      this.exhibitorsLen = e
+      this.$emit('finalLength', e)
     }
   }
+}
 </script>

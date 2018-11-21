@@ -18,32 +18,32 @@
 </template>
 
 <script>
-  export default {
-    name: 'Buyer',
-    data() {
-      return {
-        buyers: [],
-        index: 0
-      }
+export default {
+  name: 'Buyer',
+  data() {
+    return {
+      buyers: [],
+      index: 0
+    }
+  },
+
+  created: function() {
+    this.fetchBuyers()
+  },
+
+  methods: {
+    fetchBuyers() {
+      let uri = 'http://localhost:8081/buyer'
+      this.axios.get(uri).then(response => {
+        this.buyers = response.data
+      })
     },
 
-    created: function() {
-      this.fetchBuyers();
-    },
-
-    methods: {
-      fetchBuyers() {
-        let uri = 'http://localhost:8081/buyer'
-        this.axios.get(uri).then(response => {
-          this.buyers = response.data
-        })
-      },
-
-      getNumWithCommas: function (num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      }
+    getNumWithCommas: function (num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
+}
 </script>
 
 <style>
