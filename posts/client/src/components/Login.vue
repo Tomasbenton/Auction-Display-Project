@@ -1,6 +1,7 @@
 <template>
 	<div id='login'>
 		<img class='logo' src='../assets/4H_Logo.png'>
+    <img class='logo2' src='../assets/FFA_Logo.png'>
 		<h1>Admin Login</h1>
 		<form>
 			<input type="text" name="username" v-model="input.username" placeholder="Username">
@@ -13,33 +14,33 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       input: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       }
-    }
+    };
   },
   methods: {
     login() {
-      if (this.input.username != '' && this.input.password != '') {
+      if (this.input.username != "" && this.input.password != "") {
         if (
           this.input.username == this.$parent.mockAccount.username &&
           this.input.password == this.$parent.mockAccount.password
         ) {
-          this.$emit('authenticated', true)
-          this.$router.replace({ name: 'Admin' })
+          this.$emit("authenticated", true);
+          this.$router.replace({ name: "Admin" });
         } else {
-          console.log('The username and/or password is incorrect')
+          console.log("The username and/or password is incorrect");
         }
       } else {
-        console.log('A username and password must be present')
+        console.log("A username and password must be present");
       }
     }
   }
-}
+};
 </script>
 
 <style>
@@ -52,6 +53,11 @@ form {
 .logo {
   width: 150px;
   height: auto;
+  margin-top: 50px;
+}
+.logo2 {
+  width: auto;
+  height: 170px;
   margin-top: 50px;
 }
 
