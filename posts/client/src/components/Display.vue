@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import Exhibitor from './Exhibitor.vue';
-  import Buyer from './Buyer.vue';
+  import Exhibitor from './Exhibitor.vue'
+  import Buyer from './Buyer.vue'
 
   export default {
     components: {

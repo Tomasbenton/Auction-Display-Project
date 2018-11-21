@@ -28,7 +28,7 @@
     },
 
     created: function() {
-      this.fetchBuyers();
+      this.fetchBuyers()
     },
 
     methods: {

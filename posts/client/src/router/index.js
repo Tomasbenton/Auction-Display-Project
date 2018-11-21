@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
 import Exhibitor from '@/components/Exhibitor'
@@ -19,8 +19,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Login',
+      component: Login
     },
     {
       path: '/admin',

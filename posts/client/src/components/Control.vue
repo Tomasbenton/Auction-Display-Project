@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import Exhibitor from './Exhibitor.vue';
+  import Exhibitor from './Exhibitor.vue'
   export default{
     props: ['exhibitors'],
     data() {
@@ -20,7 +20,7 @@
       incrementRight: function() {
         // Note that '%' operator in JS is remainder and NOT modulo
         this.index = ++this.index % this.exhibitors.length
-        //this.index += 1
+        // this.index += 1
       },
 
       incrementLeft: function() {

@@ -19,7 +19,7 @@
     },
 
     created: function() {
-      this.fetchExhibitors();
+      this.fetchExhibitors()
     },
 
     methods: {
@@ -32,7 +32,7 @@
 
       getImgUrl: function(pic) {
         return require('../assets/' + pic)
-      },
+      }
     }
   }
 </script>

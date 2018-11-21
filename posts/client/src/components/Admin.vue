@@ -1,6 +1,6 @@
 <template>
  <div id="admin">
- 	<img class="logo" src="../assets/4H_logo.png">
+	 <img class="logo" src="../assets/4H_Logo.png">
 	<h1>Admin Dashboard</h1>
 	<router-link to="/manage"><button class="button">Manage Data</button></router-link>
 	<router-link to="/control"><button class="button">Display Control Panel</button></router-link>
@@ -12,6 +12,10 @@
 </template>
 
 <script>
-export default{
+export default {
+  name: 'Admin',
+  data() {
+    return {}
+  }
 }
 </script>
