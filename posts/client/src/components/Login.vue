@@ -1,0 +1,124 @@
+<template>
+	<div id='login'>
+		<img class='logo' src='../assets/4H_Logo.png'>
+		<h1>Admin Login</h1>
+		<form>
+			<input type="text" placeholder="Username">
+			<input type="password" placeholder="Password">
+			<button type="button" v-on:click="login()">Login</button>
+			<!-- <router-link to="/admin"><button type="submit">Submit</button></router-link> -->
+			<!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
+		</form>
+	</div>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data() {
+    return {
+      input: {
+        username: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    login() {
+      if (this.input.username != '' && this.input.password != '') {
+        if (
+          this.input.username == this.$parent.mockAccount.username &&
+          this.input.password == this.$parent.mockAccount.password
+        ) {
+          this.$emit('authenticated', true)
+          this.$router.replace({ name: 'Admin' })
+        } else {
+          console.log('The username and/or password is incorrect')
+        }
+      } else {
+        console.log('A username and password must be present')
+      }
+    }
+  }
+}
+</script>
+
+<style>
+#login,
+form {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.logo {
+  width: 150px;
+  height: auto;
+  margin-top: 50px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  max-width: 400px;
+  height: 40px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 150px;
+  height: 50px;
+  float: right;
+  cursor: pointer;
+}
+
+h1,
+button,
+a {
+  color: #339966;
+}
+
+h1 {
+  font-family: Lato, Arial, sans-serif;
+}
+.text {
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.text {
+  text-align: left;
+}
+
+h1 {
+  font-size: 40px;
+}
+.text {
+  font-size: 13px;
+}
+input {
+  font-size: 14px;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #808080;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+
+a,
+button {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+</style>
