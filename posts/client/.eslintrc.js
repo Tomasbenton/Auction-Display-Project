@@ -32,6 +32,8 @@ module.exports = {
     // allow trailing spaces
     'no-trailing-spaces': 'off',
     // allow no space before function parenthesis
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    // allow '==' instead of only '==='
+    'eqeqeq': 'off'
   }
 }

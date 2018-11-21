@@ -11,7 +11,7 @@ import EditPost from '@/components/EditPost'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   routes: [
     {
@@ -22,17 +22,26 @@ export default new Router({
     {
       path: '/admin',
       name: 'Admin',
-      component: Admin
+      component: Admin,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/display',
       name: 'Display',
-      component: Display
+      component: Display,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/manage',
       name: 'Manage',
-      component: Manage
+      component: Manage,
+      meta: {
+        requiresAuth: true
+      }
     },
     /* {
       path: '/search',
@@ -56,3 +65,27 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('jwt') == null) {
+      next({
+        path: '/',
+        params: { nextUrl: to.fullPath }
+      })
+    } else {
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (to.matched.some(record => record.meta.is_admin)) {
+        if (user.is_admin == 1) {
+          next()
+        } else {
+          next({ name: 'Login' })
+        }
+      } else {
+        next()
+      }
+    }
+  }
+})
+
+export default router
