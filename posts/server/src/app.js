@@ -45,6 +45,108 @@ db.createCollection("User", {
     }
   }
 })
+// Create Exhibitor Collection
+db.createCollection("Exhibitor", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["entrySaleNumber", "fullName", "tag", "checkInWeight", "className", "departmentName", "clubName", "showClassName", "pictureName"],
+      properties: {
+        entrySaleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        fullName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        tag: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        animalDescription: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        checkInWeight: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        className: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        departmentName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        clubName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        showClassName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        pictureName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        }
+      }
+    }
+  }
+})
+// Create Buyer Collection
+db.createCollection("Buyer", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["entrySaleNumber", "name", "identifier", "pictureName"],
+      properties: {
+        entrySaleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        name: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        identifier: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        contactName: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        email: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        phone: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        address1: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        address2: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        cityStatePostalCode: {
+          bsonType: "string",
+          description: "must be a string and is not required"
+        },
+        pictureName: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        }
+      }
+    }
+  }
+})
 
 // Fetch all posts
 app.get('/posts', (req, res) => {
