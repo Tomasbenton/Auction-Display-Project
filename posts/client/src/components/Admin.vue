@@ -8,7 +8,7 @@
 	<router-link to="/display"><button class="button">Main Display Page</button></router-link>
 	<router-link to="/exhibitor"><button class="button">Exhibitor Display</button></router-link>
 	<router-link to="/buyer"><button class="button">Buyer Display</button></router-link>
-	<router-link tag="logout" class-active="active" v-if="$parent.authenticated" to='/login' v-on:click.native="logout()" replace><button class="button">Logout</button></router-link>
+	<router-link class-active="active" v-if="$parent.authenticated" to='/login' v-on:click.native="logout()" replace><button class="button">Logout</button></router-link>
 	<router-view @authenticated="setAuthenticated" />
  </div>
 </template>

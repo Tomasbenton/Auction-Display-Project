@@ -6,6 +6,7 @@ const morgan = require('morgan')
 var Post = require("../models/post");
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
+const userRoutes = require('../exproutes/user.route');
 
 // Express.js
 const app = express()
@@ -14,6 +15,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use('/exhibitor', exhibitorRoutes);
 app.use('/buyer', buyerRoutes);
+app.use('/user', userRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import Exhibitor from './Exhibitor.vue'
+  // import Exhibitor from './Exhibitor.vue'
   export default{
     props: ['exhibitors'],
     data() {

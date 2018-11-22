@@ -27,9 +27,11 @@ export default {
   methods: {
     login() {
       if (this.input.username != "" && this.input.password != "") {
+        var user = this.$parent.getUserByName(this.input.username)
         if (
-          this.input.username.toLowerCase() == this.$parent.mockAccount.username.toLowerCase() &&
-          this.input.password == this.$parent.mockAccount.password
+          typeof user !== "undefined" &&
+          this.input.username.toLowerCase() == user.username.toLowerCase() &&
+          this.input.password == user.password
         ) {
           this.$emit("authenticated", true)
           this.$router.replace({ name: "Admin" })
