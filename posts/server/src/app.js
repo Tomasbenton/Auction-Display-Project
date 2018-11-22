@@ -26,6 +26,26 @@ db.once("open", function(callback){
   console.log("Database connection Succeeded");
 });
 
+// Create User Collection
+db.createCollection("User", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["username", "password"],
+      properties: {
+        username: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        password: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        }
+      }
+    }
+  }
+})
+
 // Fetch all posts
 app.get('/posts', (req, res) => {
   Post.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, posts) {
