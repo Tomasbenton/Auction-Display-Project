@@ -22,23 +22,23 @@ export default {
         username: "",
         password: ""
       }
-    };
+    }
   },
   methods: {
     login() {
       if (this.input.username != "" && this.input.password != "") {
         if (
-          this.input.username == this.$parent.mockAccount.username &&
+          this.input.username.toLowerCase() == this.$parent.mockAccount.username.toLowerCase() &&
           this.input.password == this.$parent.mockAccount.password
         ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "Admin" });
+          this.$emit("authenticated", true)
+          this.$router.replace({ name: "Admin" })
         } else {
-          console.log("Username or password is incorrect");
+          console.log("Username or password is incorrect")
           document.getElementById("hidden").innerHTML = "Username or password is incorrect"
         }
       } else {
-        console.log("Username and password are required");
+        console.log("Username and password are required")
         document.getElementById("hidden").innerHTML = "Username and password are required"
       }
     }

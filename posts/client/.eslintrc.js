@@ -38,6 +38,8 @@ module.exports = {
     // give up on trying to standardize indentation
     'indent': 'off',
     // allow ==
-    'eqeqeq': 'off'
+    'eqeqeq': 'off',
+    // allow single and double quotes
+    'quotes': 'off'
   }
 }
