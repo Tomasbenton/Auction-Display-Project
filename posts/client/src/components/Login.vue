@@ -4,9 +4,10 @@
     <img class='logo2' src='../assets/FFA_Logo.png'>
 		<h1>Admin Login</h1>
 		<form>
-			<input type="text" name="username" v-model="input.username" placeholder="Username">
-			<input type="password" name="password" v-model="input.password" placeholder="Password">
-			<button type="button" v-on:click="login()">Login</button>
+			<input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
+			<input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
+			<button type="button" name="login" v-on:click="login()">Login</button>
+      <p class='errorMsg' id="hidden"></p>
 			<!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
 		</form>
 	</div>
@@ -33,14 +34,16 @@ export default {
           this.$emit("authenticated", true);
           this.$router.replace({ name: "Admin" });
         } else {
-          console.log("The username and/or password is incorrect");
+          console.log("Username or password is incorrect");
+          document.getElementById("hidden").innerHTML = "Username or password is incorrect"
         }
       } else {
-        console.log("A username and password must be present");
+        console.log("Username and password are required");
+        document.getElementById("hidden").innerHTML = "Username and password are required"
       }
     }
   }
-};
+}
 </script>
 
 <style>
@@ -73,6 +76,13 @@ input {
   display: block;
   margin-bottom: 20px;
 }
+
+input:focus, button:focus {
+  border-color: #339966;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 233, 109, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 233, 109, 0.6);
+}  
 
 button {
   width: 150px;
@@ -125,5 +135,10 @@ button {
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.errorMsg {
+  color: red;
+  text-align: left;
 }
 </style>
