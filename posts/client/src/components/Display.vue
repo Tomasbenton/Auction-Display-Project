@@ -1,7 +1,7 @@
 <template>
     <div id="display">
       <exhibitors v-on:exhibitorsLen="setLength">
-        {{ i + 1 }}
+        from display component {{ this.exhibitorsLen }}
       </exhibitors>
       <exhibitors>
         <p slot-scope="{ exhibitors }">{{ exhibitors[i].firstName }}</p>
@@ -14,6 +14,9 @@
       </exhibitors>
       <exhibitors>
         <p slot-scope="{ exhibitors }">{{ exhibitors[i].species }}</p>
+      </exhibitors>
+      <exhibitors>
+        <img slot-scope="{ exhibitors }" :src="getImgUrl(exhibitors[i].picture)" alt="exhibitors[i].firstName with a exhibitors[i].species" class="image">
       </exhibitors>
     </div>
 </template>
@@ -31,7 +34,10 @@ export default {
   methods: {
     setLength(e) {
       this.exhibitorsLen = e
-      this.$emit('finalLength', e)
+      this.$emit('finalLength', this.exhibitorsLen)
+    },
+    getImgUrl: function(pic) {
+      return require('../assets/' + pic)
     }
   }
 }

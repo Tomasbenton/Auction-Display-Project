@@ -1,6 +1,6 @@
 <template>
   <div id="exhibitor">
-    <slot :exhibitors="exhibitors"><p>I'm the child component!</p></slot>
+    <slot :exhibitors="exhibitors"></slot>
     <!--
     <section class="exhibitor_info">
       <h1 class="exhibitor_name">{{ exhibitors[index].firstName }} {{ exhibitors[index].lastName }}</h1>
@@ -27,17 +27,10 @@ export default {
       let uri = 'http://localhost:8081/exhibitor'
       this.axios.get(uri).then(response => {
         this.exhibitors = response.data
+        let length = this.exhibitors.length
+        this.$emit('exhibitorsLen', length)
       })
-    },
-    getImgUrl: function(pic) {
-      return require('../assets/' + pic)
     }
-  },
-  mounted: function () {
-    this.$nextTick(function () {
-      let length = this.exhibitors.length
-      this.$emit('exhibitorsLen', length)
-    })
   }
 }
 </script>
