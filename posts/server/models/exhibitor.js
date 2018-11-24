@@ -8,7 +8,8 @@ var ExhibitorSchema = new Schema({
   lastName: String,
   species: String,
   fairWeight: Number,
-  clubName: String
+  clubName: String,
+  picture: String
 },{
     collection: 'Exhibitor'
 });

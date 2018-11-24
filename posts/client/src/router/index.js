@@ -7,7 +7,7 @@ import Exhibitor from '@/components/Exhibitor'
 import Buyer from '@/components/Buyer'
 import Manage from '@/components/Manage'
 import Posts from '@/components/Posts'
-import NewPost from '@/components/NewPost'
+import NewExhibitor from '@/components/NewExhibitor'
 import EditPost from '@/components/EditPost'
 import Control from '@/components/Control'
 // import Search from '@/components/Search'
@@ -64,9 +64,9 @@ export default new Router({
       component: Posts
     },
     {
-      path: '/posts/new',
-      name: 'NewPost',
-      component: NewPost
+      path: '/manage/new',
+      name: 'NewExhibitor',
+      component: NewExhibitor
     },
     {
       path: '/posts/:id',

@@ -3,7 +3,7 @@
         <h1>Manage Data</h1>
         <input type="text" placeholder="Search tag #">
         <button>Submit</button>
-        <router-link v-bind:to="{ name: 'NewPost' }">
+        <router-link v-bind:to="{ name: 'NewExhibitor' }">
           <button class="add">Add</button>
         </router-link>
         <div>
