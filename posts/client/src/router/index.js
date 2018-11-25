@@ -8,8 +8,11 @@ import Buyer from '@/components/Buyer'
 import Manage from '@/components/Manage'
 import Posts from '@/components/Posts'
 import NewExhibitor from '@/components/NewExhibitor'
+import NewBuyer from '@/components/NewBuyer'
 import EditPost from '@/components/EditPost'
 import Control from '@/components/Control'
+import ManageExhibitors from '@/components/ManageExhibitors'
+import ManageBuyers from '@/components/ManageBuyers'
 // import Search from '@/components/Search'
 
 Vue.use(Router)
@@ -53,20 +56,30 @@ export default new Router({
       name: 'Manage',
       component: Manage
     },
-    /* {
-      path: '/search',
-      name: 'Search',
-      component: Search
-    }, */
+    {
+      path: '/manage/exhibitors',
+      name: 'ManageExhibitors',
+      component: ManageExhibitors
+    },
+    {
+      path: '/manage/buyers',
+      name: 'ManageBuyers',
+      component: ManageBuyers
+    },
     {
       path: '/posts',
       name: 'Posts',
       component: Posts
     },
     {
-      path: '/manage/new',
+      path: '/manage/exhibitors/new',
       name: 'NewExhibitor',
       component: NewExhibitor
+    },
+    {
+      path: '/manage/buyers/new',
+      name: 'NewBuyer',
+      component: NewBuyer
     },
     {
       path: '/posts/:id',
