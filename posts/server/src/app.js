@@ -68,12 +68,12 @@ app.post('/exhibitor', (req, res) => {
   var picture = req.body.picture;
 
   var new_exhibitor = new Exhibitor({
+    saleNum : saleNum,
+    tagNum : tagNum,
+    species : species,
+    fairWeight : fairWeight,
     firstName: firstName,
     lastName: lastName,
-    saleNum : saleNum,
-	  tagNum : tagNum,
-	  species : species,
-	  fairWeight : fairWeight,
 	  clubName : clubName,
 	  picture : picture
   })
@@ -101,7 +101,7 @@ app.get('/exhibitor/:id', (req, res) => {
 // Update a post
 app.put('/exhibitor/:id', (req, res) => {
   var db = req.db;
-  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName picture', function (error, exhibitor) {
+  Post.findById(req.params.id, 'saleNum tagNum species fairWeight firstName lastName clubName picture', function (error, exhibitor) {
     if (error) { console.error(error); }
 
     exhibitor.firstName = req.body.firstName;
