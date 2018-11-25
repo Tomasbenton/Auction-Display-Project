@@ -40,6 +40,8 @@ module.exports = {
     // allow ==
     'eqeqeq': 'off',
     // allow single and double quotes
-    'quotes': 'off'
+    'quotes': 'off',
+    // allow curly brackets where they belong
+    'brace-style': 'off'
   }
 }

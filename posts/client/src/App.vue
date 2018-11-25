@@ -11,14 +11,13 @@ export default {
   name: 'App',
   data() {
     return {
-      authenticated: false,
+      // authenticated: true,
       users: []
     }
   },
 
   created: function() {
       this.fetchUsers()
-      this.getUserByName("Test")
   },
 
   mounted() {
@@ -30,9 +29,6 @@ export default {
   methods: {
     setAuthenticated(status) {
       this.authenticated = status
-    },
-    logout() {
-      this.authenticated = false
     },
     fetchUsers() {
         let uri = 'http://localhost:8081/user'
@@ -104,6 +100,12 @@ form {
 .logo {
   width: 150px;
   height: auto;
+  margin-top: 50px;
+}
+
+.logo2 {
+  width: auto;
+  height: 170px;
   margin-top: 50px;
 }
 
