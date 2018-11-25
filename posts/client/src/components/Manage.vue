@@ -9,19 +9,26 @@
         <div>
         <table>
           <tr>
-            <td><strong>Company Name</strong></td>
-            <td><strong>Tag Number</strong></td>
-            <td><strong>Exhibitor</strong></td>
-            <td><strong>Action</strong></td>
+						<td><strong>Sale_number</strong></td>
+						<td><strong>Tag Number</strong></td>
+						<td><strong>Species</strong></td>
+						<td><strong>Weight</strong></td>
+						<td><strong>First Name</strong></td>
+						<td><strong>Last Name</strong></td>
+						<td><strong>Company</strong></td>
+						<td><strong>Picture</strong></td>
+						<td><strong>Action</strong></td>
           </tr>
-          <tr v-for="post in posts" :key="post">
-            <td>{{ post.clubName }}</td>
-            <td>{{ post.tagNum }}</td>
-            <td>{{ post.firstName }}</td>
-						<td>
-              <router-link v-bind:to="{ name: 'EditPost', params: { id: post._id } }">Edit</router-link> |
-              <a href="#" @click="deletePost(post._id)">Delete</a>
-            </td>
+          <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
+            <td>{{ exhibitor.tagNum }}</td>
+            <td>{{ exhibitor.saleNum }}</td>
+            <td>{{ exhibitor.species }}</td>
+						<td>{{ exhibitor.fairWeight }}</td>
+						<td>{{ exhibitor.firstName }}</td>
+						<td>{{ exhibitor.lastName }}</td>
+						<td>{{ exhibitor.clubName }}</td>
+						<td>Picture_link</td>
+						<td>Edit Delete</td>
           </tr>
 				</table>
 
@@ -31,30 +38,30 @@
 </template>
 
 <script>
-import PostsService from '@/services/PostsService'
-export default {
-  name: 'posts',
-  data () {
-    return {
-      posts: []
-    }
-  },
-  mounted () {
-    this.getPosts()
-  },
-  methods: {
-    async getPosts () {
-      const response = await PostsService.fetchPosts()
-      this.posts = response.data.posts
+  export default {
+    name: 'Exhibitor',
+    data() {
+      return {
+        exhibitors: [],
+        index: 0
+      }
     },
-    async deletePost (id) {
-      await PostsService.deletePost(id)
-      this.getPosts()
-      this.$router.push({ name: 'Manage' })
+
+    created: function() {
+      this.fetchExhibitors()
+    },
+
+    methods: {
+      fetchExhibitors() {
+        let uri = 'http://localhost:8081/exhibitor'
+        this.axios.get(uri).then(response => {
+          this.exhibitors = response.data
+        })
+      }
     }
   }
-}
 </script>
+
 <style>
     #manage{
         margin-top: 100px;
@@ -62,7 +69,7 @@ export default {
     }
 
 		table{
-				width: 80%;
+				width: 95%;
 				background-color: #e8e8e8;
 				margin: auto;
 				margin: 10px auto;
@@ -71,7 +78,7 @@ export default {
 		}
 
 		td{
-      width: 25%;
+      width: 12.5%;
 		}
 
     button, input{
@@ -84,7 +91,7 @@ export default {
     }
     .col{
         display: inline-block;
-        width: 20%;
+        width: 11.11%;
         text-align: left;
     }
 
@@ -92,9 +99,6 @@ export default {
     padding: 10px 5px;
     }
 
-    .add{
-
-    }
 		a {
       color: #4d7ef7;
       text-decoration: none;
