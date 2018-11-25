@@ -8,7 +8,7 @@
         <div>
         <table>
           <tr>
-						<td><strong>Sale_number</strong></td>
+						<td><strong>Sale Number</strong></td>
 						<td><strong>Tag Number</strong></td>
 						<td><strong>Species</strong></td>
 						<td><strong>Weight</strong></td>

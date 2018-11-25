@@ -17,6 +17,25 @@
 						<td><strong>Address 1</strong></td>
 						<td><strong>Address 2</strong></td>
 						<td><strong>Location</strong></td>
+						<td><strong>Type</strong></td>
+						<td><strong>Purchase</strong></td>
+						<td><strong>Picture</strong></td>
+						<td><strong>Action</strong></td>
+          </tr>
+					<tr v-for="buyer in buyers" :key="buyer._id">
+            <td>{{ buyer.entrySaleNumber }}</td>
+            <td>{{ buyer.name }}</td>
+            <td>{{ buyer.identifier }}</td>
+						<td>{{ buyer.contactName }}</td>
+						<td>{{ buyer.email }}</td>
+						<td>{{ buyer.phone }}</td>
+						<td>{{ buyer.address1 }}</td>
+						<td>{{ buyer.address2 }}</td>
+						<td>{{ buyer.cityStatePostalCode }}</td>
+						<td>{{ buyer.type }}</td>
+						<td>{{ buyer.purchaseAmount }}</td>
+						<td>{{ buyer.pictureName }}</td>
+						<td>Edit Delete</td>
           </tr>
 				</table>
 
@@ -27,23 +46,23 @@
 
 <script>
   export default {
-    name: 'Exhibitor',
+    name: 'Buyer',
     data() {
       return {
-        exhibitors: [],
-        index: 0
+        buyers: [],
+				index: 0
       }
     },
 
     created: function() {
-      this.fetchExhibitors()
+      this.fetchBuyers()
     },
 
     methods: {
-      fetchExhibitors() {
-        let uri = 'http://localhost:8081/exhibitor'
+      fetchBuyers() {
+        let uri = 'http://localhost:8081/buyer'
         this.axios.get(uri).then(response => {
-          this.exhibitors = response.data
+          this.buyers = response.data
         })
       }
     }
@@ -66,7 +85,7 @@
 		}
 
 		td{
-      width: 12.5%;
+      width: 7.7%;
 		}
 
     button, input{
