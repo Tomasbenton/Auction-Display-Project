@@ -7,11 +7,12 @@
 </template>
 
 <script>
+var authenticatedVar = false
 export default {
   name: 'App',
   data() {
     return {
-      // authenticated: true,
+      authenticated: authenticatedVar,
       users: []
     }
   },

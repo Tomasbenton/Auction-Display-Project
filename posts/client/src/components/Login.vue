@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  created: function() {
+  beforeCreate() {
     this.$parent.authenticated = false
   },
 

@@ -27,7 +27,7 @@ export default {
       var retVal = confirm("Are you sure you want to logout?")
       if (retVal) {
         this.setAuthenticated(false)
-        this.$router.push('/login')
+        this.$router.replace({ name: 'Login' })
       }
       else {
         this.setAuthenticated(true)
