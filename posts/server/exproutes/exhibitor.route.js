@@ -24,5 +24,13 @@ exhibitorRoutes.route('/').get(function (req, res) {
     }
     })
 })
+
+// exhibitorRoutes.route('/delete').delete(function (req, res) {
+//     // Something
+// })
+
+// exhibitorRoutes.route('/update').put(function (req, res) {
+//     // Something
+// })
  
  module.exports = exhibitorRoutes;

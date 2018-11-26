@@ -1,74 +1,98 @@
 <template>
   <div>
-    <h1>Add Exhibitor</h1>
+    <h1>Add Buyer</h1>
       <div class=form>
         <div>
-          <input type=text name=SaleNum placeholder=SALE_NUMBER v-model=saleNum>
+          <input type=text name=entrySaleNumber placeholder="Entry Sale Number" v-model=entrySaleNumber>
         </div>
         <div>
-          <input type=text name=tagNum placeholder=TAG_NUMBER v-model=tagNum>
+          <input type=text name=name placeholder="Name" v-model=name>
         </div>
         <div>
-          <input type=text name=species placeholder=SPECIES v-model=species>
+          <input type=text name=identifier placeholder="Identifier" v-model=identifier>
         </div>
         <div>
-          <input type=text name=fairWeight placeholder=WEIGHT v-model=fairWeight>
+          <input type=text name=contactName placeholder="Contact Name" v-model=contactName>
         </div>
         <div>
-          <input type=text name=firstName placeholder=FIRST_NAME v-model=firstName>
+          <input type=text name=email placeholder="Email" v-model=email>
         </div>
         <div>
-          <input type=text name=lastName placeholder=LAST_NAME v-model=lastName>
+          <input type=text name=phone placeholder="Phone" v-model=phone>
         </div>
         <div>
-          <input type=text name=clubName placeholder=COMPANY v-model=clubName>
+          <input type=text name=address1 placeholder="Address 1" v-model=address1>
         </div>
         <div>
-          <input type=text name=picture placeholder=PICTURE_LINK v-model=picture>
+          <input type=text name=address2 placeholder="Address 2" v-model=address2>
         </div>
         <div>
-          <button class=app_post_btn @click=addPost>Add</button>
+          <input type=text name=cityStatePostalZip placeholder="City, State PostalZip" v-model=cityStatePostalZip>
+        </div>
+        <div>
+          <input type=text name=pictureName placeholder="Picture Name" v-model=pictureName>
+        </div>
+        <div>
+          <input type=text name=type placeholder="Type" v-model=type>
+        </div>
+        <div>
+          <input type=text name=purchaseAmount placeholder="Purchase Amount" v-model=purchaseAmount>
+        </div>
+        <div>
+          <button class=app_post_btn @click=addBuyer>Add</button>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-import Api from '@/services/Api'
+// import Api from '@/services/Api'
 export default {
-  name: 'NewExhibitor',
+  name: 'NewBuyer',
   data () {
     return {
-      saleNum: '',
-      tagNum: '',
-      species: '',
-      fairWeight: '',
-      firstName: '',
-      lastName: '',
-      clubName: '',
-      picture: ''
+      entrySaleNumber: null,
+      name: null,
+      identifier: null,
+      contactName: null,
+      email: null,
+      phone: null,
+      address1: null,
+      address2: null,
+      cityStatePostalZip: null,
+      pictureName: null,
+      type: null,
+      purchaseAmount: null
     }
   },
   methods: {
-    async addPost () {
-      let newExhibitor = {
-        saleNum: this.saleNum,
-        tagNum: this.tagNum,
-        species: this.species,
-        fairWeight: this.fairWeight,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        clubName: this.clubName,
-        picture: this.picture
+    async addBuyer () {
+      let newBuyer = {
+        entrySaleNumber: this.entrySaleNumber,
+        name: this.name,
+        identifier: this.identifier,
+        contactName: this.contactName,
+        email: this.email,
+        phone: this.phone,
+        address1: this.address1,
+        address2: this.address2,
+        cityStatePostalZip: this.cityStatePostalZip,
+        pictureName: this.pictureName,
+        type: this.type,
+        purchaseAmount: this.purchaseAmount
       }
-      await Api().post('exhibitor', newExhibitor)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      /* this.$router.push({ name: 'Manage' }) */
+      let uri = 'http://localhost:8081/buyer/add'
+      this.axios.post(uri, newBuyer).then((response) => {
+        console.log(response)
+      })
+      // await Api().post('exhibitor', newExhibitor)
+      //   .then((response) => {
+      //     console.log(response)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
+      this.$router.push({ name: 'Manage' })
     }
   }
 }

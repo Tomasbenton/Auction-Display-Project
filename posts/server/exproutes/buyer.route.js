@@ -24,5 +24,13 @@ buyerRoutes.route('/').get(function (req, res) {
     }
     })
 })
+
+// buyerRoutes.route('/delete').delete(function (req, res) {
+//     // Something
+// })
+    
+// buyerRoutes.route('/update').put(function (req, res) {
+//     // Something
+// })
  
  module.exports = buyerRoutes;

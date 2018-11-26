@@ -3,72 +3,86 @@
     <h1>Add Exhibitor</h1>
       <div class=form>
         <div>
-          <input type=text name=SaleNum placeholder=SALE_NUMBER v-model=saleNum>
+          <input type=text name=entrySaleNumber placeholder="Entry Sale Number" v-model=entrySaleNumber>
         </div>
         <div>
-          <input type=text name=tagNum placeholder=TAG_NUMBER v-model=tagNum>
+          <input type=text name=fullName placeholder="Full Name" v-model=fullName>
         </div>
         <div>
-          <input type=text name=species placeholder=SPECIES v-model=species>
+          <input type=text name=tag placeholder="Tag" v-model=tag>
         </div>
         <div>
-          <input type=text name=fairWeight placeholder=WEIGHT v-model=fairWeight>
+          <input type=text name=animalDescription placeholder="Animal Description" v-model=animalDescription>
         </div>
         <div>
-          <input type=text name=firstName placeholder=FIRST_NAME v-model=firstName>
+          <input type=text name=checkInWeight placeholder="Check-In Weight" v-model=checkInWeight>
         </div>
         <div>
-          <input type=text name=lastName placeholder=LAST_NAME v-model=lastName>
+          <input type=text name=className placeholder="Class Name" v-model=className>
         </div>
         <div>
-          <input type=text name=clubName placeholder=COMPANY v-model=clubName>
+          <input type=text name=departmentName placeholder="Department Name" v-model=departmentName>
         </div>
         <div>
-          <input type=text name=picture placeholder=PICTURE_LINK v-model=picture>
+          <input type=text name=clubName placeholder="Club Name" v-model=clubName>
         </div>
         <div>
-          <button class=app_post_btn @click=addPost>Add</button>
+          <input type=text name=showClassName placeholder="Show Class Name" v-model=showClassName>
+        </div>
+        <div>
+          <input type=text name=pictureName placeholder="Picture File Name" v-model=pictureName>
+        </div>
+        <div>
+          <button class=app_post_btn @click=addExhibitor>Add</button>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-import Api from '@/services/Api'
+// import Api from '@/services/Api'
 export default {
   name: 'NewExhibitor',
   data () {
     return {
-      saleNum: '',
-      tagNum: '',
-      species: '',
-      fairWeight: '',
-      firstName: '',
-      lastName: '',
-      clubName: '',
-      picture: ''
+      entrySaleNumber: null,
+      fullName: null,
+      tag: null,
+      animalDescription: null,
+      checkInWeight: null,
+      className: null,
+      departmentName: null,
+      clubName: null,
+      showClassName: null,
+      pictureName: null
     }
   },
   methods: {
-    async addPost () {
+    async addExhibitor () {
       let newExhibitor = {
-        saleNum: this.saleNum,
-        tagNum: this.tagNum,
-        species: this.species,
-        fairWeight: this.fairWeight,
-        firstName: this.firstName,
-        lastName: this.lastName,
+        entrySaleNumber: this.entrySaleNumber,
+        fullName: this.fullName,
+        tag: this.tag,
+        animalDescription: this.animalDescription,
+        checkInWeight: this.checkInWeight,
+        className: this.className,
+        departmentName: this.departmentName,
         clubName: this.clubName,
-        picture: this.picture
+        showClassName: this.showClassName,
+        pictureName: this.pictureName
       }
-      await Api().post('exhibitor', newExhibitor)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      /* this.$router.push({ name: 'Manage' }) */
+      let uri = 'http://localhost:8081/exhibitor/add'
+      this.axios.post(uri, newExhibitor).then((response) => {
+        console.log(response)
+      })
+      // await Api().post('exhibitor', newExhibitor)
+      //   .then((response) => {
+      //     console.log(response)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
+      this.$router.push({ name: 'Manage' })
     }
   }
 }
