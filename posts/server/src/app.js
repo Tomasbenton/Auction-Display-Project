@@ -3,7 +3,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-var Post = require("../models/post");
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 const userRoutes = require('../exproutes/user.route');
@@ -149,17 +148,17 @@ db.createCollection("Buyer", {
 })
 
 // Fetch all posts
-app.get('/posts', (req, res) => {
-  Post.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, posts) {
+app.get('/exhibitor', (req, res) => {
+  Exhibitor.find({}, 'saleNum tagNum firstName lastName species fairWeight clubName picture', function (error, exhibitor) {
     if (error) { console.error(error); }
     res.send({
-      posts: posts
+      exhibitor: exhibitor
     })
   }).sort({_id:-1})
 })
 
-// Add new post
-app.post('/posts', (req, res) => {
+// Add new exhibitor
+app.post('/exhibitor', (req, res) => {
   var db = req.db;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
@@ -168,54 +167,54 @@ app.post('/posts', (req, res) => {
   var species = req.body.species;
   var fairWeight = req.body.fairWeight;
   var clubName = req.body.clubName;
-  //var picture = req.body.picture;
+  var picture = req.body.picture;
 
-  var new_post = new Post({
+  var new_exhibitor = new Exhibitor({
+    saleNum : saleNum,
+    tagNum : tagNum,
+    species : species,
+    fairWeight : fairWeight,
     firstName: firstName,
     lastName: lastName,
-    saleNum : saleNum,
-	  tagNum : tagNum,
-	  species : species,
-	  fairWeight : fairWeight,
-	  clubName : clubName
-	  //,picture : picture
+	  clubName : clubName,
+	  picture : picture
   })
 
-  new_post.save(function (error) {
+  new_exhibitor.save(function (error) {
     if (error) {
       console.log(error)
     }
     res.send({
       success: true,
-      message: 'Post saved successfully!'
+      message: 'Exhibitor saved successfully!'
     })
   })
 })
 
 // Fetch single post
-app.get('/post/:id', (req, res) => {
+app.get('/exhibitor/:id', (req, res) => {
   var db = req.db;
-  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
+  Exhibitor.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName picture', function (error, exhibitor) {
     if (error) { console.error(error); }
-    res.send(post)
+    res.send(exhibitor)
   })
 })
 
 // Update a post
-app.put('/posts/:id', (req, res) => {
+app.put('/exhibitor/:id', (req, res) => {
   var db = req.db;
-  Post.findById(req.params.id, 'saleNum tagNum firstName lastName species fairWeight clubName', function (error, post) {
+  Post.findById(req.params.id, 'saleNum tagNum species fairWeight firstName lastName clubName picture', function (error, exhibitor) {
     if (error) { console.error(error); }
 
-    post.firstName = req.body.firstName;
-    post.lastName = req.body.lastName;
-    post.saleNum= req.body.saleNum;
-    post.tagNum = req.body.tagNum;
-    post.species = req.body.species;
-    post.fairWeight = req.body.fairWeight;
-    post.clubName = req.body.clubName;
-    //post.picture = req.body.picture;
-    post.save(function (error) {
+    exhibitor.firstName = req.body.firstName;
+    exhibitor.lastName = req.body.lastName;
+    exhibitor.saleNum= req.body.saleNum;
+    exhibitor.tagNum = req.body.tagNum;
+    exhibitor.species = req.body.species;
+    exhibitor.fairWeight = req.body.fairWeight;
+    exhibitor.clubName = req.body.clubName;
+    exhibitor.picture = req.body.picture;
+    exhibitor.save(function (error) {
       if (error) {
         console.log(error)
       }
@@ -226,12 +225,12 @@ app.put('/posts/:id', (req, res) => {
   })
 })
 
-// Delete a post
-app.delete('/posts/:id', (req, res) => {
+// Delete an exhibitor
+app.delete('/exhibitor/:id', (req, res) => {
   var db = req.db;
-  Post.remove({
+  Exhibitor.remove({
     _id: req.params.id
-  }, function(err, post){
+  }, function(err, exhibitor){
     if (err)
       res.send(err)
     res.send({
