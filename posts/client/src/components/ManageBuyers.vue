@@ -31,11 +31,12 @@
 						<td>{{ buyer.phone }}</td>
 						<td>{{ buyer.address1 }}</td>
 						<td>{{ buyer.address2 }}</td>
-						<td>{{ buyer.cityStatePostalCode }}</td>
+						<td>{{ buyer.cityStatePostalZip }}</td>
 						<td>{{ buyer.type }}</td>
 						<td>{{ buyer.purchaseAmount }}</td>
 						<td>{{ buyer.pictureName }}</td>
-						<td>Edit Delete</td>
+						<router-link v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
+            <a href="#" @click="deleteBuyer(buyer._id)">Delete</a>
           </tr>
 				</table>
 
@@ -64,9 +65,17 @@
         this.axios.get(uri).then(response => {
           this.buyers = response.data
         })
-      }
+      },
+			async deleteBuyer (id) {
+				let uri = 'http://localhost:8081/buyer/' + id
+	      await this.axios.delete(uri).then((response) => {
+	        console.log(response)
+	      })
+	      this.fetchBuyers()
+	      this.$router.push({ name: 'Manage' })
     }
   }
+}
 </script>
 
 <style>
