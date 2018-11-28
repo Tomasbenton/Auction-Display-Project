@@ -1,0 +1,3 @@
+export const NEW_INDEX = 'NEW_INDEX'
+export const DECREMENTED = 'DECREMENTED'
+export const INCREMENTED = 'INCREMENTED'

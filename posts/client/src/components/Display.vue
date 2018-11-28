@@ -33,7 +33,7 @@ export default {
   methods: {
     setLength(e) {
       this.exhibitorsLength = e
-      this.$emit('finalLength', this.exhibitorsLength)
+      this.$emit('length', this.exhibitorsLength)
     },
     getImgUrl: function(pic) {
       return require('../assets/' + pic)

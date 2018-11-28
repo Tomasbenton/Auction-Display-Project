@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { NEW_INDEX, DECREMENTED, INCREMENTED } from './mutation-constants'
 
 Vue.use(Vuex)
 
@@ -8,28 +9,31 @@ const state = {
 }
 
 const mutations = {
-  increment(state) {
-    state.index++
+  [NEW_INDEX] (state, index) {
+    state.index = index
   },
-  decrement(state) {
+  [DECREMENTED] (state) {
     state.index--
   },
-  setIndex(state, e){
-    state.index = e.index
-    localStorage.setItem('index', e.index)
-  },
-  getIndex(state){
-    if (localStorage.getItem('index')){
-      
-      state.index = localStorage.getItem('index')
-    }
+  [INCREMENTED] (state) {
+    state.index++
   }
 }
 
-const getters = {
+const actions = {
+  setIndex ({commit}, index) {
+    commit(NEW_INDEX, index)
+  },
+  decrementIndex({commit}) {
+    commit(DECREMENTED)
+  },
+  incrementIndex({commit}) {
+    commit(INCREMENTED)
+  }
 }
 
 export default new Vuex.Store({
   state,
-  mutations
+  mutations,
+  actions
 })

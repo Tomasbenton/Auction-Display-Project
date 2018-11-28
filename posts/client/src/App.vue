@@ -6,12 +6,7 @@
 
 <script>
 export default {
-  name: 'App',
-  computed: {
-    index () {
-      return this.$store.state.index
-    }
-  }
+  name: 'App'
 }
 </script>
 
