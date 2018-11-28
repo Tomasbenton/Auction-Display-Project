@@ -78,7 +78,7 @@
 	      this.fetchBuyers()
 	      this.$router.push({ name: 'Manage' })
     },
-		deleteAll() {
+		async deleteAll() {
 			let uri = 'http://localhost:8081/buyer/'
 			var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
 			if (delCheck) {

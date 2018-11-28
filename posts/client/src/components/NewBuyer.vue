@@ -40,6 +40,9 @@
         </div>
         <div>
           <button class=app_post_btn @click=addBuyer>Add</button>
+          <router-link v-bind:to="{ name: 'Manage' }">
+            <button>Return to Manage</button>
+          </router-link>
         </div>
       </div>
   </div>
@@ -84,7 +87,6 @@ export default {
       this.axios.post(uri, newBuyer).then((response) => {
         console.log(response)
       })
-      this.$router.push({ name: 'Manage' })
     }
   }
 }
