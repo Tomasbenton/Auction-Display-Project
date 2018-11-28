@@ -7,9 +7,9 @@
 <script>
 export default {
   name: 'App',
-  data() {
-    return {
-      index: 0
+  computed: {
+    index () {
+      return this.$store.state.index
     }
   }
 }

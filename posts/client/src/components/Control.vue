@@ -2,7 +2,7 @@
   <div id="control">
     <div class="displays">
       <div class="other_display"><display v-on:finalLength="setIndexLimit" :i="prevIndex"></display></div>
-      <div class="main_display"><display v-on:finalLength="setIndexLimit" :i="index"></display></div>
+      <div class="main_display"><display v-on:finalLength="setIndexLimit" :i="$store.state.index"></display></div>
       <div class="other_display"><display v-on:finalLength="setIndexLimit" :i="nextIndex"></display></div>
     </div>
     <div class="controls"><button v-on:click="previous">Previous</button>
@@ -59,36 +59,37 @@ export default{
   },
   data() {
     return {
-      index: 0,
       prevIndex: 0,
       nextIndex: 0,
       indexLimit: 0
     }
   },
   created: function() {
-    this.prevIndex = this.index - 1;
-    this.nextIndex = this.index + 1;
-    this.$emit('indexPosition', this.index)
+    this.nextIndex = this.$store.state.index + 1
   },
   methods: {
     previous: function() {
-      if (this.index === 0) this.index = this.indexLimit - 1
-      else this.index--
       if (this.prevIndex === 0) this.prevIndex = this.indexLimit - 1
       else this.prevIndex--
+      if (this.$store.state.index === 0) this.$store.state.index = this.indexLimit - 1
+      else this.$store.commit('decrement')
       if (this.nextIndex === 0) this.nextIndex = this.indexLimit - 1
       else this.nextIndex--
+      this.$store.commit('setIndex', $this)
     },
     next: function() {
-      if (this.indexLimit === this.index + 1) this.index = 0
-      else this.index++
-      if (this.indexLimit === this.prevIndex + 1) this.prevIndex = 0
+      if ((this.prevIndex + 1) === this.indexLimit) this.prevIndex = 0
       else this.prevIndex++
-      if (this.indexLimit === this.nextIndex + 1) this.nextIndex = 0
+      if ((this.$store.state.index + 1) === this.indexLimit) this.$store.state.index = 0
+      else this.$store.commit('increment')
+      if ((this.nextIndex + 1) === this.indexLimit) this.nextIndex = 0
       else this.nextIndex++
+
+
     },
     setIndexLimit(e) {
       this.indexLimit = e
+      this.prevIndex = this.indexLimit - 1
     }
   }
 }  

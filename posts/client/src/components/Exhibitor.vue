@@ -1,6 +1,6 @@
 <template>
   <div id="exhibitor">
-    <slot :exhibitors="exhibitors"></slot>
+    <slot v-if="exhibitors" :exhibitors="exhibitors"></slot>
   </div>
 </template>
 

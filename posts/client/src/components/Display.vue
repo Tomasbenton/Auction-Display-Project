@@ -1,6 +1,6 @@
 <template>
     <div id="display">
-      <exhibitors v-on:exhibitorsLength="setLength" v-on:exhibitorsIndex="setIndex">
+      <exhibitors v-on:exhibitorsLength="setLength">
         <div slot-scope="{ exhibitors }">
           <h1>{{ exhibitors[i].firstName }} {{ exhibitors[i].lastName }}</h1>
           <h2>Tag Number: {{ exhibitors[i].tagNum }}</h2>
@@ -37,6 +37,11 @@ export default {
     },
     getImgUrl: function(pic) {
       return require('../assets/' + pic)
+    }
+  },
+  computed: {
+    index () {
+      return this.$store.state.index
     }
   }
 }
