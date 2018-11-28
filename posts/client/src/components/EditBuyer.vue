@@ -1,6 +1,6 @@
 <template>
   <div class="buyers">
-    <h1>Edit Post</h1>
+    <h1>Edit Buyer</h1>
     <div class=form>
     <div>
       <input type=text name=entrySaleNumber placeholder="Entry Sale Number" v-model=entrySaleNumber>
