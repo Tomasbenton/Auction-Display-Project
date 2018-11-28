@@ -32,7 +32,8 @@ export default {
       this.authenticated = status
     },
     fetchUsers() {
-        let uri = 'http://localhost:8081/user'
+      let uri = 'http://localhost:8081/user'
+        // let uri = 'http://192.168.21.105:8081/user'
         this.axios.get(uri).then(response => {
           this.users = response.data
         })
