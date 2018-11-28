@@ -75,7 +75,7 @@ export default {
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
       })
-      this.$router.push({ name: 'Manage' })
+      /* this.$router.push({ name: 'Manage' }) */
     }
   }
 }

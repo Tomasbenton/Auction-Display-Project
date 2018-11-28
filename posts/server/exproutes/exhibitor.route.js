@@ -30,7 +30,7 @@ exhibitorRoutes.route('/').get(function (req, res) {
 // Fetch single exhibitor
 exhibitorRoutes.route('/:id').get((req, res) => {
   var id = req.params.id;
-  Exhibitor.findById(id, 'entrySaleNumber fullName tag animalDescription checkInWeight className departmentName clubName showClassName pictureName', (err, exhibitor) =>{
+  Exhibitor.findById(id, (err, exhibitor) =>{
       res.json(exhibitor);
   });
 });
@@ -65,7 +65,10 @@ exhibitorRoutes.route('/:id').put((req, res) => {
 exhibitorRoutes.route('/:id').delete((req, res) => {
   var id = req.params.id;
   Exhibitor.findByIdAndRemove(id, (err,exhibitor) =>{
-        if(err) res.json(err);
+        if(err){
+          console.log(err);
+          res.json(err);
+        }
         else res.json('Exhibitor successfully removed');
     });
 });

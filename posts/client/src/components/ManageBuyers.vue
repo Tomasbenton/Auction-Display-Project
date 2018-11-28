@@ -7,6 +7,7 @@
         <router-link v-bind:to="{ name: 'NewBuyer' }">
           <button class="add">Add</button>
         </router-link>
+				<button @click=deleteAll()>Delete All Buyers</button>
 		</div>
         <div>
         <table>
@@ -76,7 +77,21 @@
 	      })
 	      this.fetchBuyers()
 	      this.$router.push({ name: 'Manage' })
-    }
+    },
+		deleteAll() {
+			let uri = 'http://localhost:8081/buyer/'
+			var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
+			if (delCheck) {
+        for (var i = 0; i < this.buyers.length; i++) {
+					uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
+					this.axios.delete(uri).then((response) => {
+						console.log(response)
+					})
+				}
+				this.fetchBuyers()
+	      this.$router.push({ name: 'Manage' })
+      }
+		}
   }
 }
 </script>
@@ -86,7 +101,7 @@
 				margin: 20px;
 				text-align: center;
 		}
-		
+
 		table{
 				width: 95%;
 				background-color: #e8e8e8;

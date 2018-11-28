@@ -1,4 +1,4 @@
-<template>
+Exhibitor<template>
 	<div id="exhibitors">
 		<div id="control">
 			<h2>Exhibitors</h2>
@@ -7,6 +7,7 @@
         	<router-link v-bind:to="{ name: 'NewExhibitor' }">
           	<button class="add">Add</button>
         	</router-link>
+					<button @click=deleteAll()>Delete All Exhibitors</button>
 		</div>
     <div>
     	<table>
@@ -70,7 +71,21 @@
 	      })
 	      this.fetchExhibitors()
 	      this.$router.push({ name: 'Manage' })
-    	}
+    	},
+			deleteAll() {
+				let uri = 'http://localhost:8081/exhibitor/'
+				var delCheck = confirm("Are you sure you want to delete ALL Exhibitors?")
+				if (delCheck) {
+	        for (var i = 0; i < this.exhibitors.length; i++) {
+						uri = 'http://localhost:8081/exhibitor/' + this.exhibitors[i]._id
+						this.axios.delete(uri).then((response) => {
+							console.log(response)
+						})
+					}
+					this.fetchExhibitors()
+		      this.$router.push({ name: 'Manage' })
+	      }
+			}
     }
   }
 </script>
