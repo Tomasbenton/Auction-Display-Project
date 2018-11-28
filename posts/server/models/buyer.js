@@ -12,6 +12,7 @@ var BuyerSchema = new Schema({
   address2: String,
   cityStatePostalCode: String,
   pictureName: String,
+  purchaseAmount: Number,
   type: String
 },{
     collection: 'Buyer'

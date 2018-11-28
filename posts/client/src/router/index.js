@@ -5,12 +5,15 @@ import Admin from '@/components/Admin'
 import Display from '@/components/Display'
 import Exhibitor from '@/components/Exhibitor'
 import Buyer from '@/components/Buyer'
-import Manage from '@/components/Manage'
-import Posts from '@/components/Posts'
-import NewPost from '@/components/NewPost'
-import EditPost from '@/components/EditPost'
 import Control from '@/components/Control'
-// import Search from '@/components/Search'
+
+import Manage from '@/components/Manage'
+import ManageExhibitors from '@/components/ManageExhibitors'
+import ManageBuyers from '@/components/ManageBuyers'
+import NewExhibitor from '@/components/NewExhibitor'
+import NewBuyer from '@/components/NewBuyer'
+import EditBuyer from '@/components/EditBuyer'
+import EditExhibitor from '@/components/EditExhibitor'
 
 Vue.use(Router)
 
@@ -53,25 +56,35 @@ export default new Router({
       name: 'Manage',
       component: Manage
     },
-    /* {
-      path: '/search',
-      name: 'Search',
-      component: Search
-    }, */
     {
-      path: '/posts',
-      name: 'Posts',
-      component: Posts
+      path: '/manage/exhibitors',
+      name: 'ManageExhibitors',
+      component: ManageExhibitors
     },
     {
-      path: '/posts/new',
-      name: 'NewPost',
-      component: NewPost
+      path: '/manage/buyers',
+      name: 'ManageBuyers',
+      component: ManageBuyers
     },
     {
-      path: '/posts/:id',
-      name: 'EditPost',
-      component: EditPost
+      path: '/manage/exhibitors/new',
+      name: 'NewExhibitor',
+      component: NewExhibitor
+    },
+    {
+      path: '/manage/buyers/new',
+      name: 'NewBuyer',
+      component: NewBuyer
+    },
+    {
+      path: '/manage/buyer/edit',
+      name: 'EditBuyer',
+      component: EditBuyer
+    },
+    {
+      path: '/manage/exhibitor/edit',
+      name: 'EditExhibitor',
+      component: EditExhibitor
     },
     {
       path: '/control',
