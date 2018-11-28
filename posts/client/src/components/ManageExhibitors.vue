@@ -8,26 +8,31 @@
         <div>
         <table>
           <tr>
-						<td><strong>Sale Number</strong></td>
-						<td><strong>Tag Number</strong></td>
-						<td><strong>Species</strong></td>
+						<td><strong>Sale#</strong></td>
+						<td><strong>Name</strong></td>
+						<td><strong>Tag#</strong></td>
+						<td><strong>Animal Description</strong></td>
 						<td><strong>Weight</strong></td>
-						<td><strong>First Name</strong></td>
-						<td><strong>Last Name</strong></td>
-						<td><strong>Company</strong></td>
+						<td><strong>Class Name</strong></td>
+						<td><strong>Department</strong></td>
+						<td><strong>Club</strong></td>
+						<td><strong>Show Class</strong></td>
 						<td><strong>Picture</strong></td>
 						<td><strong>Action</strong></td>
           </tr>
           <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
-            <td>{{ exhibitor.tagNum }}</td>
-            <td>{{ exhibitor.saleNum }}</td>
-            <td>{{ exhibitor.species }}</td>
-						<td>{{ exhibitor.fairWeight }}</td>
-						<td>{{ exhibitor.firstName }}</td>
-						<td>{{ exhibitor.lastName }}</td>
+            <td>{{ exhibitor.entrySaleNumber }}</td>
+            <td>{{ exhibitor.fullName }}</td>
+            <td>{{ exhibitor.tag }}</td>
+						<td>{{ exhibitor.animalDescription }}</td>
+						<td>{{ exhibitor.checkInWeight }}</td>
+						<td>{{ exhibitor.className }}</td>
+						<td>{{ exhibitor.departmentName }}</td>
 						<td>{{ exhibitor.clubName }}</td>
-						<td>Picture_link</td>
-						<td>Edit Delete</td>
+						<td>{{ exhibitor.showClassName }}</td>
+						<td>{{ exhibitor.pictureName }}</td>
+						<router-link v-bind:to="{ name: 'EditExhibitor', params: { id: exhibitor._id } }">Edit</router-link> |
+            <a href="#" @click="deleteExhibitor(exhibitor._id)">Delete</a>
           </tr>
 				</table>
 
@@ -56,17 +61,20 @@
         this.axios.get(uri).then(response => {
           this.exhibitors = response.data
         })
-      }
+      },
+			async deleteExhibitor (id) {
+				let uri = 'http://localhost:8081/exhibitor/' + id
+	      await this.axios.delete(uri).then((response) => {
+	        console.log(response)
+	      })
+	      this.fetchExhibitors()
+	      this.$router.push({ name: 'Manage' })
+    	}
     }
   }
 </script>
 
 <style>
-    #manage{
-        margin-top: 100px;
-        height: 100%;
-    }
-
 		table{
 				width: 95%;
 				background-color: #e8e8e8;

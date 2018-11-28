@@ -94,7 +94,7 @@
 		}
 
 		td{
-      width: 7.7%;
+      width: 9.09%;
 		}
 
     button, input{

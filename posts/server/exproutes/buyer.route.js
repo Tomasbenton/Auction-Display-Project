@@ -3,6 +3,7 @@ const buyerRoutes = express.Router()
 
 const Buyer = require('../models/Buyer')
 
+// Add a buyer
 buyerRoutes.route('/add').post(function (req, res) {
     var buyer = new Buyer(req.body)
     buyer.save()
@@ -70,9 +71,5 @@ buyerRoutes.route('/:id').delete((req, res) => {
         else res.json('Buyer successfully removed');
     });
 });
-// buyerRoutes.route('/delete').delete(function (req, res) {
-//     // Something
-// })
-
 
  module.exports = buyerRoutes;

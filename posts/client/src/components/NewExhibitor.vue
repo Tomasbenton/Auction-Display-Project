@@ -75,13 +75,6 @@ export default {
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
       })
-      // await Api().post('exhibitor', newExhibitor)
-      //   .then((response) => {
-      //     console.log(response)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
       this.$router.push({ name: 'Manage' })
     }
   }

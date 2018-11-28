@@ -13,6 +13,7 @@ import ManageBuyers from '@/components/ManageBuyers'
 import NewExhibitor from '@/components/NewExhibitor'
 import NewBuyer from '@/components/NewBuyer'
 import EditBuyer from '@/components/EditBuyer'
+import EditExhibitor from '@/components/EditExhibitor'
 
 Vue.use(Router)
 
@@ -79,6 +80,11 @@ export default new Router({
       path: '/manage/buyer/edit',
       name: 'EditBuyer',
       component: EditBuyer
+    },
+    {
+      path: '/manage/exhibitor/edit',
+      name: 'EditExhibitor',
+      component: EditExhibitor
     },
     {
       path: '/control',
