@@ -8,8 +8,8 @@
 	<router-link to="/display"><button class="button">Main Display Page</button></router-link>
 	<router-link to="/exhibitor"><button class="button">Exhibitor Display</button></router-link>
 	<router-link to="/buyer"><button class="button">Buyer Display</button></router-link>
-	<router-link class-active="active" v-if="$parent.authenticated" to='/login' v-on:click.native="logout()" replace><button class="button">Logout</button></router-link>
-	<router-view @authenticated="setAuthenticated" />
+	<router-link to="/admin" class-active="active" v-on:click.native="logout()" replace><button class="button">Logout</button></router-link>
+  <router-view @authenticated="setAuthenticated" />
  </div>
 </template>
 
@@ -24,7 +24,14 @@ export default {
       this.$parent.authenticated = status
     },
     logout() {
-	  this.$parent.authenticated = false
+      var retVal = confirm("Are you sure you want to logout?")
+      if (retVal) {
+        this.setAuthenticated(false)
+        this.$router.replace({ name: 'Login' })
+      }
+      else {
+        this.setAuthenticated(true)
+      }
     }
   }
 }
