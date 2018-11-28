@@ -90,21 +90,20 @@ export default {
 }
 </script>
 <style type=text/css>
+h1 {
+ text-align: center;
+}
 .form input, .form textarea {
   width: 500px;
-  padding: 10px;
   border: 1px solid #e0dede;
   outline: none;
   font-size: 12px;
 }
 .form div {
-  margin: 20px;
+  text-align: center;
 }
+
 .app_post_btn {
-  padding: 10px 80px;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
   width: 520px;
   border: none;
 }

@@ -1,44 +1,45 @@
 <template>
 	<div id="exhibitors">
-        <input type="text" placeholder="Search tag #">
-        <button>Submit</button>
-        <router-link v-bind:to="{ name: 'NewExhibitor' }">
-          <button class="add">Add</button>
-        </router-link>
-        <div>
-        <table>
-          <tr>
-						<td><strong>Sale#</strong></td>
-						<td><strong>Name</strong></td>
-						<td><strong>Tag#</strong></td>
-						<td><strong>Animal Description</strong></td>
-						<td><strong>Weight</strong></td>
-						<td><strong>Class Name</strong></td>
-						<td><strong>Department</strong></td>
-						<td><strong>Club</strong></td>
-						<td><strong>Show Class</strong></td>
-						<td><strong>Picture</strong></td>
-						<td><strong>Action</strong></td>
-          </tr>
-          <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
-            <td>{{ exhibitor.entrySaleNumber }}</td>
-            <td>{{ exhibitor.fullName }}</td>
-            <td>{{ exhibitor.tag }}</td>
-						<td>{{ exhibitor.animalDescription }}</td>
-						<td>{{ exhibitor.checkInWeight }}</td>
-						<td>{{ exhibitor.className }}</td>
-						<td>{{ exhibitor.departmentName }}</td>
-						<td>{{ exhibitor.clubName }}</td>
-						<td>{{ exhibitor.showClassName }}</td>
-						<td>{{ exhibitor.pictureName }}</td>
-						<router-link v-bind:to="{ name: 'EditExhibitor', params: { id: exhibitor._id } }">Edit</router-link> |
-            <a href="#" @click="deleteExhibitor(exhibitor._id)">Delete</a>
-          </tr>
-				</table>
-
-        </div>
+		<div id="control">
+			<h2>Exhibitors</h2>
+        	<input type="text" placeholder="Search tag #">
+        	<button>Submit</button>
+        	<router-link v-bind:to="{ name: 'NewExhibitor' }">
+          	<button class="add">Add</button>
+        	</router-link>
+		</div>
+    <div>
+    	<table>
+      	<tr>
+					<td><strong>Sale#</strong></td>
+					<td><strong>Name</strong></td>
+					<td><strong>Tag#</strong></td>
+					<td><strong>Animal Description</strong></td>
+					<td><strong>Weight</strong></td>
+					<td><strong>Class Name</strong></td>
+					<td><strong>Department</strong></td>
+					<td><strong>Club</strong></td>
+					<td><strong>Show Class</strong></td>
+					<td><strong>Picture</strong></td>
+					<td><strong>Action</strong></td>
+      	</tr>
+      	<tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
+        	<td>{{ exhibitor.entrySaleNumber }}</td>
+        	<td>{{ exhibitor.fullName }}</td>
+        	<td>{{ exhibitor.tag }}</td>
+					<td>{{ exhibitor.animalDescription }}</td>
+					<td>{{ exhibitor.checkInWeight }}</td>
+					<td>{{ exhibitor.className }}</td>
+					<td>{{ exhibitor.departmentName }}</td>
+					<td>{{ exhibitor.clubName }}</td>
+					<td>{{ exhibitor.showClassName }}</td>
+					<td>{{ exhibitor.pictureName }}</td>
+					<router-link v-bind:to="{ name: 'EditExhibitor', params: { id: exhibitor._id } }">Edit</router-link> |
+        	<a href="#" @click="deleteExhibitor(exhibitor._id)">Delete</a>
+      	</tr>
+			</table>
+  	</div>
 	</div>
-
 </template>
 
 <script>
@@ -75,6 +76,13 @@
 </script>
 
 <style>
+		#control {
+				margin: 20px;
+				text-align: center;
+		}
+		h2 {
+				text-align: center;
+		}
 		table{
 				width: 95%;
 				background-color: #e8e8e8;
@@ -106,13 +114,7 @@
     padding: 10px 5px;
     }
 
-		a {
-      color: #4d7ef7;
-      text-decoration: none;
-		}
     a.add_post_link {
-      background: #4d7ef7;
-      color: #fff;
       padding: 10px 80px;
       text-transform: uppercase;
       font-size: 12px;

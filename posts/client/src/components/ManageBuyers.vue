@@ -1,10 +1,13 @@
 <template>
 	<div id="buyers">
+		<div id="control">
+				<h2>Buyers</h2>
         <input type="text" placeholder="Search tag #">
         <button>Submit</button>
         <router-link v-bind:to="{ name: 'NewBuyer' }">
           <button class="add">Add</button>
         </router-link>
+		</div>
         <div>
         <table>
           <tr>
@@ -79,11 +82,11 @@
 </script>
 
 <style>
-    #manage{
-        margin-top: 100px;
-        height: 100%;
-    }
-
+		#control {
+				margin: 20px;
+				text-align: center;
+		}
+		
 		table{
 				width: 95%;
 				background-color: #e8e8e8;
@@ -115,13 +118,7 @@
     padding: 10px 5px;
     }
 
-		a {
-      color: #4d7ef7;
-      text-decoration: none;
-		}
     a.add_post_link {
-      background: #4d7ef7;
-      color: #fff;
       padding: 10px 80px;
       text-transform: uppercase;
       font-size: 12px;

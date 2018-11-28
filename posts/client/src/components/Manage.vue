@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="manage">
 		<h1>Manage Data</h1>
 		<button @click='view = !view'>Toggle View</button>
 		<template v-if="view">
@@ -8,7 +8,6 @@
 		<template v-else>
 			<manageBuyers></manageBuyers>
 		</template>
-
 	</div>
 </template>
 
@@ -39,9 +38,9 @@
 
 </script>
 
-<style>
-	.h1 {
-		text-align: center;
-		margin: auto;
+<style type="text/css">
+	h1 {
+	 border-bottom: solid;
+	 padding-bottom: 20px;
 	}
 </style>
