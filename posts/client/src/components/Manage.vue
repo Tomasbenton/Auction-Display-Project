@@ -1,7 +1,7 @@
 <template>
 	<div class="manage">
 		<h1>Manage Data</h1>
-		<button @click='view = !view'>Toggle View</button>
+		<button id="toggle-button" @click='view = !view'>Toggle View</button>
     <router-link v-bind:to="{ name: 'Admin' }">
       <button id="dashboard-button">Return to Dashboard</button>
     </router-link>
@@ -48,5 +48,9 @@
 	}
   #dashboard-button {
     float: left;
+  }
+  #toggle-button {
+    display: flex;
+    justify-content: center;
   }
 </style>
