@@ -12,33 +12,20 @@
         <div>
         <table>
           <tr>
-						<td><strong>Sale Number</strong></td>
+						<td><strong>Bidder Number</strong></td>
 						<td><strong>Name</strong></td>
-						<td><strong>Identifier</strong></td>
 						<td><strong>Contact Name</strong></td>
-						<td><strong>Email</strong></td>
 						<td><strong>Phone</strong></td>
-						<td><strong>Address 1</strong></td>
-						<td><strong>Address 2</strong></td>
-						<td><strong>Location</strong></td>
-						<td><strong>Type</strong></td>
-						<td><strong>Purchase</strong></td>
-						<td><strong>Picture</strong></td>
-						<td><strong>Action</strong></td>
+						<td><strong>Email</strong></td>
+						<td><strong>Logo Filename</strong></td>
           </tr>
 					<tr v-for="buyer in buyers" :key="buyer._id">
-            <td>{{ buyer.entrySaleNumber }}</td>
-            <td>{{ buyer.name }}</td>
-            <td>{{ buyer.identifier }}</td>
+            <td>{{ buyer.bidderNumber }}</td>
+						<td>{{ buyer.name }}</td>
 						<td>{{ buyer.contactName }}</td>
-						<td>{{ buyer.email }}</td>
 						<td>{{ buyer.phone }}</td>
-						<td>{{ buyer.address1 }}</td>
-						<td>{{ buyer.address2 }}</td>
-						<td>{{ buyer.cityStatePostalZip }}</td>
-						<td>{{ buyer.type }}</td>
-						<td>{{ buyer.purchaseAmount }}</td>
-						<td>{{ buyer.pictureName }}</td>
+						<td>{{ buyer.email }}</td>
+						<td>{{ buyer.logoFilename }}</td>
 						<router-link v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
             <a href="#" @click="deleteBuyer(buyer._id)">Delete</a>
           </tr>

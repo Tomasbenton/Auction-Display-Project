@@ -3,37 +3,47 @@
     <h1>Add Exhibitor</h1>
       <div class=form>
         <div>
-          <input type=text name=entrySaleNumber placeholder="Entry Sale Number" v-model=entrySaleNumber>
+          <input class="input-field" v-validate="'required|numeric'" type=text name=saleNumber placeholder="Sale Number" v-model=saleNumber>
+          <label class="error-label" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
         </div>
         <div>
-          <input type=text name=fullName placeholder="Full Name" v-model=fullName>
+          <input class="input-field" v-validate="'required|alpha_spaces'" type=text name=fullName placeholder="Full Name" v-model=fullName>
+          <label class="error-label" for="fullName" >{{ errors.first('fullName') }}</label> 
         </div>
         <div>
-          <input type=text name=tag placeholder="Tag" v-model=tag>
+          <input class="input-field" v-validate="'required'" type=text name=tag placeholder="Tag" v-model=tag>
+          <label class="error-label" for="tag" >{{ errors.first('tag') }}</label>
         </div>
         <div>
-          <input type=text name=animalDescription placeholder="Animal Description" v-model=animalDescription>
+          <input class="input-field" v-validate="'required|alpha'" type=text name=species placeholder="Species" v-model=species>
+          <label class="error-label" for="species" >{{ errors.first('species') }}</label>
         </div>
         <div>
-          <input type=text name=checkInWeight placeholder="Check-In Weight" v-model=checkInWeight>
+          <input class="input-field" v-validate="''" type=text name=animalDescription placeholder="Animal Description" v-model=animalDescription>
+          <label class="error-label" for="animalDescription" >{{ errors.first('animalDescription') }}</label>
         </div>
         <div>
-          <input type=text name=className placeholder="Class Name" v-model=className>
+          <input class="input-field" v-validate="'required|decimal'" type=text name=checkInWeight placeholder="Check-In Weight" v-model=checkInWeight>
+          <label class="error-label" for="checkInWeight" >{{ errors.first('checkInWeight') }}</label>
         </div>
         <div>
-          <input type=text name=departmentName placeholder="Department Name" v-model=departmentName>
+          <input class="input-field" v-validate="''" type=text name=clubName placeholder="Club Name" v-model=clubName>
+          <label class="error-label" for="clubName" >{{ errors.first('clubName') }}</label>
         </div>
         <div>
-          <input type=text name=clubName placeholder="Club Name" v-model=clubName>
+          <input class="input-field" v-validate="'alpha_spaces'" type=text name=showClassName placeholder="Show Class Name" v-model=showClassName>
+          <label class="error-label" for="showClassName" >{{ errors.first('showClassName') }}</label>
         </div>
         <div>
-          <input type=text name=showClassName placeholder="Show Class Name" v-model=showClassName>
+          <input class="input-field" v-validate="''" type=text name=placing placeholder="Placing" v-model=placing>
+          <label class="error-label" for="placing" >{{ errors.first('placing') }}</label>
         </div>
         <div>
-          <input type=text name=pictureName placeholder="Picture File Name" v-model=pictureName>
+          <input class="input-field" v-validate="'numeric'" type=text name=buyback placeholder="Buyback" v-model=buyback>
+          <label class="error-label" for="buyback" >{{ errors.first('buyback') }}</label>
         </div>
         <div>
-          <button class=app_post_btn @click=addExhibitor>Add</button>
+          <button class=app_post_btn @click=validate>Add</button>
           <router-link v-bind:to="{ name: 'Manage' }">
             <button>Return to Manage</button>
           </router-link>
@@ -48,31 +58,37 @@ export default {
   name: 'NewExhibitor',
   data () {
     return {
-      entrySaleNumber: null,
+      saleNumber: null,
       fullName: null,
       tag: null,
+      species: null,
       animalDescription: null,
       checkInWeight: null,
-      className: null,
-      departmentName: null,
       clubName: null,
       showClassName: null,
-      pictureName: null
+      placing: null,
+      buyback: null
     }
   },
   methods: {
+    validate () {
+      this.$validator.validateAll()
+      if (!this.errors.any()) {
+        this.addExhibitor()
+      }
+    },
     async addExhibitor () {
       let newExhibitor = {
-        entrySaleNumber: this.entrySaleNumber,
+        saleNumber: this.saleNumber,
         fullName: this.fullName,
         tag: this.tag,
+        species: this.species,
         animalDescription: this.animalDescription,
         checkInWeight: this.checkInWeight,
-        className: this.className,
-        departmentName: this.departmentName,
         clubName: this.clubName,
         showClassName: this.showClassName,
-        pictureName: this.pictureName
+        placing: this.placing,
+        buyback: this.buyback
       }
       let uri = 'http://localhost:8081/exhibitor/add'
       this.axios.post(uri, newExhibitor).then((response) => {
@@ -82,7 +98,7 @@ export default {
   }
 }
 </script>
-<style type=text/css>
+<style>
 h1 {
  text-align: center;
 }
@@ -99,5 +115,16 @@ h1 {
 .app_post_btn {
   width: 520px;
   border: none;
+}
+.control-label{
+  display: block;
+}
+.error-label{
+  display: block;
+  margin-bottom: 20px;
+  color: red;
+}
+.input-field{
+  margin-bottom:0;
 }
 </style>
