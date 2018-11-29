@@ -226,6 +226,15 @@ button {
 button:hover {
   background-color: #ffffff;
 }
+.logout{
+  background-color: #FF0000;
+  color: #f1f1f1;
+}
+
+.logout:hover{
+  background-color: #f1f1f1;
+  color: #ff0000;
+}
 
 .frame {
   width: 100%;
