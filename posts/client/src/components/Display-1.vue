@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div id="exhibitor">
     <display v-on:length="setIndices" :i="index"></display>
-    
   </div>
 </template>
 
@@ -33,5 +32,5 @@ export default{
   mounted() {
     this.ls_attachListener(this.handleIndex)
   }
-}  
+}
 </script>

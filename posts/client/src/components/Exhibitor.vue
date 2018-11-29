@@ -1,5 +1,5 @@
 <template>
-  <div id="exhibitor">
+  <div>
     <slot :exhibitors="exhibitors"></slot>
   </div>
 </template>

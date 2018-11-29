@@ -15,6 +15,7 @@ export default {
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
+      transition: 0.3s ease;
   }
 
   body{
@@ -23,6 +24,12 @@ export default {
       padding: 0px;
       margin: 0px;
   }
+
+  h1, h2{ color: #339966; }
+
+  h1, h2{ font-family: Lato, Arial, sans-serif; }
+
+  h1{ font-size: 4vw; line-height: 0%; }
 /*
   #home, #admin, #exhibitor, #buyer, form{
     width: 100%;
