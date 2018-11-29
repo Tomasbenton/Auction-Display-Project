@@ -28,8 +28,7 @@ export default {
       if (retVal) {
         this.setAuthenticated(false)
         this.$router.replace({ name: 'Login' })
-      }
-      else {
+      } else {
         this.setAuthenticated(true)
       }
     }
