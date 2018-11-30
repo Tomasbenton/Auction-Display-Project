@@ -6,7 +6,6 @@ import Display from '@/components/Display'
 import Exhibitor from '@/components/Exhibitor'
 import Buyer from '@/components/Buyer'
 import Control from '@/components/Control'
-
 import Manage from '@/components/Manage'
 import ManageExhibitors from '@/components/ManageExhibitors'
 import ManageBuyers from '@/components/ManageBuyers'
@@ -14,6 +13,8 @@ import NewExhibitor from '@/components/NewExhibitor'
 import NewBuyer from '@/components/NewBuyer'
 import EditBuyer from '@/components/EditBuyer'
 import EditExhibitor from '@/components/EditExhibitor'
+import ExhibitorTransaction from '@/components/ExhibitorTransaction'
+import AddonTransaction from '@/components/AddonTransaction'
 
 Vue.use(Router)
 
@@ -90,6 +91,16 @@ export default new Router({
       path: '/control',
       name: 'Control',
       component: Control
+    },
+    {
+      path: '/transaction/exhibitor',
+      name: 'ExhibitorTransaction',
+      component: ExhibitorTransaction
+    },
+    {
+      path: '/transaction/addon',
+      name: 'AddonTransaction',
+      component: AddonTransaction
     }
   ]
 })

@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 const userRoutes = require('../exproutes/user.route');
+require('dotenv').config();
 
 // Express.js
 const app = express()
@@ -18,7 +19,8 @@ app.use('/user', userRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/auctiondb');
+// mongoose.connect('mongodb://localhost:27017/auctiondb');
+mongoose.connect(`mongodb://${process.env.HOST_NAME}:27017/auctiondb`);
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){

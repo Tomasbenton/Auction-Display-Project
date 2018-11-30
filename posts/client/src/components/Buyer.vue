@@ -33,7 +33,8 @@
 
     methods: {
       fetchBuyers() {
-        let uri = 'http://localhost:8081/buyer'
+        // let uri = 'http://localhost:8081/buyer'
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer`
         this.axios.get(uri).then(response => {
           this.buyers = response.data
         })

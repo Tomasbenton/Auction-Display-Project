@@ -7,18 +7,18 @@
 </template>
 
 <script>
+var authenticatedVar = false
 export default {
   name: 'App',
   data() {
     return {
-      authenticated: false,
+      authenticated: authenticatedVar,
       users: []
     }
   },
 
   created: function() {
       this.fetchUsers()
-      this.getUserByName("Test")
   },
 
   mounted() {
@@ -31,11 +31,9 @@ export default {
     setAuthenticated(status) {
       this.authenticated = status
     },
-    logout() {
-      this.authenticated = false
-    },
     fetchUsers() {
-        let uri = 'http://localhost:8081/user'
+      // let uri = 'http://localhost:8081/user'
+        let uri = `http://${process.env.HOST_NAME}:8081/user`
         this.axios.get(uri).then(response => {
           this.users = response.data
         })
@@ -104,6 +102,12 @@ form {
 .logo {
   width: 150px;
   height: auto;
+  margin-top: 50px;
+}
+
+.logo2 {
+  width: auto;
+  height: 170px;
   margin-top: 50px;
 }
 
@@ -221,6 +225,15 @@ button {
 }
 button:hover {
   background-color: #ffffff;
+}
+.logout{
+  background-color: #FF0000;
+  color: #f1f1f1;
+}
+
+.logout:hover{
+  background-color: #f1f1f1;
+  color: #ff0000;
 }
 
 .frame {

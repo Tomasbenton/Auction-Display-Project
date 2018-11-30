@@ -53,13 +53,15 @@
 
     methods: {
       fetchBuyers() {
-        let uri = 'http://localhost:8081/buyer'
+        // let uri = 'http://localhost:8081/buyer'
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer`
         this.axios.get(uri).then(response => {
           this.buyers = response.data
         })
       },
 			async deleteBuyer (id) {
-				let uri = 'http://localhost:8081/buyer/' + id
+        // let uri = 'http://localhost:8081/buyer/' + id
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + id
 	      await this.axios.delete(uri).then((response) => {
 	        console.log(response)
 	      })
@@ -67,11 +69,13 @@
 	      this.$router.push({ name: 'Manage' })
     },
 		async deleteAll() {
-			let uri = 'http://localhost:8081/buyer/'
+      // let uri = 'http://localhost:8081/buyer/'
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer/`
 			var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
 			if (delCheck) {
         for (var i = 0; i < this.buyers.length; i++) {
-					uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
+          // uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
+          uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.buyers[i]._id
 					this.axios.delete(uri).then((response) => {
 						console.log(response)
 					})

@@ -24,16 +24,18 @@ export default {
       }
     }
   },
+
+  beforeCreate() {
+    this.$parent.authenticated = false
+  },
+
   methods: {
     login() {
       if (this.input.username != "" && this.input.password != "") {
         var user = this.$parent.getUserByName(this.input.username)
-        if (
-          typeof user !== "undefined" &&
-          this.input.username.toLowerCase() == user.username.toLowerCase() &&
-          this.input.password == user.password
-        ) {
+        if (typeof user !== "undefined" && this.input.username.toLowerCase() == user.username.toLowerCase() && this.input.password == user.password) {
           this.$emit("authenticated", true)
+          this.$parent.authenticated = true
           this.$router.replace({ name: "Admin" })
         } else {
           console.log("Username or password is incorrect")
