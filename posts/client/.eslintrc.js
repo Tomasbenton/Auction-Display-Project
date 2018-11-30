@@ -32,6 +32,16 @@ module.exports = {
     // allow trailing spaces
     'no-trailing-spaces': 'off',
     // allow no space before function parenthesis
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    // allow mixed spaced and tabs
+    'no-mixed-spaces-and-tabs': 'off',
+    // give up on trying to standardize indentation
+    'indent': 'off',
+    // allow ==
+    'eqeqeq': 'off',
+    // allow single and double quotes
+    'quotes': 'off',
+    // allow curly brackets where they belong
+    'brace-style': 'off'
   }
 }

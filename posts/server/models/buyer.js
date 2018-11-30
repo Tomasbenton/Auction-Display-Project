@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var BuyerSchema = new Schema({
-  type: String,
-  businessName: String,
-  firstName: String,
-  lastName: String,
+  entrySaleNumber: Number,
+  name: String,
+  identifier: Number,
+  contactName: String,
+  email: String,
+  phone: String,
+  address1: String,
+  address2: String,
+  cityStatePostalCode: String,
+  pictureName: String,
   purchaseAmount: Number,
-  logoImage: String
+  type: String
 },{
     collection: 'Buyer'
 });

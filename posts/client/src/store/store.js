@@ -1,34 +1,41 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { NEW_INDEX, DECREMENTED, INCREMENTED } from './mutation-constants'
+import { INDEX, DECREMENTED_INDEX, INCREMENTED_INDEX, AUTHENTICATED } from './mutation-constants'
 
 Vue.use(Vuex)
 
 const state = {
-  index: 0
+  index: 0,
+  authenticated: false
 }
 
 const mutations = {
-  [NEW_INDEX] (state, index) {
+  [INDEX] (state, index) {
     state.index = index
   },
-  [DECREMENTED] (state) {
+  [DECREMENTED_INDEX] (state) {
     state.index--
   },
-  [INCREMENTED] (state) {
+  [INCREMENTED_INDEX] (state) {
     state.index++
+  },
+  [AUTHENTICATED] (state) {
+    state.authenticated = true
   }
 }
 
 const actions = {
   setIndex ({commit}, index) {
-    commit(NEW_INDEX, index)
+    commit(INDEX, index)
   },
   decrementIndex({commit}) {
-    commit(DECREMENTED)
+    commit(DECREMENTED_INDEX)
   },
   incrementIndex({commit}) {
-    commit(INCREMENTED)
+    commit(INCREMENTED_INDEX)
+  },
+  authenticated({commit}) {
+    commit(AUTHENTICATED)
   }
 }
 

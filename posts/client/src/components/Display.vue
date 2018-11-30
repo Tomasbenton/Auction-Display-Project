@@ -14,30 +14,15 @@
 </template>
 
 <script>
-import Exhibitor from './Exhibitor.vue'
-export default {
-  components: {
-    'exhibitors': Exhibitor
-  },
-  props: ['i'],
-  data: () => ({
-    exhibitorsLength: null
-  }),
-  methods: {
-    setLength(e) {
-      this.exhibitorsLength = e
-      this.$emit('length', this.exhibitorsLength)
-    },
-    getImgUrl: function(pic) {
-      return require('../assets/' + pic)
-    }
-  },
-  computed: {
-    index () {
-      return this.$store.state.index
+  import Exhibitor from './Exhibitor.vue'
+  import Buyer from './Buyer.vue'
+
+  export default {
+    components: {
+      'exhibitor': Exhibitor,
+      'buyer': Buyer
     }
   }
-}
 </script>
 
 <style scoped>

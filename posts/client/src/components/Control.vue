@@ -1,9 +1,9 @@
 <template>
   <div id="control">
     <div class="displays">
-      <div class="other_display" @click="previous"><display v-on:length="setIndices" :i="prevIndex"></display></div>
-      <div class="main_display"><display v-on:length="setIndices" :i="index"></display></div>
-      <div class="other_display" @click="next"><display v-on:length="setIndices" :i="nextIndex"></display></div>
+      <div class="other_display" @click="previous"><display v-on:length="setIndexLimit" :i="prevIndex"></display></div>
+      <div class="main_display"><display v-on:length="setIndexLimit" :i="index"></display></div>
+      <div class="other_display" @click="next"><display v-on:length="setIndexLimit" :i="nextIndex"></display></div>
     </div>
     <div class="controls"><button class="prev_btn" @click="previous">Previous</button>
     <button class="next_btn" @click="next">Next</button></div>
@@ -51,31 +51,32 @@ export default{
       else this.nextIndex++
       this.ls_setIndex(this.index)
     },
-    setIndices(e) {
-      this.indexLimit = e
-    },
-    handleIndex() {
-      this.setIndex(this.ls_getIndex())
-    },
+      setIndexLimit(e) {
+        this.indexLimit = e
+      },
+      handleIndex() {
+        this.setIndex(this.ls_getIndex())
+      }
     ...mapActions(['setIndex', 'decrementIndex', 'incrementIndex'])
-  },
-  mounted() {
-    this.ls_attachListener(this.handleIndex)
-    this.setIndex(this.ls_getIndex())
-    if (this.index === 0) {
-      this.prevIndex = this.indexLimit - 1
-      this.nextIndex = this.index + 1
-    }
-    if (this.index === (this.indexLimit - 1)) {
-      this.prevIndex = this.index - 1
-      this.nextIndex = 0
-    }
-    if (this.prevIndex === this.nextIndex) {
-      this.prevIndex = this.index - 1
-      this.nextIndex = this.index + 1
+    },
+    mounted() {
+      this.ls_attachListener(this.handleIndex)
+      if (this.ls_getIndex()) {
+        if (this.index === 0) {
+          this.prevIndex = this.indexLimit - 1
+          this.nextIndex = this.index + 1
+        }
+      if (this.index === (this.indexLimit - 1)) {
+        this.prevIndex = this.index - 1
+        this.nextIndex = 0
+      }
+      if (this.prevIndex === this.nextIndex) {
+        this.prevIndex = this.index - 1
+        this.nextIndex = this.index + 1
+      }
     }
   }
-}  
+}
 </script>
 
 <style>
@@ -140,55 +141,4 @@ export default{
   .other_display #display .image{
     width: 25vw;
   }
-
-  /*#control{
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .displays{
-    float: left;
-    overflow: hidden;
-    height: 80vh;
-  }
-
-  .main_display{
-    width: 50%;
-    float: left;
-    overflow: hidden;
-  }
-
-  .other_display{
-    height: 50vh;
-    width: 25%;
-    float: left;
-    opacity: 0.7;
-    z-index: -1;
-    position: relative;
-  }
-
-  .other_display:hover{
-    opacity: 1;
-  }
-
-  button{
-    width: 200px;
-    height: 40px;
-    margin: 0px 50px;
-  }
-
-  button{ background-color: #339966; }
-
-  h1, h2{ color: #339966; }
-  button{ color: #ffffff; }
-
-  h1, h2{ font-family: 'Open Sans', Arial, sans-serif; }
-
-  button{ border: none; }
-
-  .controls{
-    display: block;
-    width: 100vw;
-    text-align: center;
-  }*/
 </style>

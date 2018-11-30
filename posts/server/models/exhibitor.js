@@ -2,13 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var ExhibitorSchema = new Schema({
-  saleNum: Number,
-  tagNum: Number,
-  firstName: String,
-  lastName: String,
-  species: String,
-  fairWeight: Number,
-  clubName: String
+  entrySaleNumber: Number,
+  fullName: String,
+  tag: String,
+  animalDescription: String,
+  checkInWeight: Number,
+  className: String,
+  departmentName: String,
+  clubName: String,
+  showClassName: String,
+  pictureName: String
 },{
     collection: 'Exhibitor'
 });
