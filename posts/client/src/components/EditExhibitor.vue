@@ -71,7 +71,8 @@ export default {
   },
   methods: {
     async getExhibitor () {
-      let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
+      // let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
+      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + this.$route.params.id
       await this.axios.get(uri).then(response => {
       this.saleNumber = response.saleNumber
       this.fullName = response.fullName
@@ -105,7 +106,8 @@ export default {
         placing: this.placing,
         buyback: this.buyback
       }
-      let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
+      // let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
+      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + this.$route.params.id
       await this.axios.put(uri, updatedExhibitor).then((response) => {
         console.log(response)
       })

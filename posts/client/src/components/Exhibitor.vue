@@ -24,8 +24,8 @@
 
     methods: {
       fetchExhibitors() {
-        let uri = 'http://localhost:8081/exhibitor'
-        // let uri = 'http://192.168.21.105:8081/exhibitor'
+        // let uri = 'http://localhost:8081/exhibitor'
+        let uri = `http://${process.env.HOST_NAME}:8081/exhibitor`
         this.axios.get(uri).then(response => {
           this.exhibitors = response.data
         })
