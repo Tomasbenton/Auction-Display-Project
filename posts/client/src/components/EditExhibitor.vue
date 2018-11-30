@@ -92,7 +92,6 @@ export default {
       }
     },
     async updatePost () {
-      
       let updatedExhibitor = {
         id: this.$route.params.id,
         saleNumber: this.saleNumber,
