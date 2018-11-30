@@ -62,15 +62,15 @@ export default{
   mounted() {
     this.ls_attachListener(this.handleIndex)
     this.setIndex(this.ls_getIndex())
-    if(this.index === 0){
+    if (this.index === 0) {
       this.prevIndex = this.indexLimit - 1
       this.nextIndex = this.index + 1
     }
-    if (this.index === (this.indexLimit - 1)){
+    if (this.index === (this.indexLimit - 1)) {
       this.prevIndex = this.index - 1
       this.nextIndex = 0
     }
-    if (this.prevIndex === this.nextIndex){
+    if (this.prevIndex === this.nextIndex) {
       this.prevIndex = this.index - 1
       this.nextIndex = this.index + 1
     }
