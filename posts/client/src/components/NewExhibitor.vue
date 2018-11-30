@@ -90,7 +90,8 @@ export default {
         placing: this.placing,
         buyback: this.buyback
       }
-      let uri = 'http://localhost:8081/exhibitor/add'
+      // let uri = 'http://localhost:8081/exhibitor/add'
+      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/add`
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
       })

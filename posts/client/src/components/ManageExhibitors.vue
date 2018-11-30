@@ -58,13 +58,15 @@ Exhibitor<template>
 
     methods: {
       fetchExhibitors() {
-        let uri = 'http://localhost:8081/exhibitor'
+				// let uri = 'http://localhost:8081/exhibitor'
+				let uri = `http://${process.env.HOST_NAME}:8081/exhibitor`
         this.axios.get(uri).then(response => {
           this.exhibitors = response.data
         })
       },
 			async deleteExhibitor (id) {
-				let uri = 'http://localhost:8081/exhibitor/' + id
+				// let uri = 'http://localhost:8081/exhibitor/' + id
+				let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + id
 	      await this.axios.delete(uri).then((response) => {
 	        console.log(response)
 	      })
@@ -72,11 +74,13 @@ Exhibitor<template>
 	      this.$router.push({ name: 'Manage' })
     	},
 			deleteAll() {
-				let uri = 'http://localhost:8081/exhibitor/'
+				// let uri = 'http://localhost:8081/exhibitor/'
+				let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/`
 				var delCheck = confirm("Are you sure you want to delete ALL Exhibitors?")
 				if (delCheck) {
 	        for (var i = 0; i < this.exhibitors.length; i++) {
-						uri = 'http://localhost:8081/exhibitor/' + this.exhibitors[i]._id
+						// uri = 'http://localhost:8081/exhibitor/' + this.exhibitors[i]._id
+						uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + this.exhibitors[i]._id
 						this.axios.delete(uri).then((response) => {
 							console.log(response)
 						})

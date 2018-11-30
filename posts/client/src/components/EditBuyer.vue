@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     async getBuyer () {
-      let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
+      // let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.$route.params.id
       await this.axios.get(uri).then(response => {
       this.bidderNumber = response.bidderNumber
       this.name = response.name
@@ -77,7 +78,8 @@ export default {
         email: this.email,
         logoFilename: this.logoFilename
       }
-      let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
+      // let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.$route.params.id
       await this.axios.put(uri, updatedBuyer).then((response) => {
         console.log(response)
       })
