@@ -26,7 +26,7 @@ export default {
   },
 
   beforeCreate() {
-    this.$parent.authenticated = false
+    this.$parent.authenticated = true
   },
 
   methods: {

@@ -56,26 +56,26 @@ export default{
       },
       handleIndex() {
         this.setIndex(this.ls_getIndex())
-      },
-      ...mapActions(['setIndex', 'decrementIndex', 'incrementIndex'])
+      }
     },
-  mounted() {
-    this.ls_attachListener(this.handleIndex)
-    if (this.ls_getIndex()){
-      if(this.index === 0){
-        this.prevIndex = this.indexLimit - 1
+    mounted() {
+      this.ls_attachListener(this.handleIndex)
+      if (this.ls_getIndex()) {
+        if (this.index === 0) {
+          this.prevIndex = this.indexLimit - 1
+          this.nextIndex = this.index + 1
+        }
+      if (this.index === (this.indexLimit - 1)) {
+        this.prevIndex = this.index - 1
+        this.nextIndex = 0
+      }
+      if (this.prevIndex === this.nextIndex) {
+        this.prevIndex = this.index - 1
         this.nextIndex = this.index + 1
       }
-    if (this.index === (this.indexLimit - 1)){
-      this.prevIndex = this.index - 1
-      this.nextIndex = 0
     }
-    if (this.prevIndex === this.nextIndex){
-      this.prevIndex = this.index - 1
-      this.nextIndex = this.index + 1
-    }
-  }
-}
+  },
+  ...mapActions(['setIndex', 'decrementIndex', 'incrementIndex'])
 }  
 </script>
 

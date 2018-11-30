@@ -2,49 +2,55 @@
   <div id='app'>
         <div id='nav'>
         </div>
-        <router-view @authenticated="setAuthenticated" />
+        <router-view />
   </div>
 </template>
 
 <script>
-var authenticatedVar = false
-export default {
-  name: 'App',
-  data() {
-    return {
-      authenticated: authenticatedVar,
-      users: []
-    }
-  },
-
-  created: function() {
-      this.fetchUsers()
-  },
-
-  mounted() {
-    if (!this.authenticated) {
-      this.$router.replace({ name: 'Login' })
-    }
-  },
-
-  methods: {
-    setAuthenticated(status) {
-      this.authenticated = status
+import {mapState, mapActions} from 'vuex'
+import {localStorageMixin} from './store/local-storage-mixin'
+  export default {
+    name: 'App',
+    computed: {
+      ...mapState({
+        authenticated: state => state.authenticated
+      })
     },
-    fetchUsers() {
-      let uri = 'http://localhost:8081/user'
-        // let uri = 'http://192.168.21.105:8081/user'
-        this.axios.get(uri).then(response => {
-          this.users = response.data
-        })
+    mixins: [localStorageMixin],
+    data() {
+      return {
+        authenticated: true,
+        users: []
+      }
     },
-    getUserByName(name) {
-      // users is array of objects, this mapping searches for index of object with matching username
-      var index = this.users.map(function(e) { return e.username.toLowerCase() }).indexOf(name.toLowerCase())
-      return this.users[index]
-    }
+    created: function() {
+        this.fetchUsers()
+    },
+
+    mounted() {
+      if (this.ls_getIndex() === false) {
+
+      }
+    },
+    methods: {
+      authenticated() {
+        this.authenticated()
+      },
+      fetchUsers() {
+        let uri = 'http://localhost:8081/user'
+          // let uri = 'http://192.168.21.105:8081/user'
+          this.axios.get(uri).then(response => {
+            this.users = response.data
+          })
+      },
+      getUserByName(name) {
+        // users is array of objects, this mapping searches for index of object with matching username
+        var index = this.users.map(function(e) { return e.username.toLowerCase() }).indexOf(name.toLowerCase())
+        return this.users[index]
+      }
+    },
+    ...mapActions([ 'authenticated' ])
   }
-}
 </script>
 
 <style>
