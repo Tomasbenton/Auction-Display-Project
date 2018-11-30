@@ -41,16 +41,16 @@ exhibitorRoutes.route('/:id').put((req, res) => {
     if (!exhibitor)
       return next(new Error('Error getting the exhibitor!'));
     else {
-      exhibitor.entrySaleNumber = req.body.entrySaleNumber;
+      exhibitor.saleNumber = req.body.saleNumber;
       exhibitor.fullName = req.body.fullName;
       exhibitor.tag = req.body.tag;
+      exhibitor.species = req.body.species;
       exhibitor.animalDescription = req.body.animalDescription;
       exhibitor.checkInWeight = req.body.checkInWeight;
-      exhibitor.className = req.body.className;
-      exhibitor.departmentName = req.body.departmentName;
       exhibitor.clubName = req.body.clubName;
       exhibitor.showClassName = req.body.showClassName;
-      exhibitor.pictureName = req.body.pictureName;
+      exhibitor.placing = req.body.placing;
+      exhibitor.buyback = req.body.buyback;
       exhibitor.save().then( exhibitor => {
           res.json('Exhibitor updated successfully');
       })
