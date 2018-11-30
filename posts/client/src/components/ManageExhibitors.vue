@@ -1,13 +1,13 @@
 Exhibitor<template>
 	<div id="exhibitors">
+	<h2>Exhibitors</h2>
 		<div id="control">
-			<h2>Exhibitors</h2>
         	<input type="text" placeholder="Search tag #">
-        	<button>Submit</button>
         	<router-link v-bind:to="{ name: 'NewExhibitor' }">
           	<button class="add">Add</button>
         	</router-link>
 					<button @click=deleteAll()>Delete All Exhibitors</button>
+					<button>Import/Export</button>
 		</div>
     <div>
     	<table>
@@ -90,13 +90,16 @@ Exhibitor<template>
   }
 </script>
 
-<style>
+<style scoped>
 		#control {
 				margin: 20px;
 				text-align: center;
 		}
 		h2 {
 				text-align: center;
+		}
+		button {
+				float: right;
 		}
 		table{
 				width: 95%;
@@ -114,6 +117,7 @@ Exhibitor<template>
     button, input{
         display: inline-block;
         height: 40px;
+				margin: 10px;
     }
 
     input{

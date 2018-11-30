@@ -3,7 +3,7 @@ const exhibitorRoutes = express.Router()
 
 const Exhibitor = require('../models/Exhibitor')
 
-// Add a exhibitor
+// Add an exhibitor
 exhibitorRoutes.route('/add').post(function (req, res) {
     var exhibitor = new Exhibitor(req.body)
     exhibitor.save()
