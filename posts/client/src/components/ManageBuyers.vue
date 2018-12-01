@@ -8,6 +8,7 @@
           <button class="add">Add</button>
         </router-link>
 				<button @click=deleteAll()>Delete All Buyers</button>
+				<button @click=getCsvReport()>Export</button>
 		</div>
         <div>
         <table>
@@ -82,6 +83,49 @@
 				this.fetchBuyers()
 	      this.$router.push({ name: 'Manage' })
       }
+		},
+		async getCsvReport() {
+		  const jsonUrl = `http://${process.env.HOST_NAME}:8081/buyer/`
+		  const res = await fetch(jsonUrl)
+		  const json = await res.json()
+
+		  const data = json.map(row => ({
+		    bidderNumber: row.bidderNumber,
+		    name: row.name,
+		    contactName: row.contactName,
+		    phone: row.phone,
+		    email: row.email,
+		    logoFilename: row.logoFilename
+		  }))
+		  const csvData = this.objectToCsv(data)
+		  this.download(csvData)
+		},
+		objectToCsv (data) {
+		  const csvRows = []
+
+		  const headers = Object.keys(data[0])
+		  csvRows.push(headers.join(','))
+
+		  for (const row of data) {
+		    const values = headers.map(header => {
+		      const escaped = ('' + row[header]).replace(/"/g, '\\"')
+		      return `"${escaped}"`
+		    })
+		    csvRows.push(values.join(','))
+		  };
+
+		  return csvRows.join('\n')
+		},
+		download(data) {
+		  const blob = new Blob([data], { type: 'text/csv' })
+		  const url = window.URL.createObjectURL(blob)
+		  const a = document.createElement('a')
+		  a.setAttribute('hidden', '')
+		  a.setAttribute('href', url)
+		  a.setAttribute('download', 'buyerData.csv')
+		  document.body.appendChild(a)
+		  a.click()
+		  document.body.removeChild(a)
 		}
   }
 }
