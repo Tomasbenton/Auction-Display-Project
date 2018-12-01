@@ -21,10 +21,15 @@
 
 <style scoped>
   #ExhibitorTransaction{
-    width: 100%;
+    width: 450px;
     height: 100%;
+    margin: 0 auto;
     margin-top: 100px;
     text-align: center;
+  }
+
+  h1{
+    text-align: left;
   }
 
   form{
@@ -33,17 +38,17 @@
     color: #339966;
   }
 
+  input{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+  }
+
   button{
     display: block;
     margin-left: auto;
-    border-radius: 0;
     padding: 5px 10px;
     width: 100px;
     height: 40px;
-  }
-
-  input{
-    padding: 0px 10px;
-    color: #;
   }
 </style>

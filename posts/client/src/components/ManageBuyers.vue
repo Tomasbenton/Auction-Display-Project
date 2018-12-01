@@ -1,39 +1,36 @@
 <template>
-	<div id="buyers">
-		<div id="control">
-				<h2>Buyers</h2>
-        <input type="text" placeholder="Search tag #">
-        <button>Submit</button>
-        <router-link v-bind:to="{ name: 'NewBuyer' }">
-          <button class="add">Add</button>
-        </router-link>
-				<button @click=deleteAll()>Delete All Buyers</button>
-				<button @click=getCsvReport()>Export</button>
-		</div>
-        <div>
-        <table>
-          <tr>
-						<td><strong>Bidder Number</strong></td>
-						<td><strong>Name</strong></td>
-						<td><strong>Contact Name</strong></td>
-						<td><strong>Phone</strong></td>
-						<td><strong>Email</strong></td>
-						<td><strong>Logo Filename</strong></td>
-          </tr>
-					<tr v-for="buyer in buyers" :key="buyer._id">
-            <td>{{ buyer.bidderNumber }}</td>
-						<td>{{ buyer.name }}</td>
-						<td>{{ buyer.contactName }}</td>
-						<td>{{ buyer.phone }}</td>
-						<td>{{ buyer.email }}</td>
-						<td>{{ buyer.logoFilename }}</td>
-						<router-link v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
-            <a href="#" @click="deleteBuyer(buyer._id)">Delete</a>
-          </tr>
-				</table>
-
-        </div>
-	</div>
+  <div id="manageBuyers">
+    <div id="control">
+      <h1>Buyers</h1>
+      <!--<input type="text" placeholder="Search tag #">
+      <button>Submit</button>-->
+      <router-link v-bind:to="{ name: 'NewBuyer' }">
+        <button class="add">Add</button>
+      </router-link>
+      <button @click=deleteAll()>Delete All Buyers</button>
+      <button @click=getCsvReport()>Export All Data</button>
+    </div>
+    <table class="dataTable">
+      <tr>
+        <td><strong>Bidder Number</strong></td>
+        <td><strong>Name</strong></td>
+        <td><strong>Contact Name</strong></td>
+        <td><strong>Phone</strong></td>
+        <td><strong>Email</strong></td>
+        <td><strong>Logo Filename</strong></td>
+      </tr>
+      <tr v-for="buyer in buyers" :key="buyer._id">
+        <td>{{ buyer.bidderNumber }}</td>
+        <td>{{ buyer.name }}</td>
+        <td>{{ buyer.contactName }}</td>
+        <td>{{ buyer.phone }}</td>
+        <td>{{ buyer.email }}</td>
+        <td>{{ buyer.logoFilename }}</td>
+        <router-link class="link" v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
+        <a class="link" @click="deleteBuyer(buyer._id)">Delete</a>
+      </tr>
+    </table>
+  </div>
 
 </template>
 
@@ -43,7 +40,7 @@
     data() {
       return {
         buyers: [],
-				index: 0
+        index: 0
       }
     },
 
@@ -59,119 +56,120 @@
           this.buyers = response.data
         })
       },
-			async deleteBuyer (id) {
+      async deleteBuyer (id) {
         // let uri = 'http://localhost:8081/buyer/' + id
         let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + id
-	      await this.axios.delete(uri).then((response) => {
-	        console.log(response)
-	      })
-	      this.fetchBuyers()
-	      this.$router.push({ name: 'Manage' })
+        await this.axios.delete(uri).then((response) => {
+          console.log(response)
+        })
+        this.fetchBuyers()
+        this.$router.push({ name: 'Manage' })
     },
-		async deleteAll() {
+    async deleteAll() {
       // let uri = 'http://localhost:8081/buyer/'
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/`
-			var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
-			if (delCheck) {
+      var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
+      if (delCheck) {
         for (var i = 0; i < this.buyers.length; i++) {
           // uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
           uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.buyers[i]._id
-					this.axios.delete(uri).then((response) => {
-						console.log(response)
-					})
-				}
-				this.fetchBuyers()
-	      this.$router.push({ name: 'Manage' })
+          this.axios.delete(uri).then((response) => {
+            console.log(response)
+          })
+        }
+        this.fetchBuyers()
+        this.$router.push({ name: 'Manage' })
       }
-		},
-		async getCsvReport() {
-		  const jsonUrl = `http://${process.env.HOST_NAME}:8081/buyer/`
-		  const res = await fetch(jsonUrl)
-		  const json = await res.json()
+    },
+    async getCsvReport() {
+      const jsonUrl = `http://${process.env.HOST_NAME}:8081/buyer/`
+      const res = await fetch(jsonUrl)
+      const json = await res.json()
 
-		  const data = json.map(row => ({
-		    bidderNumber: row.bidderNumber,
-		    name: row.name,
-		    contactName: row.contactName,
-		    phone: row.phone,
-		    email: row.email,
-		    logoFilename: row.logoFilename
-		  }))
-		  const csvData = this.objectToCsv(data)
-		  this.download(csvData)
-		},
-		objectToCsv (data) {
-		  const csvRows = []
+      const data = json.map(row => ({
+        bidderNumber: row.bidderNumber,
+        name: row.name,
+        contactName: row.contactName,
+        phone: row.phone,
+        email: row.email,
+        logoFilename: row.logoFilename
+      }))
+      const csvData = this.objectToCsv(data)
+      this.download(csvData)
+    },
+    objectToCsv (data) {
+      const csvRows = []
 
-		  const headers = Object.keys(data[0])
-		  csvRows.push(headers.join(','))
+      const headers = Object.keys(data[0])
+      csvRows.push(headers.join(','))
 
-		  for (const row of data) {
-		    const values = headers.map(header => {
-		      const escaped = ('' + row[header]).replace(/"/g, '\\"')
-		      return `"${escaped}"`
-		    })
-		    csvRows.push(values.join(','))
-		  };
+      for (const row of data) {
+        const values = headers.map(header => {
+          const escaped = ('' + row[header]).replace(/"/g, '\\"')
+          return `"${escaped}"`
+        })
+        csvRows.push(values.join(','))
+      };
 
-		  return csvRows.join('\n')
-		},
-		download(data) {
-		  const blob = new Blob([data], { type: 'text/csv' })
-		  const url = window.URL.createObjectURL(blob)
-		  const a = document.createElement('a')
-		  a.setAttribute('hidden', '')
-		  a.setAttribute('href', url)
-		  a.setAttribute('download', 'buyerData.csv')
-		  document.body.appendChild(a)
-		  a.click()
-		  document.body.removeChild(a)
-		}
+      return csvRows.join('\n')
+    },
+    download(data) {
+      const blob = new Blob([data], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.setAttribute('hidden', '')
+      a.setAttribute('href', url)
+      a.setAttribute('download', 'buyerData.csv')
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+    }
   }
 }
 </script>
 
-<style>
-		#control {
-				margin: 20px;
-				text-align: center;
-		}
+<style scoped>
+  button{
+    width: 200px;
+    height: 60px;
+    background-color: #f1f1f1;
+    color: #339966;
+    border: none;
+    margin: 2px;
+  }
 
-		table{
-				width: 95%;
-				background-color: #e8e8e8;
-				margin: auto;
-				margin: 10px auto;
-				padding: 10px 10px;
-				border-radius: 10px;
-		}
+  button:hover{
+    background-color: #339966;
+    color: #f1f1f1;
+  }
 
-		td{
-      width: 9.09%;
-		}
+  #control{
+    text-align: left;
+    display: block;
+    margin: 0 auto;
+  }
 
-    button, input{
-        display: inline-block;
-        height: 40px;
-    }
+  .dataTable{
+    margin: 15px 0px;
+    padding: 10px 15px;
+    border: 1px solid #339966;
+    color: #404040;
+    width: 100%;
+  }
 
-    input{
-        width: 200px;
-    }
-    .col{
-        display: inline-block;
-        width: 11.11%;
-        text-align: left;
-    }
+  td{
+    margin: 5px 10px;
+    padding: 5px 10px;
+  }
 
-    .row{
-    padding: 10px 5px;
-    }
+  strong{
+    color: #339966;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
 
-    a.add_post_link {
-      padding: 10px 80px;
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: bold;
-		}
+  .link{
+    color: #339966;
+    text-transform: uppercase;
+  }
 </style>
