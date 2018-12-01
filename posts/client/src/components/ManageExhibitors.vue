@@ -1,13 +1,13 @@
-Exhibitor<template>
+<template>
 	<div id="exhibitors">
+	<h2>Exhibitors</h2>
 		<div id="control">
-			<h2>Exhibitors</h2>
         	<input type="text" placeholder="Search tag #">
-        	<button>Submit</button>
         	<router-link v-bind:to="{ name: 'NewExhibitor' }">
           	<button class="add">Add</button>
         	</router-link>
 					<button @click=deleteAll()>Delete All Exhibitors</button>
+					<button @click=getCsvReport()>Export</button>
 		</div>
     <div>
     	<table>
@@ -22,6 +22,7 @@ Exhibitor<template>
 					<td><strong>Show Class Name</strong></td>
 					<td><strong>Placing</strong></td>
 					<td><strong>Buyback</strong></td>
+					<td><strong>Action</strong></td>
       	</tr>
       	<tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
         	<td>{{ exhibitor.saleNumber }}</td>
@@ -88,18 +89,68 @@ Exhibitor<template>
 					this.fetchExhibitors()
 		      this.$router.push({ name: 'Manage' })
 	      }
-			}
+			},
+			async getCsvReport() {
+	      const jsonUrl = `http://${process.env.HOST_NAME}:8081/exhibitor/`
+	      const res = await fetch(jsonUrl)
+	      const json = await res.json()
+
+	      const data = json.map(row => ({
+	        saleNumber: row.saleNumber,
+	        fullName: row.fullName,
+	        tag: row.tag,
+	        species: row.species,
+	        animalDescription: row.animalDescription,
+	        checkInWeight: row.checkInWeight,
+	        clubName: row.clubName,
+	        showClassName: row.showClassName,
+	        placing: row.placing,
+	        buyback: row.buyback
+	      }))
+	      const csvData = this.objectToCsv(data)
+	      this.download(csvData)
+	    },
+	    objectToCsv (data) {
+	      const csvRows = []
+
+	      const headers = Object.keys(data[0])
+	      csvRows.push(headers.join(','))
+
+	      for (const row of data) {
+	        const values = headers.map(header => {
+	          const escaped = ('' + row[header]).replace(/"/g, '\\"')
+	          return `"${escaped}"`
+	        })
+	        csvRows.push(values.join(','))
+	      };
+
+	      return csvRows.join('\n')
+	    },
+	    download(data) {
+	      const blob = new Blob([data], { type: 'text/csv' })
+	      const url = window.URL.createObjectURL(blob)
+	      const a = document.createElement('a')
+	      a.setAttribute('hidden', '')
+	      a.setAttribute('href', url)
+	      a.setAttribute('download', 'exhibitorData.csv')
+	      document.body.appendChild(a)
+	      a.click()
+	      document.body.removeChild(a)
+	    }
     }
   }
 </script>
 
-<style>
+<style scoped>
 		#control {
 				margin: 20px;
 				text-align: center;
 		}
 		h2 {
 				text-align: center;
+		}
+		button {
+				float: right;
 		}
 		table{
 				width: 95%;
@@ -111,12 +162,13 @@ Exhibitor<template>
 		}
 
 		td{
-      width: 12.5%;
+      width: 9.09%;
 		}
 
     button, input{
         display: inline-block;
         height: 40px;
+				margin: 10px;
     }
 
     input{

@@ -8,7 +8,7 @@
         </div>
         <div>
           <input class="input-field" v-validate="'required|alpha_spaces'" type=text name=fullName placeholder="Full Name" v-model=fullName>
-          <label class="error-label" for="fullName" >{{ errors.first('fullName') }}</label> 
+          <label class="error-label" for="fullName" >{{ errors.first('fullName') }}</label>
         </div>
         <div>
           <input class="input-field" v-validate="'required'" type=text name=tag placeholder="Tag" v-model=tag>
