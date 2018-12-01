@@ -91,7 +91,7 @@
 	      }
 			},
 			async getCsvReport() {
-	      const jsonUrl = 'http://localhost:8081/exhibitor/'
+	      const jsonUrl = `http://${process.env.HOST_NAME}:8081/exhibitor/`
 	      const res = await fetch(jsonUrl)
 	      const json = await res.json()
 
