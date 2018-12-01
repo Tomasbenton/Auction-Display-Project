@@ -30,7 +30,7 @@ buyerRoutes.route('/').get(function (req, res) {
 // Fetch single buyer
 buyerRoutes.route('/:id').get((req, res) => {
   var id = req.params.id;
-  Buyer.findById(id, 'entrySaleNumber name identifier contactName email phone address1 address2 cityStatePostalZip pictureName type purchaseAmount', (err, buyer) =>{
+  Buyer.findById(id, (err, buyer) =>{
       res.json(buyer);
   });
 });
@@ -41,18 +41,12 @@ buyerRoutes.route('/:id').put((req, res) => {
     if (!buyer)
       return next(new Error('Error getting the buyer!'));
     else {
-      buyer.entrySaleNumber = req.body.entrySaleNumber;
+      buyer.bidderNumber = req.body.bidderNumber;
       buyer.name = req.body.name;
-      buyer.identifier = req.body.identifier;
       buyer.contactName = req.body.contactName;
-      buyer.email = req.body.email;
       buyer.phone = req.body.phone;
-      buyer.address1 = req.body.address1;
-      buyer.address2 = req.body.address2;
-      buyer.cityStatePostalZip = req.body.cityStatePostalZip;
-      buyer.pictureName = req.body.pictureName;
-      buyer.type = req.body.type;
-      buyer.purchaseAmount = req.body.purchaseAmount;
+      buyer.email = req.body.email;
+      buyer.logoFilename = req.body.logoFilename;
       buyer.save().then( buyer => {
           res.json('Buyer updated successfully');
       })

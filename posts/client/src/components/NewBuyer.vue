@@ -3,43 +3,31 @@
     <h1>Add Buyer</h1>
       <div class=form>
         <div>
-          <input type=text name=entrySaleNumber placeholder="Entry Sale Number" v-model=entrySaleNumber>
+          <input class="input-field" v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
+          <label class="error-label" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
         </div>
         <div>
-          <input type=text name=name placeholder="Name" v-model=name>
+          <input class="input-field" v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
+          <label class="error-label" for="name" >{{ errors.first('name') }}</label>
         </div>
         <div>
-          <input type=text name=identifier placeholder="Identifier" v-model=identifier>
+          <input class="input-field" v-validate="'required|alpha_spaces'" type=text name=contactName placeholder="Contact Name" v-model=contactName>
+          <label class="error-label" for="contactName" >{{ errors.first('contactName') }}</label>
         </div>
         <div>
-          <input type=text name=contactName placeholder="Contact Name" v-model=contactName>
+          <input class="input-field" v-validate="{ required:true, regex:/^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/ }" type=text name=phone placeholder="Phone (555-555-5555)" v-model=phone>
+          <label class="error-label" for="phone" >{{ errors.first('phone') }}</label>
         </div>
         <div>
-          <input type=text name=email placeholder="Email" v-model=email>
+          <input class="input-field" v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
+          <label class="error-label" for="email" >{{ errors.first('email') }}</label>
         </div>
         <div>
-          <input type=text name=phone placeholder="Phone" v-model=phone>
+          <input class="input-field" v-validate="''" type=text name=logoFilename placeholder="Logo Filename" v-model=logoFilename>
+          <label class="error-label" for="logoFilename" >{{ errors.first('logoFilename') }}</label>
         </div>
         <div>
-          <input type=text name=address1 placeholder="Address 1" v-model=address1>
-        </div>
-        <div>
-          <input type=text name=address2 placeholder="Address 2" v-model=address2>
-        </div>
-        <div>
-          <input type=text name=cityStatePostalZip placeholder="City, State PostalZip" v-model=cityStatePostalZip>
-        </div>
-        <div>
-          <input type=text name=pictureName placeholder="Picture Name" v-model=pictureName>
-        </div>
-        <div>
-          <input type=text name=type placeholder="Type" v-model=type>
-        </div>
-        <div>
-          <input type=text name=purchaseAmount placeholder="Purchase Amount" v-model=purchaseAmount>
-        </div>
-        <div>
-          <button class=app_post_btn @click=addBuyer>Add</button>
+          <button class=app_post_btn @click=validate>Add</button>
           <router-link v-bind:to="{ name: 'Manage' }">
             <button>Return to Manage</button>
           </router-link>
@@ -53,37 +41,32 @@ export default {
   name: 'NewBuyer',
   data () {
     return {
-      entrySaleNumber: null,
+      bidderNumber: null,
       name: null,
-      identifier: null,
       contactName: null,
-      email: null,
       phone: null,
-      address1: null,
-      address2: null,
-      cityStatePostalZip: null,
-      pictureName: null,
-      type: null,
-      purchaseAmount: null
+      email: null,
+      logoFilename: null
     }
   },
   methods: {
+    validate () {
+      this.$validator.validateAll()
+      if (!this.errors.any()) {
+        this.addBuyer()
+      }
+    },
     async addBuyer () {
       let newBuyer = {
-        entrySaleNumber: this.entrySaleNumber,
+        bidderNumber: this.bidderNumber,
         name: this.name,
-        identifier: this.identifier,
         contactName: this.contactName,
-        email: this.email,
         phone: this.phone,
-        address1: this.address1,
-        address2: this.address2,
-        cityStatePostalZip: this.cityStatePostalZip,
-        pictureName: this.pictureName,
-        type: this.type,
-        purchaseAmount: this.purchaseAmount
+        email: this.email,
+        logoFilename: this.logoFilename
       }
-      let uri = 'http://localhost:8081/buyer/add'
+      // let uri = 'http://localhost:8081/buyer/add'
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer/add`
       this.axios.post(uri, newBuyer).then((response) => {
         console.log(response)
       })
@@ -104,9 +87,19 @@ h1 {
 .form div {
   text-align: center;
 }
-
 .app_post_btn {
   width: 520px;
   border: none;
+}
+.control-label{
+  display: block;
+}
+.error-label{
+  display: block;
+  margin-bottom: 20px;
+  color: red;
+}
+.input-field{
+  margin-bottom:0;
 }
 </style>
