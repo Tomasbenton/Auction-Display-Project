@@ -1,8 +1,8 @@
 <template>
   <div id='app'>
-        <div id='nav'>
-        </div>
-        <router-view @authenticated="setAuthenticated" />
+    <div id='nav'>
+    </div>
+    <router-view @authenticated="setAuthenticated" />
   </div>
 </template>
 
@@ -55,11 +55,11 @@ export default {
     transition: 0.3s ease;
   }
 
-  #app, body {
+  #app, body, #exhibitorTransaction {
     width: 100%;
     height: 100%;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     font-family: 'Open Sans', Arial, sans-serif;
     font-size: 16px;
   }
@@ -70,7 +70,8 @@ export default {
 
   h1{
     font-family: Lato, Arial, sans-serif;
-    font-size: 35px;
+    text-transform: uppercase;
+    font-size: 24px;
     line-height: 100%;
     color: #339966;
   }
@@ -111,5 +112,10 @@ export default {
     color: #339966;
     text-transform: uppercase;
     cursor: pointer;
+  }
+
+  .dashboardBtn{
+    background-color: #fadc23;
+    color: #339966;
   }
 </style>

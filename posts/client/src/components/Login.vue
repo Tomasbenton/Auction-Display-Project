@@ -60,11 +60,16 @@ export default {
     font-family: 'Open Sans', Arial, sans-serif;
   }
 
+  h1{
+    color: #339966;
+  }
+
   button{
     display: block;
     margin-left: auto;
     padding: 10px 15px;
-    width: 100px;
+    height: 50px;
+    width: 100%;
   }
 
   .errorMsg{
@@ -75,5 +80,7 @@ export default {
 
   input{
     height: 50px;
+    border-bottom:1px solid #339966;
+    font-weight: 600;
   }
 </style>
