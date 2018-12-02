@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #login{
     width: 100%;
     max-width: 400px;
@@ -71,5 +71,9 @@ export default {
     color: #ff0000;
     font-size: 14px;
     float: left;
+  }
+
+  input{
+    height: 50px;
   }
 </style>

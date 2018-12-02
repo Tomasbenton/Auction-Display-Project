@@ -3,9 +3,6 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
-import Exhibitor from '@/components/Exhibitor'
-import Buyer from '@/components/Buyer'
-import Control from '@/components/Control'
 import Manage from '@/components/Manage'
 import ManageExhibitors from '@/components/ManageExhibitors'
 import ManageBuyers from '@/components/ManageBuyers'
@@ -43,16 +40,6 @@ export default new Router({
       component: Display
     },
     {
-      path: '/exhibitor',
-      name: 'Exhibitor',
-      component: Exhibitor
-    },
-    {
-      path: '/buyer',
-      name: 'Buyer',
-      component: Buyer
-    },
-    {
       path: '/manage',
       name: 'Manage',
       component: Manage
@@ -86,11 +73,6 @@ export default new Router({
       path: '/manage/exhibitor/edit',
       name: 'EditExhibitor',
       component: EditExhibitor
-    },
-    {
-      path: '/control',
-      name: 'Control',
-      component: Control
     },
     {
       path: '/transaction/exhibitor',

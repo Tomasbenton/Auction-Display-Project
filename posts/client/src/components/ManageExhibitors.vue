@@ -177,9 +177,4 @@
     font-size: 14px;
     text-transform: uppercase;
   }
-
-  .link{
-    color: #339966;
-    text-transform: uppercase;
-  }
 </style>

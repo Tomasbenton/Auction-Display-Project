@@ -7,7 +7,7 @@
 </template>
 
 <script>
-var authenticatedVar = true
+var authenticatedVar = false
 export default {
   name: 'App',
   data() {
@@ -105,5 +105,11 @@ export default {
   button:hover{
     background-color: #f1f1f1;
     color: #339966;
+  }
+
+  .link{
+    color: #339966;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 </style>
