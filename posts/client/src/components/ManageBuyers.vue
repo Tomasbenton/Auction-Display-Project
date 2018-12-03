@@ -73,12 +73,12 @@
         for (var i = 0; i < this.buyers.length; i++) {
           // uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
           uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.buyers[i]._id
-          this.axios.delete(uri).then((response) => {
-            console.log(response)
-          })
-        }
-        this.fetchBuyers()
-        this.$router.push({ name: 'Manage' })
+					this.axios.delete(uri).then((response) => {
+						console.log(response)
+					})
+				}
+				this.buyers = []
+	      this.$router.push({ name: 'Manage' })
       }
     },
     async getCsvReport() {
