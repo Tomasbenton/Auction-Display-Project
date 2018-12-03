@@ -38,10 +38,21 @@ npm install
 ```
 
 ## Running
-// Start MongoDB (link to install docs for specific OS)
-// cd client npm run dev
-// cd server npm start
-// * Note to run all at once in seperate terminal instances
+To start the web application server:
+* Start MongoDB - see the *Tutorials* section for your specific operating system on the [installation page](https://docs.mongodb.com/manual/installation/) for how to start Mongo. (Run on default port 27017)
+* Start client-side Vue.js server (starts at url [http://localhost:8080/](http://localhost:8080/))
+```bash
+cd posts
+cd client
+npm run dev
+```
+* Start back-end Node.js server
+```bash
+cd posts
+cd server
+npm start
+```
+*Note: You need to run all three servers simultaneously, so you may need to start each in their own respective terminal instances. It is also important to make sure the MongoDB server is started and listenting on port 27017 before attempting to start the Node.js server.
 
 ## Configuration
 // Modify .env files with computer's hostname (recommended) or ip address
