@@ -18,6 +18,7 @@
         <td><strong>Phone</strong></td>
         <td><strong>Email</strong></td>
         <td><strong>Logo Filename</strong></td>
+        <td><strong>Action</strong></td>
       </tr>
       <tr v-for="buyer in buyers" :key="buyer._id">
         <td>{{ buyer.bidderNumber }}</td>
