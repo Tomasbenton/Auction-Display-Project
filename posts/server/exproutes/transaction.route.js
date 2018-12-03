@@ -6,7 +6,7 @@ const Transaction = require('../models/Transaction')
 // Add a transaction
 transactionRoutes.route('/add').post(function (req, res) {
     var transaction = new Transaction(req.body)
-    if (saleNumber && bidderNumber && purchaseAmount && purchaseType) {
+    if (transaction.saleNumber && transaction.bidderNumber && transaction.purchaseAmount && transaction.purchaseType) {
         transaction.save()
         .then(transaction => {
         res.status(200).json({'transaction': 'transaction added successfully'})
