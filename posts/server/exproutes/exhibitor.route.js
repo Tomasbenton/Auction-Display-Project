@@ -6,13 +6,15 @@ const Exhibitor = require('../models/Exhibitor')
 // Add an exhibitor
 exhibitorRoutes.route('/add').post(function (req, res) {
     var exhibitor = new Exhibitor(req.body)
-    exhibitor.save()
-    .then(exhibitor => {
-    res.status(200).json({'exhibitor': 'exhibitor added successfully'})
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database")
-    })
+    if (saleNumber && fullName && tag && species && checkInWeight) {
+        exhibitor.save()
+        .then(exhibitor => {
+        res.status(200).json({'exhibitor': 'exhibitor added successfully'})
+        })
+        .catch(err => {
+        res.status(400).send("unable to save to database")
+        })
+    }
 })
 
 // Fetch all exhibitors

@@ -6,13 +6,15 @@ const Buyer = require('../models/Buyer')
 // Add a buyer
 buyerRoutes.route('/add').post(function (req, res) {
     var buyer = new Buyer(req.body)
-    buyer.save()
-    .then(buyer => {
-    res.status(200).json({'buyer': 'buyer added successfully'})
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database")
-    })
+    if (bidderNumber && name && contactName && phone) {
+        buyer.save()
+        .then(buyer => {
+        res.status(200).json({'buyer': 'buyer added successfully'})
+        })
+        .catch(err => {
+        res.status(400).send("unable to save to database")
+        })
+    }
 })
 
 // Fetch all buyers
