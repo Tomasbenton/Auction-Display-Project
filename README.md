@@ -69,7 +69,7 @@ Once the hostname has been changed properly, other devices on the same local are
 
 ---
 ## Contributors
-// Link to GitHub contributors page
+Here are the awesome [contributors](https://github.com/Cahough/Auction-Display-Project/graphs/contributors) to this project.
 
 ## License
-// Code licensed under the <license>
+Code licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
