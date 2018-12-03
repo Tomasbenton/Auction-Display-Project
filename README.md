@@ -39,7 +39,7 @@ npm install
 
 ## Running
 To start the web application server:
-* Start MongoDB - see the *Tutorials* section for your specific operating system on the [installation page](https://docs.mongodb.com/manual/installation/) for how to start Mongo. (Run on default port 27017)
+* Start MongoDB server - see the *Tutorials* section for your specific operating system on the [installation page](https://docs.mongodb.com/manual/installation/) for how to start Mongo. (Run on default port 27017)
 * Start client-side Vue.js server (starts at url [http://localhost:8080/](http://localhost:8080/))
 ```bash
 cd posts
@@ -55,9 +55,15 @@ npm start
 *Note: You need to run all three servers simultaneously, so you may need to start each in their own respective terminal instances. It is also important to make sure the MongoDB server is started and listenting on port 27017 before attempting to start the Node.js server.
 
 ## Configuration
-// Modify .env files with computer's hostname (recommended) or ip address
-// bash hostname
-// Change username and password in User collection using mongo shell or client such as Compass
+By default, the servers all run on localhost which will not allow other devices on the network to access the web application. You will need to replace the two references to locahost using either the host computer's hostname (recommended) or ip address.
+
+* Get computer's hostname
+```bash
+hostname
+```
+* Replace HOST_NAME value:`"'localhost'"` in `~/posts/client/config/dev.env.js` with your computer's [hostname.local]
+* Replace HOST_NAME value=`localhost` (plain-text) in `~/posts/server/.env` with your computer's [hostname.local]
+* (Recommended) Change/add `username` and `password` in *'User'* collection in database using either Mongo shell or a database client such as [MongoDB Compass](https://www.mongodb.com/products/compass) so that default username and password are not used.
 
 ---
 ## Contributors
