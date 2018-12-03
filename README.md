@@ -11,11 +11,31 @@ Auction Display Project is built using a _**MEVN**_ stack which consists of:
 To learn more about the MEVN stack, and to see the tutorial we used as a foundation for starting this project, click [here](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0).
 
 ## Getting Started
-// Install these on host or vm as primary server (may work in Docker but untested)
-// Install MongoDB (Version xx)
-// Install Node.js (Version xx)
-// Install Vue.js CLI 3 (Version xx)
-// cd client & server --> npm install
+To get started, you will need to download and install MongoDB and Node.js on a host machine or virtual machine for the server. It should also work in a Docker container; however, this has not yet been tested.
+* Install [MongoDB](https://docs.mongodb.com/manual/installation/) (created with version 3.0.15)
+* Install [Node.js](https://nodejs.org/en/download/) (created with version 8.12.0)
+* Install [Vue.js CLI 3](https://cli.vuejs.org/guide/installation.html) (created with version 2.9.6)
+```bash
+npm install -g vue-cli
+```
+* Clone the GitHub repository
+```bash
+git clone https://github.com/Cahough/Auction-Display-Project.git
+```
+* Install node modules for front and back-end servers
+
+Go to client directory and install node modules
+```bash
+cd posts
+cd client
+npm install
+```
+Go to server directory and install node modules
+```bash
+cd posts
+cd server
+npm install
+```
 
 ## Running
 // Start MongoDB (link to install docs for specific OS)
