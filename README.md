@@ -1,5 +1,5 @@
 # Auction Display Project
-Auction Display Project is a project created to help display exhibitor, buyer, addon buyer, and sale information during a county fair auction. The application is comprised of a front-end web application server, a back-end api server, and a database server that can all be run on a host machine inside of a local network. The system is designed to connect with other computers or Raspberry PI or similar devices that act as endpoints for displaying the data on a monitor(s).
+Auction Display Project is a project created to help display exhibitor, buyer, addon buyer, and sale information during a live county fair auction. The application is comprised of a front-end web application server, a back-end API server, and a database server that can all be run on a host machine inside of a local network. The system is designed to connect with other computers or Raspberry PI or similar devices that act as endpoints for displaying the data on a monitor(s).
 
 ## Technologies
 Auction Display Project is built using a _**MEVN**_ stack which consists of:
@@ -64,6 +64,8 @@ hostname
 * Replace HOST_NAME value:`"'localhost'"` in `~/posts/client/config/dev.env.js` with your computer's [hostname.local]
 * Replace HOST_NAME value=`localhost` (plain-text) in `~/posts/server/.env` with your computer's [hostname.local]
 * (Recommended) Change/add `username` and `password` in *'User'* collection in database using either Mongo shell or a database client such as [MongoDB Compass](https://www.mongodb.com/products/compass) so that default username and password are not used.
+
+Once the hostname has been changed properly, other devices on the same local area network will be able to access the web application at the url [http://hostname.local:8080/login](http://hostname.local:8080/login).
 
 ---
 ## Contributors
