@@ -48,7 +48,7 @@ buyerRoutes.route('/:id').put((req, res) => {
       buyer.contactName = req.body.contactName;
       buyer.phone = req.body.phone;
       buyer.email = req.body.email;
-      buyer.logoFilename = req.body.logoFilename;
+      buyer.logoFileName = req.body.logoFileName;
       buyer.save().then( buyer => {
           res.json('Buyer updated successfully');
       })
