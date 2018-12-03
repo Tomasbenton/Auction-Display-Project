@@ -8,12 +8,12 @@
     </router-link>
     <div class="container">
       <h1>Addon Transaction Table</h1>
-      Sale Number: <input type="number" v-validate="required|numeric" name="saleNumber" v-model="saleNumber">
+      Sale Number: <input type="number" min="0" v-validate="required|numeric" name="saleNumber" v-model="saleNumber">
       <p class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</p>
       <button>Enter</button>
-      Bidder Number: <input type="number" v-validate="required|numeric" name="bidderNumber" v-model="bidderNumber">
+      Bidder Number: <input type="number" min="0" v-validate="required|numeric" name="bidderNumber" v-model="bidderNumber">
       <p class="errorLabel">{{ errors.first('bidderNumber') }}</p>
-      Amount: <input type="number" v-validate="required|numeric" name="purchaseAmount" v-model="purchaseAmount">
+      Amount: <input type="number" min="0" v-validate="required|numeric" name="purchaseAmount" v-model="purchaseAmount">
       <p class="errorLabel">{{ errors.first('purchaseAmount') }}</p>
       <button @click="validate">Submit</button>
     </div>

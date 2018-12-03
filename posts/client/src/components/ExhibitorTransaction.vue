@@ -9,14 +9,14 @@
     <main class="container">
       <h1>Exhibitor Transaction Table</h1>
       Sale Number:
-      <input type="number" name="saleNumber" v-model="saleNumber">
+      <input type="number"  min="0" name="saleNumber" v-model="saleNumber">
       <p class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</p>
       <button>Enter</button>
       Bidder Number:
-      <input type="number" name="bidderNumber" v-model="bidderNumber">
+      <input type="number" min="0" name="bidderNumber" v-model="bidderNumber">
       <p class="errorLabel">{{ errors.first('bidderNumber') }}</p>
       Amount:
-      <input type="number" name="purchaseAmount" v-model="purchaseAmount">
+      <input type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
       <p class="errorLabel">{{ errors.first('purchaseAmount' )}}</p>
       <button @click="validate">Submit</button>
     </main>
