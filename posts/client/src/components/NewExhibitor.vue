@@ -98,6 +98,5 @@ export default {
   .errorLabel{
     font-size: 12px;
     color: #ff0000;
-
   }
 </style>

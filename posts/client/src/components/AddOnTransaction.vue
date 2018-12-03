@@ -8,20 +8,23 @@
     </router-link>
     <div class="container">
       <h1>Addon Transaction Table</h1>
-      Sale Number: <input type="number" min="0" v-validate="required|numeric" name="saleNumber" v-model="saleNumber">
-      <p class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</p>
+      Sale Number: 
+      <label class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number" min="0" name="saleNumber" v-model="saleNumber">
       <button>Enter</button>
-      Bidder Number: <input type="number" min="0" v-validate="required|numeric" name="bidderNumber" v-model="bidderNumber">
-      <p class="errorLabel">{{ errors.first('bidderNumber') }}</p>
-      Amount: <input type="number" min="0" v-validate="required|numeric" name="purchaseAmount" v-model="purchaseAmount">
-      <p class="errorLabel">{{ errors.first('purchaseAmount') }}</p>
-      <button @click="validate">Submit</button>
+      Bidder Number: 
+      <label class="errorLabel">{{ errors.first('bidderNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number" min="0" name="bidderNumber" v-model="bidderNumber">
+      Amount:
+      <label class="errorLabel">{{ errors.first('purchaseAmount') }}</label>
+      <input v-validate="'required|numeric'" type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
+      <button @click=validate>Submit</button>
     </div>
   </div>
 </template>
 
 <script>
-  export default{
+  export default {
     name: 'AddonTransaction',
     data () {
       return {
@@ -103,5 +106,10 @@
 
   .arrow{
     font-size: 25px;
+  }
+
+  .errorLabel{
+    font-size: 12px;
+    color: #ff0000;
   }
 </style>
