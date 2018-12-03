@@ -23,8 +23,8 @@
           <input v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
         </div>
         <div>
-          <label class="errorLabel" for="logoFilename" >{{ errors.first('logoFilename') }}</label>
-          <input v-validate="''" type=text name=logoFilename placeholder="Logo Filename" v-model=logoFilename>
+          <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
+          <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
         </div>
         <div>
           <button class=app_post_btn @click=validate>Add</button>
@@ -46,7 +46,7 @@ export default {
       contactName: null,
       phone: null,
       email: null,
-      logoFilename: null
+      logoFileName: null
     }
   },
   methods: {
@@ -63,7 +63,7 @@ export default {
         contactName: this.contactName,
         phone: this.phone,
         email: this.email,
-        logoFilename: this.logoFilename
+        logoFileName: this.logoFileName
       }
       // let uri = 'http://localhost:8081/buyer/add'
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/add`

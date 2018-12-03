@@ -26,7 +26,7 @@
         <td>{{ buyer.contactName }}</td>
         <td>{{ buyer.phone }}</td>
         <td>{{ buyer.email }}</td>
-        <td>{{ buyer.logoFilename }}</td>
+        <td>{{ buyer.logoFileName }}</td>
         <router-link class="link" v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
         <a class="link" @click="deleteBuyer(buyer._id)">Delete</a>
       </tr>
@@ -93,7 +93,7 @@
         contactName: row.contactName,
         phone: row.phone,
         email: row.email,
-        logoFilename: row.logoFilename
+        logoFileName: row.logoFileName
       }))
       const csvData = this.objectToCsv(data)
       this.download(csvData)

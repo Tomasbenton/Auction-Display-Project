@@ -14,7 +14,7 @@ To learn more about the MEVN stack, and to see the tutorial we used as a foundat
 To get started, you will need to download and install MongoDB and Node.js on a host machine or virtual machine for the server. It should also work in a Docker container; however, this has not yet been tested.
 * Install [MongoDB](https://docs.mongodb.com/manual/installation/) (created with version 3.0.15)
 * Install [Node.js](https://nodejs.org/en/download/) (created with version 8.12.0)
-* Install [Vue.js CLI 3](https://cli.vuejs.org/guide/installation.html) (created with version 2.9.6)
+* Install [Vue.js CLI](https://cli.vuejs.org/guide/installation.html) (created with version 2.9.6)
 ```bash
 npm install -g vue-cli
 ```
