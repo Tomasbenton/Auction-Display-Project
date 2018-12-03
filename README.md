@@ -40,7 +40,7 @@ npm install
 ## Getting Running
 To start the web application server:
 * Start MongoDB server - see the *Tutorials* section for your specific operating system on the [installation page](https://docs.mongodb.com/manual/installation/) for how to start Mongo. (Run on default port 27017)
-* Start client-side Vue.js server (starts at url [http://localhost:8080/](http://localhost:8080/))
+* Start client-side Vue.js server (starts at url [http://localhost:8080/](http://localhost:8080/) | default username: Admin password: Password)
 ```bash
 cd posts
 cd client
