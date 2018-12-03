@@ -80,7 +80,7 @@
 						console.log(response)
 					})
 				}
-				this.fetchBuyers()
+				this.buyers = []
 	      this.$router.push({ name: 'Manage' })
       }
 		},

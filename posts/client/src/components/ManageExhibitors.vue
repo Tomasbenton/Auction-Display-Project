@@ -86,7 +86,7 @@
 							console.log(response)
 						})
 					}
-					this.fetchExhibitors()
+					this.exhibitors = []
 		      this.$router.push({ name: 'Manage' })
 	      }
 			},
