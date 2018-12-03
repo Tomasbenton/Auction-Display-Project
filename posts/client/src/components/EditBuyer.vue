@@ -1,34 +1,23 @@
 <template>
-  <div class="buyers">
+  <div id="editBuyer">
     <h1>Edit Buyer</h1>
       <div class=form>
-        <div>
-          <input class="input-field" v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
-          <label class="error-label" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
-        </div>
-        <div>
-          <input class="input-field" v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
-          <label class="error-label" for="name" >{{ errors.first('name') }}</label>
-        </div>
-        <div>
-          <input class="input-field" v-validate="'required|alpha_spaces'" type=text name=contactName placeholder="Contact Name" v-model=contactName>
-          <label class="error-label" for="contactName" >{{ errors.first('contactName') }}</label>
-        </div>
-        <div>
-          <input class="input-field" v-validate="{ required:true, regex:/^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/ }" type=text name=phone placeholder="Phone (555-555-5555)" v-model=phone>
-          <label class="error-label" for="phone" >{{ errors.first('phone') }}</label>
-        </div>
-        <div>
-          <input class="input-field" v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
-          <label class="error-label" for="email" >{{ errors.first('email') }}</label>
-        </div>
-        <div>
-          <input class="input-field" v-validate="''" type=text name=logoFilename placeholder="Logo Filename" v-model=logoFilename>
-          <label class="error-label" for="logoFilename" >{{ errors.first('logoFilename') }}</label>
-        </div>
-      <div>
-          <button class="app_post_btn" @click="validate">Update</button>
-        </div>
+        <input v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
+        <label class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
+        <input v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
+        <label class="errorLabel" for="name" >{{ errors.first('name') }}</label>
+        <input v-validate="'required|alpha_spaces'" type=text name=contactName placeholder="Contact Name" v-model=contactName>
+        <label class="errorLabel" for="contactName" >{{ errors.first('contactName') }}</label>
+        <input v-validate="{ required:true, regex:/^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/ }" type=text name=phone placeholder="Phone (555-555-5555)" v-model=phone>
+        <label class="errorLabel" for="phone" >{{ errors.first('phone') }}</label>
+        <input v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
+        <label class="errorLabel" for="email" >{{ errors.first('email') }}</label>
+        <input v-validate="''" type=text name=logoFilename placeholder="Logo Filename" v-model=logoFilename>
+        <label class="errorLabel" for="logoFilename" >{{ errors.first('logoFilename') }}</label>
+        <button class="app_post_btn" @click="validate">Update</button>
+        <router-link v-bind:to="{ name: 'Manage' }">
+          <button>Return to Manage Data</button>
+        </router-link>
       </div>
   </div>
 </template>
@@ -89,26 +78,26 @@ export default {
 }
 </script>
 
-<style type="text/css">
-.form input, .form textarea {
-  width: 500px;
-  padding: 10px;
-}
-.form div {
-  margin: 20px;
-}
-.app_post_btn {
-  width: 520px;
-}
-.control-label{
-  display: block;
-}
-.error-label{
-  display: block;
-  margin-bottom: 20px;
-  color: red;
-}
-.input-field{
-  margin-bottom:0;
-}
+<style scoped>
+  #editBuyer{
+    width: 450px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+  }
+
+  input{
+    height: 50px;
+    border: 1px solid #f1f1f1;
+  }
+
+  button{
+    width: 200px;
+    height: 40px;
+    border-radius: 0px;
+  }
+
+  .errorLabel{
+    font-size: 12px;
+    color: #ff0000;
+  }
 </style>

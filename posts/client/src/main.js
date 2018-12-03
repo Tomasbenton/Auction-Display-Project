@@ -32,7 +32,10 @@ const dict = {
       contactName: 'Contact Name',
       phone: 'Phone Number',
       email: 'Email Address',
-      logoFilename: 'Logo Filename'
+      logoFilename: 'Logo Filename',
+      // Transaction
+      purchaseAmount: 'Purchase Amount',
+      purchaseType: 'Purchase Type'
     },
     messages: {
       regex: () => 'Invalid Phone Number. Required format: 555-555-5555'

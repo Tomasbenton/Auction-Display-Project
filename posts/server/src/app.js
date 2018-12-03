@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 const userRoutes = require('../exproutes/user.route');
+const transactionRoutes = require('../exproutes/transaction.route');
 require('dotenv').config();
 
 // Express.js
@@ -16,6 +17,7 @@ app.use(cors())
 app.use('/exhibitor', exhibitorRoutes);
 app.use('/buyer', buyerRoutes);
 app.use('/user', userRoutes);
+app.use('/transaction', transactionRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');
@@ -46,6 +48,9 @@ db.createCollection("User", {
     }
   }
 })
+// Insert default Username: Admin, Password: Password document if it does not already exist
+db.collection('User').createIndex( { username: 1, password: 1 }, {unique:true} )
+db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password' })
 // Create Exhibitor Collection
 db.createCollection("Exhibitor", {
   validator: {

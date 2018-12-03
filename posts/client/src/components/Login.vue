@@ -1,13 +1,13 @@
 <template>
 	<div id='login'>
 		<img class='logo' src='../assets/4H_Logo.png'>
-    <img class='logo2' src='../assets/FFA_Logo.png'>
+    <img class='logo' src='../assets/FFA_Logo.png'>
 		<h1>Admin Login</h1>
 		<form>
 			<input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
 			<input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
-			<button type="button" name="login" v-on:click="login()">Login</button>
       <p class='errorMsg' id="hidden"></p>
+			<button type="button" name="login" v-on:click="login()">Login</button>
 			<!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
 		</form>
 	</div>
@@ -50,99 +50,37 @@ export default {
 }
 </script>
 
-<style>
-#login,
-form {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-.logo {
-  width: 150px;
-  height: auto;
-  margin-top: 50px;
-}
-.logo2 {
-  width: auto;
-  height: 170px;
-  margin-top: 50px;
-}
+<style scoped>
+  #login{
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+    font-family: 'Open Sans', Arial, sans-serif;
+  }
 
-form {
-  max-width: 400px;
-  margin: 0 auto;
-}
+  h1{
+    color: #339966;
+  }
 
-input {
-  width: 100%;
-  max-width: 400px;
-  height: 40px;
-  display: block;
-  margin-bottom: 20px;
-}
+  button{
+    display: block;
+    margin-left: auto;
+    padding: 10px 15px;
+    height: 50px;
+    width: 100%;
+  }
 
-input:focus, button:focus {
-  border-color: #339966;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 233, 109, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 233, 109, 0.6);
-}  
+  .errorMsg{
+    color: #ff0000;
+    font-size: 14px;
+    float: left;
+  }
 
-button {
-  width: 150px;
-  height: 50px;
-  float: right;
-  cursor: pointer;
-}
-
-h1,
-button,
-a {
-  color: #339966;
-}
-
-h1 {
-  font-family: Lato, Arial, sans-serif;
-}
-.text {
-  font-family: "Open Sans", Arial, sans-serif;
-}
-
-.text {
-  text-align: left;
-}
-
-h1 {
-  font-size: 40px;
-}
-.text {
-  font-size: 13px;
-}
-input {
-  font-size: 14px;
-}
-
-input {
-  border: none;
-  border-bottom: 1px solid #808080;
-}
-
-button {
-  border: none;
-  border-radius: 5px;
-  background-color: #f1f1f1;
-}
-
-a,
-button {
-  text-transform: uppercase;
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.errorMsg {
-  color: red;
-  text-align: left;
-}
+  input{
+    height: 50px;
+    border-bottom:1px solid #339966;
+    font-weight: 600;
+  }
 </style>
