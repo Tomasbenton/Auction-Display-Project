@@ -1,5 +1,5 @@
 # Auction Display Project
-// Description
+Auction Display Project is a project created to help display exhibitor, buyer, addon buyer, and sale information during a county fair auction. The application is comprised of a front-end web application server, a back-end api server, and a database server that can all be run on a host machine inside of a local network. The system is designed to connect with other computers or Raspberry PI or similar devices that act as endpoints for displaying the data on a monitor(s).
 
 ## Technologies
 // MEVN Stack w/links
