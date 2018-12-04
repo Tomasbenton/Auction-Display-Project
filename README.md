@@ -67,6 +67,14 @@ hostname
 
 Once the hostname has been changed properly, other devices on the same local area network will be able to access the web application at the url [http://hostname.local:8080/login](http://hostname.local:8080/login).
 
+## System Backup
+Although the web application has built-in functionality on the `Manage Data` page to import and export *Exhibitor* and *Buyer* data as CSV files for easy use with MS Excel, Apple Numbers, or Google Sheets; it is highly recommended to create additional backups. Backup options include, but are not limited to:
+1. **Full system backups** using [Time Machine](https://support.apple.com/en-us/HT201250) (macOS), [Acronis](https://www.acronis.com/en-us/personal/computer-backup/) (Windows), [Rsync/Grsync](https://linux.die.net/man/1/rsync) (Linux), or some other method of creating full system images/backups.
+2. **Import/Export data using MongoDB Compass** for which additional information can be found [here](https://docs.mongodb.com/compass/master/import-export/).
+3. **Copy underlying data files** via snapshots or `cp` for which additional information can be found [here](https://docs.mongodb.com/manual/core/backups/).
+4. **Use [`mongodump`](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)** to create BSON files which can be restored using the `mongorestore` tool. *Note that while `mongodump` and `mongorestore` are simple and easy-to-use tools, they are limited to smaller data sets, and may not be entirely reliable as a sole backup system.
+
+
 ---
 ## Contributors
 Here are the awesome [contributors](https://github.com/Cahough/Auction-Display-Project/graphs/contributors) to this project.
