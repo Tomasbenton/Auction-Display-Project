@@ -65,7 +65,6 @@ export default {
         email: this.email,
         logoFilename: this.logoFilename
       }
-      // let uri = 'http://localhost:8081/buyer/add'
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/add`
       this.axios.post(uri, newBuyer).then((response) => {
         console.log(response)

@@ -5,7 +5,7 @@
       <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
       <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|alpha_spaces'" type="text" name="fullName" placeholder="Full Name" v-model=fullName>
-      <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label> 
+      <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label>
       <input v-validate="'required'" type="text" name="tag" placeholder="Tag" v-model="tag">
       <label class="errorLabel" for="tag" >{{ errors.first('tag') }}</label>
       <input v-validate="'required|alpha'" type="text" name="species" placeholder="Species" v-model="species">
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-// import Api from '@/services/Api'
 export default {
   name: 'NewExhibitor',
   data () {
@@ -68,11 +67,11 @@ export default {
         placing: this.placing,
         buyback: this.buyback
       }
-      // let uri = 'http://localhost:8081/exhibitor/add'
       let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/add`
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
       })
+      this.$router.push({ name: 'NewExhibitor' })
     }
   }
 }
