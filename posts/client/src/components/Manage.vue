@@ -27,12 +27,13 @@ export default {
   name: 'btn',
   data() {
     return {
-      view: true
+      // view: true
+      view: this.$route.params.view
     }
   },
   methods: {
     toggleDisplayType() {
-      this.view = !this.view
+      this.$route.params.view = !this.$route.params.view
     }
   },
   components: {

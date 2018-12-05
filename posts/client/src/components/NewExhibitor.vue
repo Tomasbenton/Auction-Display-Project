@@ -23,7 +23,7 @@
       <label class="errorLabel" for="buyback" >{{ errors.first('buyback') }}</label>
       <input v-validate="'numeric'" type="text" name="buyback" placeholder="Buyback" v-model=buyback>
       <button class=app_post_btn @click=validate>Add</button>
-      <router-link v-bind:to="{ name: 'Manage' }">
+      <router-link v-bind:to="{ name: 'Manage', params: {view: true } }">
         <button>Return to Manage</button>
       </router-link>
     </div>

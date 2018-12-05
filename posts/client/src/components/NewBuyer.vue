@@ -15,7 +15,7 @@
         <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
         <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
         <button class=app_post_btn @click=validate>Add</button>
-        <router-link v-bind:to="{ name: 'Manage' }">
+        <router-link v-bind:to="{ name: 'Manage', params: {view: false} }">
           <button>Return to Manage</button>
         </router-link>
       </div>
