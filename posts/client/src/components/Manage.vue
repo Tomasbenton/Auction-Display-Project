@@ -2,10 +2,10 @@
   <div class="manage">
     <nav>
       <h1>Manage Data</h1>
-      <button @click='view = !view'>Toggle View</button>
       <router-link v-bind:to="{ name: 'Admin' }">
         <button id="dashboard-button">Return to Dashboard</button>
       </router-link>
+      <button @click='view = !view'>Toggle View</button>
     </nav>
     <template v-if="view">
       <manageExhibitors></manageExhibitors>

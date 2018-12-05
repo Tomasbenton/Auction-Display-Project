@@ -32,7 +32,7 @@ exhibitorRoutes.route('/').get(function (req, res) {
 // Fetch single exhibitor
 exhibitorRoutes.route('/:id').get((req, res) => {
   var id = req.params.id;
-  Exhibitor.findById(id, (err, exhibitor) =>{
+  Exhibitor.findById(id, (err, exhibitor) => {
       res.json(exhibitor);
   });
 });

@@ -5,10 +5,10 @@
       <!--<input type="text" placeholder="Search tag #">
       <button>Submit</button>-->
       <router-link v-bind:to="{ name: 'NewBuyer' }">
-        <button class="add">Add</button>
+        <button class="add">Add New Buyer</button>
       </router-link>
       <button @click=deleteAll()>Delete All Buyers</button>
-      <button @click=getCsvReport()>Export All Data</button>
+      <button @click=getCsvReport()>Export All Buyers</button>
     </div>
     <table class="dataTable">
       <tr>
