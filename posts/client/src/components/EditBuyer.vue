@@ -72,7 +72,7 @@ export default {
       await this.axios.put(uri, updatedBuyer).then((response) => {
         console.log(response)
       })
-      this.$router.push({ name: 'Manage', params: {view: false } })
+      this.$router.push({ name: 'Manage', params: { view: false } })
     }
   }
 }

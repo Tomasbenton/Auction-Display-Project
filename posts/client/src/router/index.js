@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
+import Exhibitor from '@/components/Exhibitor'
 import Manage from '@/components/Manage'
 import ManageExhibitors from '@/components/ManageExhibitors'
 import ManageBuyers from '@/components/ManageBuyers'
@@ -38,6 +39,11 @@ export default new Router({
       path: '/display',
       name: 'Display',
       component: Display
+    },
+    {
+      path: '/exhibitor',
+      name: 'Exhibitor',
+      component: Exhibitor
     },
     {
       path: '/manage',

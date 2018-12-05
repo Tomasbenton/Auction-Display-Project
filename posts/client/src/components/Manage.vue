@@ -3,7 +3,7 @@
     <nav>
       <h1>Manage Data</h1>
       <router-link v-bind:to="{ name: 'Admin' }">
-        <button id="dashboard-button">Return to Dashboard</button>
+        <button class="dashboardBtn">Return to Dashboard</button>
       </router-link>
       <button @click='view = !view'>Toggle View</button>
     </nav>
@@ -76,4 +76,12 @@ export default {
     margin: 0px 25px;
   }
 
+  .dashboardBtn{
+    background-color: #fadc23;
+    color: #339966;
+  }
+  .dashboardBtn:hover{
+    background-color: #f1f1f1;
+    color: #339966;
+  }
 </style>
