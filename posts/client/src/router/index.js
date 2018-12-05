@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import Display from '@/components/Display'
 import Exhibitor from '@/components/Exhibitor'
+import Buyer from '@/components/Buyer'
 import Manage from '@/components/Manage'
 import ManageExhibitors from '@/components/ManageExhibitors'
 import ManageBuyers from '@/components/ManageBuyers'
@@ -44,6 +45,11 @@ export default new Router({
       path: '/exhibitor',
       name: 'Exhibitor',
       component: Exhibitor
+    },
+    {
+      path: '/buyer',
+      name: 'Buyer',
+      component: Buyer
     },
     {
       path: '/manage',
