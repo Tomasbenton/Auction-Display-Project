@@ -50,7 +50,7 @@ db.createCollection("User", {
 })
 // Insert default Username: Admin, Password: Password document if it does not already exist
 db.collection('User').createIndex( { username: 1, password: 1 }, {unique:true} )
-db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password' })
+db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password', 'saleNumber': 0 })
 // Create Exhibitor Collection
 db.createCollection("Exhibitor", {
   validator: {
