@@ -7,7 +7,7 @@
 </template>
 
 <script>
-var authenticatedVar = false
+var authenticatedVar = true
 export default {
   name: 'App',
   data() {
