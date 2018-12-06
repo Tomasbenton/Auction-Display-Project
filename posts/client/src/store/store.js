@@ -1,29 +1,71 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { USER_ID, USERS } from './mutation-constants'
+
+const INDEX = 'INDEX'
+const PREVIOUS_INDEX = 'PREVIOUS_INDEX'
+const BIDDER_INDEX = 'BIDDER_INDEX'
+const SALE_NUMBER = 'SALE_NUMBER'
+const PREVIOUS_SALE_NUMBER = 'PREVIOUS_SALE_NUMBER'
+const BIDDER_NUMBER = 'BIDDER_NUMBER'
+const PURCHASE_INDEX = 'PURCHASE_INDEX'
 
 Vue.use(Vuex)
 
 const state = {
-	userID: null,
-	users: []
+	index: 0,
+	previousIndex: 0,
+	bidderIndex: 0,
+	saleNumber: 0,
+	previousSaleNumber: 0,
+	bidderNumber: 0,
+	purchaseIndex: 0
 }
 
 const mutations = {
-	[USER_ID](state, userID) {
-		state.userID = userID
+	[INDEX] (state, num) {
+		state.index = num
 	},
-	[USERS](state, users) {
-		state.users = users
+	[PREVIOUS_INDEX] (state, num) {
+		state.previousIndex = num
+	},
+	[BIDDER_INDEX] (state, num) {
+		state.bidderIndex = num
+	},
+	[SALE_NUMBER] (state, num) {
+		state.saleNumber = num
+	},
+	[PREVIOUS_SALE_NUMBER] (state, num) {
+		state.previousSaleNumber = num
+	},
+	[BIDDER_NUMBER] (state, num) {
+		state.bidderNumber = num
+	},
+	[PURCHASE_INDEX] (state, num) {
+		state.purchaseIndex = num
 	}
 }
 
 const actions = {
-	setUserID({commit}, userID) {
-		commit(USER_ID, userID)
+	setIndex ({commit}, num) {
+		commit(INDEX, num)
 	},
-	setUsers({commit}, users) {
-		commit(USERS, users)
+	setPreviousIndex ({commit}, num) {
+		commit(PREVIOUS_INDEX, num)
+	},
+	setBidderIndex ({commit}, num) {
+		commit(BIDDER_INDEX, num)
+	},
+	setSaleNumber ({commit}, num) {
+		commit(SALE_NUMBER, num)
+	},
+	setPreviousSaleNumber ({commit}, num) {
+		commit(PREVIOUS_SALE_NUMBER, num)
+	},
+	setBidderNumber ({commit}, num) {
+		commit(BIDDER_NUMBER, num)
+	},
+	setPurchaseIndex ({commit}, num) {
+		commit(PURCHASE_INDEX, num)
 	}
 }
 

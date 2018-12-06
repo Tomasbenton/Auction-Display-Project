@@ -1,2 +1,6 @@
-export const USER_ID = 'USER_ID'
-export const USERS = 'USERS'
+export const INDEX = 'INDEX'
+export const PREVIOUS_INDEX = 'PREVIOUS_INDEX'
+export const BIDDER_INDEX = 'BIDDER_INDEX'
+export const SALE_NUMBER = 'SALE_NUMBER'
+export const PREVIOUS_SALE_NUMBER = 'PREVIOUS_SALE_NUMBER'
+export const BIDDER_NUMBER = 'BIDDER_NUMBER'
