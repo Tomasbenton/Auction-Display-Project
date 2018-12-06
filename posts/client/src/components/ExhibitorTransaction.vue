@@ -9,13 +9,13 @@
     <main class="container">
       <h1>Exhibitor Transaction Table</h1>
       Sale Number:
-      <input type="number" name="saleNumber">
-      <button @click="displayCurrentExhibitor">Enter</button>
+      <input type="number" name="saleNumber" v-model="saleNumber">
+      <button @click="displayCurrentExhibitor">Display Current Exhibitor</button>
       Bidder Number:
-      <input type="number" name="bidderNumber">
+      <input type="number" name="bidderNumber" disabled v-model="bidderNumber">
       Amount:
-      <input type="number" name="purchaseAmount">
-      <button @click="addNewTransaction">Submit</button>
+      <input type="number" name="purchaseAmount" disabled v-model="purchaseAmount">
+      <button name="addBtn" @click="addNewTransaction" disabled>Submit</button>
     </main>
   </div>
 </template>
@@ -25,37 +25,46 @@
     name: 'ExhibitorTransaction',
     data () {
       return {
+        users: [],
+        id: 0,
         exhibitors: [],
-        id: null,
+        // id: null,
         saleNumber: null,
-        bidderNumber: null,
-        purchaseAmount: null,
-        purchaseType: "Buyer"
+        bidderNumber: 0,
+        purchaseAmount: 0,
+        purchaseType: "Buyer",
+        transactions: []
       }
     },
     created: function () {
-      this.fetchExhibitors()
+      this.fetchUser()
+      this.fetchTransactions()
     },
     methods: {
-      displayCurrentExhibitor() {
-        this.saleNumber = parseInt(document.querySelector("input[name='saleNumber']").value)
-        for (let i = 0; i < this.exhibitors.length; i++) {
-          if (this.exhibitors[i].saleNumber === this.saleNumber) {
-            this.id = this.exhibitors[i]._id
+      async fetchUser() {
+        let url = `http://${process.env.HOST_NAME}:8081/user`
+        await this.axios.get(url).then(response => {
+          this.users = response.data
+          for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].username === "Admin") this.id = this.users[i]._id
           }
-        }
+        })
       },
-      fetchExhibitors() {
-        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
-        this.axios.get(url).then(response => {
-          this.exhibitors = response.data
+      async displayCurrentExhibitor() {
+        // add input validity, only numbers
+        // clicking the display button should only enable the other fields if it's valid
+        let url = `http://${process.env.HOST_NAME}:8081/user/${this.id}`
+        let transaction = {
+          saleNumber: this.saleNumber
+        }
+        await this.axios.put(url, transaction).then(response => {
+          console.log(response)
+          document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
+          document.querySelector("input[name='purchaseAmount']").removeAttribute("disabled")
+          document.querySelector("button[name='addBtn']").removeAttribute("disabled")
         })
       },
       async addNewTransaction() {
-        /*
-          1) add a check to see whether sale number is in exhibitor table
-          2) add confirmation messages
-        */
         let newTransaction = {
           saleNumber: this.saleNumber,
           bidderNumber: this.bidderNumber,
@@ -63,7 +72,19 @@
           purchaseType: this.purchaseType
         }
         let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        await this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        })
+      },
+      async fetchTransactions() {
+        let url = `http://${process.env.HOST_NAME}:8081/transaction/`
+        await this.axios.get(url).then((response) => {
+          this.transactions = response.data
+        })
+      },
+      async fetchExhibitors() {
+        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
+        await this.axios.get(url).then((response) => {
+          this.exhibitors = response.data
         })
       }
     }

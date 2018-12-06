@@ -1,8 +1,8 @@
 const express = require('express')
 const userRoutes = express.Router()
-
 const User = require('../models/User')
 
+// adds a user
 userRoutes.route('/add').post(function (req, res) {
     var user = new User(req.body)
     user.save()
@@ -14,6 +14,24 @@ userRoutes.route('/add').post(function (req, res) {
     })
 })
 
+// updates user
+userRoutes.route('/:id').put((req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    if (!user)
+      return next(new Error('Error getting the user!'));
+    else {
+        user.saleNumber = req.body.saleNumber;
+        user.save().then( user => {
+          res.json('User updated successfully');
+      })
+      .catch(err => {
+            res.status(400).send("Error when updating the user");
+      });
+    }
+  });
+});
+
+// gets all users
 userRoutes.route('/').get(function (req, res) {
     User.find(function (err, users){
     if(err){
@@ -25,27 +43,7 @@ userRoutes.route('/').get(function (req, res) {
     })
 })
 
-// Update user
-userRoutes.route('/:id').put((req, res) => {
-  User.findById(req.params.id, (err, user) => {
-    if (!user)
-      return next(new Error('Error getting the user!'));
-    else {
-      user.saleNumber = req.body.saleNumber;
-      user.bidderNumber = req.body.bidderNumber;
-      user.purchaseAmount = req.body.purchaseAmount;
-      user.purchaseType = req.body.purchaseType;
-      user.save().then( user => {
-          res.json('User updated successfully');
-      })
-      .catch(err => {
-            res.status(400).send("Error when updating the user");
-      });
-    }
-  });
-});
-
-// Fetch single user
+// fetches a single user
 userRoutes.route('/:id').get((req, res) => {
   var id = req.params.id;
   User.findById(id, (err, user) =>{
