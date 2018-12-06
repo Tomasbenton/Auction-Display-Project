@@ -11,7 +11,7 @@
         <h1>Current Sale:</h1>
         <h2>Please wait for the next sale</h2>
       </section>
-      <section class="previousSale" v-if="(transactions.length >= 1) && exhibitors.length && buyers.length && transactions.length">
+      <section class="previousSale" v-if="exhibitors.length && buyers.length && transactions.length">
         <h1>Previous Sale</h1>
         <h2>Name: {{ exhibitors[previousIndex].fullName }}</h2>
         <h2>Species: {{ exhibitors[previousIndex].species }} </h2>

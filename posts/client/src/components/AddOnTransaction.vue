@@ -21,12 +21,12 @@
 </template>
 
 <script>
+  import {mapState, mapActions} from 'vuex'
   export default {
     name: 'AddonTransaction',
     data () {
       return {
         users: [],
-        id: 0,
         exhibitors: [],
         transactions: [],
         saleNumber: null,
@@ -34,6 +34,11 @@
         purchaseAmount: 0,
         purchaseType: "Addon"
       }
+    },
+    computed: {
+      ...mapState({
+        userID: state => state.userID
+      })
     },
     created: function () {
       this.fetchUser()
@@ -83,7 +88,8 @@
           this.exhibitors = response.data
         })
       }
-    }
+    },
+      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex', 'setUserID'])
   }
 </script>
 

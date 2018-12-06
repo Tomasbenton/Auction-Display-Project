@@ -21,12 +21,12 @@
 </template>
 
 <script>
+  import {mapState, mapActions} from 'vuex'
   export default {
     name: 'ExhibitorTransaction',
     data () {
       return {
         users: [],
-        id: 0,
         exhibitors: [],
         transactions: [],
         saleNumber: null,
@@ -34,6 +34,11 @@
         purchaseAmount: 0,
         purchaseType: "Buyer"
       }
+    },
+    computed: {
+      ...mapState({
+        userID: state => state.userID
+      })
     },
     created: function () {
       this.fetchUser()
@@ -45,14 +50,14 @@
         await this.axios.get(url).then(response => {
           this.users = response.data
           for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === "Admin") this.id = this.users[i]._id
+            if (this.users[i].username === "Admin") this.setUserID(this.users[i]._id)
           }
         })
       },
       async displayCurrentExhibitor() {
         // add input validity, only numbers
         // clicking the display button should only enable the other fields if it's valid
-        let url = `http://${process.env.HOST_NAME}:8081/user/${this.id}`
+        let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
         let transaction = {
           saleNumber: this.saleNumber
         }
@@ -85,7 +90,8 @@
         await this.axios.get(url).then((response) => {
           this.exhibitors = response.data
         })
-      }
+      },
+      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex', 'setUserID'])
     }
   }
 </script>
