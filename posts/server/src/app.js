@@ -129,7 +129,7 @@ db.createCollection("Buyer", {
           bsonType: "string",
           description: "must be a string and is not required"
         },
-        logoFilename: {
+        logoFileName: {
           bsonType: "string",
           description: "must be a string and is not required"
         }

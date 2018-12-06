@@ -3,9 +3,9 @@
     <nav>
       <h1>Manage Data</h1>
       <router-link v-bind:to="{ name: 'Admin' }">
-        <button id="dashboard-button">Return to Dashboard</button>
+        <button class="dashboardBtn">Return to Dashboard</button>
       </router-link>
-			<button @click='view = !view'>Toggle View</button>
+      <button @click='view = !view'>Toggle View</button>
     </nav>
     <template v-if="view">
       <manageExhibitors></manageExhibitors>
@@ -27,12 +27,13 @@ export default {
   name: 'btn',
   data() {
     return {
-      view: true
+      // view: true
+      view: this.$route.params.view
     }
   },
   methods: {
     toggleDisplayType() {
-      this.view = !this.view
+      this.$route.params.view = !this.$route.params.view
     }
   },
   components: {
@@ -75,4 +76,12 @@ export default {
     margin: 0px 25px;
   }
 
+  .dashboardBtn{
+    background-color: #fadc23;
+    color: #339966;
+  }
+  .dashboardBtn:hover{
+    background-color: #f1f1f1;
+    color: #339966;
+  }
 </style>

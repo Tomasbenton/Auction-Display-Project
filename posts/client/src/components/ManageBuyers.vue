@@ -5,10 +5,10 @@
       <!--<input type="text" placeholder="Search tag #">
       <button>Submit</button>-->
       <router-link v-bind:to="{ name: 'NewBuyer' }">
-        <button class="add">Add</button>
+        <button class="add">Add New Buyer</button>
       </router-link>
       <button @click=deleteAll()>Delete All Buyers</button>
-      <button @click=getCsvReport()>Export All Data</button>
+      <button @click=getCsvReport()>Export All Buyers</button>
     </div>
     <table class="dataTable">
       <tr>
@@ -18,6 +18,7 @@
         <td><strong>Phone</strong></td>
         <td><strong>Email</strong></td>
         <td><strong>Logo Filename</strong></td>
+        <td><strong>Action</strong></td>
       </tr>
       <tr v-for="buyer in buyers" :key="buyer._id">
         <td>{{ buyer.bidderNumber }}</td>
@@ -25,7 +26,7 @@
         <td>{{ buyer.contactName }}</td>
         <td>{{ buyer.phone }}</td>
         <td>{{ buyer.email }}</td>
-        <td>{{ buyer.logoFilename }}</td>
+        <td>{{ buyer.logoFileName }}</td>
         <router-link class="link" v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
         <a class="link" @click="deleteBuyer(buyer._id)">Delete</a>
       </tr>
@@ -92,7 +93,7 @@
         contactName: row.contactName,
         phone: row.phone,
         email: row.email,
-        logoFilename: row.logoFilename
+        logoFileName: row.logoFileName
       }))
       const csvData = this.objectToCsv(data)
       this.download(csvData)

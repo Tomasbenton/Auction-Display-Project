@@ -3,7 +3,7 @@
 	<img class="logo" src="../assets/4H_Logo.png">
 	<img class='logo' src='../assets/FFA_Logo.png'>
 	<h1>Admin Dashboard</h1>
-	<router-link to="/manage"><button>Manage Data</button></router-link>
+	<router-link v-bind:to="{ name: 'Manage', params: { view: true } }"><button>Manage Data</button></router-link>
 	<router-link to="/display"><button>Current/Previous Sale Display</button></router-link>
 	<router-link to="/exhibitor"><button>List of Exhibitors</button></router-link>
 	<router-link to="/buyer"><button>Buyer/Addons Display</button></router-link>

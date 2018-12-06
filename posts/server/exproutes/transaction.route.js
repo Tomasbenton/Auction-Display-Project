@@ -6,13 +6,15 @@ const Transaction = require('../models/Transaction')
 // Add a transaction
 transactionRoutes.route('/add').post(function (req, res) {
     var transaction = new Transaction(req.body)
-    transaction.save()
-    .then(transaction => {
-    res.status(200).json({'transaction': 'transaction added successfully'})
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database")
-    })
+    if (transaction.saleNumber && transaction.bidderNumber && transaction.purchaseAmount && transaction.purchaseType) {
+        transaction.save()
+        .then(transaction => {
+        res.status(200).json({'transaction': 'transaction added successfully'})
+        })
+        .catch(err => {
+        res.status(400).send("unable to save to database")
+        })
+    }
 })
 
 // Fetch all transactions

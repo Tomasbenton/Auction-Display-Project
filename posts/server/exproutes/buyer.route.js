@@ -6,13 +6,15 @@ const Buyer = require('../models/Buyer')
 // Add a buyer
 buyerRoutes.route('/add').post(function (req, res) {
     var buyer = new Buyer(req.body)
-    buyer.save()
-    .then(buyer => {
-    res.status(200).json({'buyer': 'buyer added successfully'})
-    })
-    .catch(err => {
-    res.status(400).send("unable to save to database")
-    })
+    if (buyer.bidderNumber && buyer.name && buyer.contactName && buyer.phone) {
+        buyer.save()
+        .then(buyer => {
+        res.status(200).json({'buyer': 'buyer added successfully'})
+        })
+        .catch(err => {
+        res.status(400).send("unable to save to database")
+        })
+    }
 })
 
 // Fetch all buyers
@@ -46,7 +48,7 @@ buyerRoutes.route('/:id').put((req, res) => {
       buyer.contactName = req.body.contactName;
       buyer.phone = req.body.phone;
       buyer.email = req.body.email;
-      buyer.logoFilename = req.body.logoFilename;
+      buyer.logoFileName = req.body.logoFileName;
       buyer.save().then( buyer => {
           res.json('Buyer updated successfully');
       })

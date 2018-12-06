@@ -14,7 +14,7 @@ To learn more about the MEVN stack, and to see the tutorial we used as a foundat
 To get started, you will need to download and install MongoDB and Node.js on a host machine or virtual machine for the server. It should also work in a Docker container; however, this has not yet been tested.
 * Install [MongoDB](https://docs.mongodb.com/manual/installation/) (created with version 3.0.15)
 * Install [Node.js](https://nodejs.org/en/download/) (created with version 8.12.0)
-* Install [Vue.js CLI 3](https://cli.vuejs.org/guide/installation.html) (created with version 2.9.6)
+* Install [Vue.js CLI](https://cli.vuejs.org/guide/installation.html) (created with version 2.9.6)
 ```bash
 npm install -g vue-cli
 ```
@@ -61,11 +61,19 @@ By default, the servers all run on localhost which will not allow other devices 
 ```bash
 hostname
 ```
-* Replace HOST_NAME value:`"'localhost'"` in `~/posts/client/config/dev.env.js` with your computer's [hostname.local]
-* Replace HOST_NAME value=`localhost` (plain-text) in `~/posts/server/.env` with your computer's [hostname.local]
+* Replace HOST_NAME value:`"'localhost'"` in `~/posts/client/config/dev.env.js` with your computer's [hostname.local] or [ip.address]
+* Replace HOST_NAME value=`localhost` (plain-text) in `~/posts/server/.env` with your computer's [hostname.local] or [ip.address]
 * (Recommended) Change/add `username` and `password` in *'User'* collection in database using either Mongo shell or a database client such as [MongoDB Compass](https://www.mongodb.com/products/compass) so that default username and password are not used.
 
 Once the hostname has been changed properly, other devices on the same local area network will be able to access the web application at the url [http://hostname.local:8080/login](http://hostname.local:8080/login).
+
+## System Backup
+Although the web application has built-in functionality on the `Manage Data` page to import and export *Exhibitor* and *Buyer* data as CSV files for easy use with MS Excel, Apple Numbers, or Google Sheets; it is highly recommended to create additional backups. Backup options include, but are not limited to:
+1. **Full system backups** using [Time Machine](https://support.apple.com/en-us/HT201250) (macOS), [Acronis](https://www.acronis.com/en-us/personal/computer-backup/) (Windows), [Rsync/Grsync](https://linux.die.net/man/1/rsync) (Linux), or some other method of creating full system images/backups.
+2. **Import/Export data using MongoDB Compass** for which additional information can be found [here](https://docs.mongodb.com/compass/master/import-export/).
+3. **Copy underlying data files** via snapshots or `cp` for which additional information can be found [here](https://docs.mongodb.com/manual/core/backups/).
+4. **Use [`mongodump`](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)** to create BSON files which can be restored using the `mongorestore` tool. *Note that while `mongodump` and `mongorestore` are simple and easy-to-use tools, they are limited to smaller data sets, and may not be entirely reliable as a sole backup system.
+
 
 ---
 ## Contributors

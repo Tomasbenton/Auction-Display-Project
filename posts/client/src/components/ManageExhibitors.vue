@@ -4,10 +4,10 @@
       <h1>Exhibitors</h1>
       <!--<input type="text" placeholder="Search tag #">-->
       <router-link v-bind:to="{ name: 'NewExhibitor' }">
-        <button class="add">Add</button>
+        <button class="add">Add New Exhibitor</button>
       </router-link>
       <button @click=deleteAll()>Delete All Exhibitors</button>
-      <button @click=getCsvReport()>Export All Data</button>
+      <button @click=getCsvReport()>Export All Exhibitors</button>
     </div>
     <table class="dataTable">
       <tr>

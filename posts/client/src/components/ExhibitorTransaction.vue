@@ -9,22 +9,22 @@
     <main class="container">
       <h1>Exhibitor Transaction Table</h1>
       Sale Number:
-      <input type="number" name="saleNumber" v-model="saleNumber">
-      <p class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</p>
+      <label class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number"  min="0" name="saleNumber" v-model="saleNumber">
       <button>Enter</button>
       Bidder Number:
-      <input type="number" name="bidderNumber" v-model="bidderNumber">
-      <p class="errorLabel">{{ errors.first('bidderNumber') }}</p>
+      <label class="errorLabel">{{ errors.first('bidderNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number" min="0" name="bidderNumber" v-model="bidderNumber">
       Amount:
-      <input type="number" name="purchaseAmount" v-model="purchaseAmount">
-      <p class="errorLabel">{{ errors.first('purchaseAmount' )}}</p>
-      <button @click="validate">Submit</button>
+      <label class="errorLabel">{{ errors.first('purchaseAmount' )}}</label>
+      <input v-validate="'required|numeric'" type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
+      <button @click=validate>Submit</button>
     </main>
   </div>
 </template>
 
 <script>
-  export default{
+  export default {
     name: 'ExhibitorTransaction',
     data () {
       return {
@@ -37,7 +37,9 @@
     methods: {
       validate() {
         this.$validator.validateAll()
-        if (!this.errors.any()) this.addNewTransaction()
+        if (!this.errors.any()) {
+          this.addNewTransaction()
+        }
       },
       async addNewTransaction() {
         let newTransaction = {
@@ -106,5 +108,10 @@
 
   .arrow{
     font-size: 25px;
+  }
+
+  .errorLabel{
+    font-size: 12px;
+    color: #ff0000;
   }
 </style>

@@ -32,7 +32,7 @@ const dict = {
       contactName: 'Contact Name',
       phone: 'Phone Number',
       email: 'Email Address',
-      logoFilename: 'Logo Filename',
+      logoFileName: 'Logo Filename',
       // Transaction
       purchaseAmount: 'Purchase Amount',
       purchaseType: 'Purchase Type'
