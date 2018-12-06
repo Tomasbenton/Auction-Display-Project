@@ -1,7 +1,7 @@
 <template>
   <div id="exhibitorTransaction">
     <router-link v-bind:to="{ name: 'Admin' }">
-      <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
+      <button class="topBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
     <router-link to="/transaction/addon">
       <button class="topBtn"><span class="arrow">&#8596;</span> Go to Addon Transaction Table</button>
@@ -9,16 +9,13 @@
     <main class="container">
       <h1>Exhibitor Transaction Table</h1>
       Sale Number:
-      <label class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number"  min="0" name="saleNumber" v-model="saleNumber">
-      <button>Enter</button>
+      <input type="number" name="saleNumber">
+      <button @click="displayCurrentExhibitor">Enter</button>
       Bidder Number:
-      <label class="errorLabel">{{ errors.first('bidderNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="bidderNumber" v-model="bidderNumber">
+      <input type="number" name="bidderNumber">
       Amount:
-      <label class="errorLabel">{{ errors.first('purchaseAmount' )}}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
-      <button @click=validate>Submit</button>
+      <input type="number" name="purchaseAmount">
+      <button @click="addNewTransaction">Submit</button>
     </main>
   </div>
 </template>
@@ -28,20 +25,37 @@
     name: 'ExhibitorTransaction',
     data () {
       return {
+        exhibitors: [],
+        id: null,
         saleNumber: null,
         bidderNumber: null,
         purchaseAmount: null,
         purchaseType: "Buyer"
       }
     },
+    created: function () {
+      this.fetchExhibitors()
+    },
     methods: {
-      validate() {
-        this.$validator.validateAll()
-        if (!this.errors.any()) {
-          this.addNewTransaction()
+      displayCurrentExhibitor() {
+        this.saleNumber = parseInt(document.querySelector("input[name='saleNumber']").value)
+        for (let i = 0; i < this.exhibitors.length; i++) {
+          if (this.exhibitors[i].saleNumber === this.saleNumber) {
+            this.id = this.exhibitors[i]._id
+          }
         }
       },
+      fetchExhibitors() {
+        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
+        this.axios.get(url).then(response => {
+          this.exhibitors = response.data
+        })
+      },
       async addNewTransaction() {
+        /*
+          1) add a check to see whether sale number is in exhibitor table
+          2) add confirmation messages
+        */
         let newTransaction = {
           saleNumber: this.saleNumber,
           bidderNumber: this.bidderNumber,
