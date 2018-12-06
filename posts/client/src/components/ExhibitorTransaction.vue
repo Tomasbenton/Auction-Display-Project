@@ -1,7 +1,7 @@
 <template>
   <div id="exhibitorTransaction">
     <router-link v-bind:to="{ name: 'Admin' }">
-      <button class="topBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
+      <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
     <router-link to="/transaction/addon">
       <button class="topBtn"><span class="arrow">&#8596;</span> Go to Addon Transaction Table</button>
@@ -28,12 +28,11 @@
         users: [],
         id: 0,
         exhibitors: [],
-        // id: null,
+        transactions: [],
         saleNumber: null,
         bidderNumber: 0,
         purchaseAmount: 0,
-        purchaseType: "Buyer",
-        transactions: []
+        purchaseType: "Buyer"
       }
     },
     created: function () {

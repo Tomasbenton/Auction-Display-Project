@@ -9,16 +9,13 @@
     <div class="container">
       <h1>Addon Transaction Table</h1>
       Sale Number: 
-      <label class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="saleNumber" v-model="saleNumber">
-      <button>Enter</button>
+      <input type="number" name="saleNumber" v-model="saleNumber">
+      <button @click="displayCurrentExhibitor">Enter</button>
       Bidder Number: 
-      <label class="errorLabel">{{ errors.first('bidderNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="bidderNumber" v-model="bidderNumber">
+      <input type="number" name="bidderNumber" v-model="bidderNumber">
       Amount:
-      <label class="errorLabel">{{ errors.first('purchaseAmount') }}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
-      <button @click=validate>Submit</button>
+      <input type="number" name="purchaseAmount" v-model="purchaseAmount">
+      <button name="addBtn" @click="addNewTransaction">Submit</button>
     </div>
   </div>
 </template>
@@ -28,16 +25,40 @@
     name: 'AddonTransaction',
     data () {
       return {
+        users: [],
+        id: 0,
+        exhibitors: [],
+        transactions: [],
         saleNumber: null,
-        bidderNumber: null,
-        purchaseAmount: null,
+        bidderNumber: 0,
+        purchaseAmount: 0,
         purchaseType: "Addon"
       }
     },
+    created: function () {
+      this.fetchUser()
+      this.fetchTransactions()
+    },
     methods: {
-      validate() {
-        this.$validator.validateAll()
-        if (!this.errors.any()) this.addNewTransaction()
+      async fetchUser() {
+        let url = `http://${process.env.HOST_NAME}:8081/user`
+        await this.axios.get(url).then(response => {
+          this.users = response.data
+          for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].username === "Admin") this.id = this.users[i]._id
+          }
+        })
+      },
+      async displayCurrentExhibitor() {
+        // add input validity, only numbers
+        // clicking the display button should only enable the other fields if it's valid
+        let url = `http://${process.env.HOST_NAME}:8081/user/${this.id}`
+        let transaction = {
+          saleNumber: this.saleNumber
+        }
+        await this.axios.put(url, transaction).then(response => {
+          console.log(response)
+        })
       },
       async addNewTransaction() {
         let newTransaction = {
@@ -47,7 +68,19 @@
           purchaseType: this.purchaseType
         }
         let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        await this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        })
+      },
+      async fetchTransactions() {
+        let url = `http://${process.env.HOST_NAME}:8081/transaction/`
+        await this.axios.get(url).then((response) => {
+          this.transactions = response.data
+        })
+      },
+      async fetchExhibitors() {
+        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
+        await this.axios.get(url).then((response) => {
+          this.exhibitors = response.data
         })
       }
     }
