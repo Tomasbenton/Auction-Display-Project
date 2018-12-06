@@ -24,5 +24,33 @@ userRoutes.route('/').get(function (req, res) {
     }
     })
 })
+
+// Update user
+userRoutes.route('/:id').put((req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    if (!user)
+      return next(new Error('Error getting the user!'));
+    else {
+      user.saleNumber = req.body.saleNumber;
+      user.bidderNumber = req.body.bidderNumber;
+      user.purchaseAmount = req.body.purchaseAmount;
+      user.purchaseType = req.body.purchaseType;
+      user.save().then( user => {
+          res.json('User updated successfully');
+      })
+      .catch(err => {
+            res.status(400).send("Error when updating the user");
+      });
+    }
+  });
+});
+
+// Fetch single user
+userRoutes.route('/:id').get((req, res) => {
+  var id = req.params.id;
+  User.findById(id, (err, user) =>{
+      res.json(user);
+  });
+});
  
  module.exports = userRoutes;

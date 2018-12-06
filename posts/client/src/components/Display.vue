@@ -1,18 +1,23 @@
 <template>
     <div id="display">
-      <exhibitor></exhibitor>
-      <buyer></buyer>
+      <section class="currentSale">
+        <h1>Current Sale</h1>
+      </section>
+      <section class="previousSale">
+        <h1>Previous Sale</h1>
+      </section>
     </div>
 </template>
 
 <script>
-  import Exhibitor from './Exhibitor.vue'
-  import Buyer from './Buyer.vue'
-
   export default {
-    components: {
-      'exhibitor': Exhibitor,
-      'buyer': Buyer
+    created: function() {
+      this.fetchTransactions()
+    },
+    methods: {
+      fetchTransactions() {
+        alert("hey")
+      }
     }
   }
 </script>
