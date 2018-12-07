@@ -52,6 +52,7 @@ export default {
       this.$validator.validateAll()
       if (!this.errors.any()) {
         this.addExhibitor()
+        this.resetExhibitor()
       }
     },
     async addExhibitor () {
@@ -71,7 +72,18 @@ export default {
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
       })
-      this.$router.push({ name: 'NewExhibitor' })
+    },
+    resetExhibitor () {
+      this.saleNumber++
+      this.fullName = ''
+      this.tag = ''
+      this.species = ''
+      this.animalDescription = ''
+      this.checkInWeight = ''
+      this.clubName = ''
+      this.showClassName = ''
+      this.placing = ''
+      this.buyback = ''
     }
   }
 }

@@ -40,6 +40,7 @@ export default {
       this.$validator.validateAll()
       if (!this.errors.any()) {
         this.addBuyer()
+        this.resetBuyer()
       }
     },
     async addBuyer () {
@@ -55,6 +56,14 @@ export default {
       this.axios.post(uri, newBuyer).then((response) => {
         console.log(response)
       })
+    },
+    resetBuyer () {
+      this.bidderNumber++
+      this.name = ''
+      this.contactName = ''
+      this.phone = ''
+      this.email = ''
+      this.logoFileName = ''
     }
   }
 }
