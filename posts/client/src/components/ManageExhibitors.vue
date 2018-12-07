@@ -7,6 +7,8 @@
         <button class="add">Add New Exhibitor</button>
       </router-link>
       <button @click=deleteAll()>Delete All Exhibitors</button>
+      <button onclick="document.getElementById('file').click();">Import Exhibitors</button>
+      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
       <button @click=getCsvReport()>Export All Exhibitors</button>
     </div>
     <table class="dataTable">
@@ -38,10 +40,6 @@
         <a class="link" @click="deleteExhibitor(exhibitor._id)">Delete</a>
       </tr>
     </table>
-		<div>
-      <button onclick="document.getElementById('file').click();">Import Exhibitors From CSV</button>
-      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
-    </div>
   </div>
 </template>
 

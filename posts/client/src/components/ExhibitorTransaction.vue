@@ -12,10 +12,10 @@
       <input type="number" name="saleNumber" v-model="saleNumber">
       <button @click="displayCurrentExhibitor">Display Current Exhibitor</button>
       Bidder Number:
-      <input type="number" name="bidderNumber" disabled v-model="bidderNumber">
+      <input type="number" name="bidderNumber" v-model="bidderNumber">
       Amount:
-      <input type="number" name="purchaseAmount" disabled v-model="purchaseAmount">
-      <button name="addBtn" @click="addNewTransaction" disabled>Submit</button>
+      <input type="number" name="purchaseAmount" v-model="purchaseAmount">
+      <button name="addBtn" @click="addNewTransaction">Submit</button>
     </main>
   </div>
 </template>
@@ -61,9 +61,9 @@
           console.log(response)
           // add input validity, only numbers
           // clicking the display button should only enable the other fields if it's valid
-          document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
+          /* document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
           document.querySelector("input[name='purchaseAmount']").removeAttribute("disabled")
-          document.querySelector("button[name='addBtn']").removeAttribute("disabled")
+          document.querySelector("button[name='addBtn']").removeAttribute("disabled") */
         })
       },
       async addNewTransaction() {
