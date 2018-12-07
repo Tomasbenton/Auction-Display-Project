@@ -27,8 +27,6 @@
     data () {
       return {
         users: [],
-        exhibitors: [],
-        transactions: [],
         saleNumber: null,
         bidderNumber: 0,
         purchaseAmount: 0,
@@ -42,7 +40,6 @@
     },
     created: function () {
       this.fetchUser()
-      this.fetchTransactions()
     },
     methods: {
       async fetchUser() {
@@ -50,14 +47,13 @@
         await this.axios.get(url).then(response => {
           this.users = response.data
           for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === "Admin") this.id = this.users[i]._id
+            if (this.users[i].username === "Admin") this.setUserID(this.users[i]._id)
           }
         })
       },
       async displayCurrentExhibitor() {
-        // add input validity, only numbers
-        // clicking the display button should only enable the other fields if it's valid
-        let url = `http://${process.env.HOST_NAME}:8081/user/${this.id}`
+        // gets user id, stores sale number
+        let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
         let transaction = {
           saleNumber: this.saleNumber
         }
@@ -76,20 +72,8 @@
         await this.axios.post(url, newTransaction).then((response) => { console.log(response)
         })
       },
-      async fetchTransactions() {
-        let url = `http://${process.env.HOST_NAME}:8081/transaction/`
-        await this.axios.get(url).then((response) => {
-          this.transactions = response.data
-        })
-      },
-      async fetchExhibitors() {
-        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
-        await this.axios.get(url).then((response) => {
-          this.exhibitors = response.data
-        })
-      }
-    },
-      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex', 'setUserID'])
+      ...mapActions(['setUserID'])
+    }
   }
 </script>
 

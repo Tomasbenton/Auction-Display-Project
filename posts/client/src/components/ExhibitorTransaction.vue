@@ -27,8 +27,6 @@
     data () {
       return {
         users: [],
-        exhibitors: [],
-        transactions: [],
         saleNumber: null,
         bidderNumber: 0,
         purchaseAmount: 0,
@@ -42,7 +40,6 @@
     },
     created: function () {
       this.fetchUser()
-      this.fetchTransactions()
     },
     methods: {
       async fetchUser() {
@@ -55,14 +52,15 @@
         })
       },
       async displayCurrentExhibitor() {
-        // add input validity, only numbers
-        // clicking the display button should only enable the other fields if it's valid
+        // gets the user id, stores saleNumber
         let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
         let transaction = {
           saleNumber: this.saleNumber
         }
         await this.axios.put(url, transaction).then(response => {
           console.log(response)
+          // add input validity, only numbers
+          // clicking the display button should only enable the other fields if it's valid
           document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
           document.querySelector("input[name='purchaseAmount']").removeAttribute("disabled")
           document.querySelector("button[name='addBtn']").removeAttribute("disabled")
@@ -79,19 +77,7 @@
         await this.axios.post(url, newTransaction).then((response) => { console.log(response)
         })
       },
-      async fetchTransactions() {
-        let url = `http://${process.env.HOST_NAME}:8081/transaction/`
-        await this.axios.get(url).then((response) => {
-          this.transactions = response.data
-        })
-      },
-      async fetchExhibitors() {
-        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
-        await this.axios.get(url).then((response) => {
-          this.exhibitors = response.data
-        })
-      },
-      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex', 'setUserID'])
+      ...mapActions(['setUserID'])
     }
   }
 </script>

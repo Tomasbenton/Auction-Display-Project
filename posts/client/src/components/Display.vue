@@ -59,10 +59,12 @@
     },
     methods: {
       async fetchSaleNumber() {
+        // gets the sale number from user collection
         let url = `http://${process.env.HOST_NAME}:8081/user`
         await this.axios.get(url).then(response => {
           this.users = response.data
           for (let i = 0; i < this.users.length; i++) {
+            // sets current sale
             if (this.users[i].username === "Admin") this.setSaleNumber(this.users[i].saleNumber)
           }
         })
@@ -72,6 +74,7 @@
         await this.axios.get(url).then(response => {
           this.exhibitors = response.data
           for (let i = 0; i < this.exhibitors.length; i++) {
+            // sets index for current sale
             if (this.exhibitors[i].saleNumber === this.saleNumber) this.setIndex(i)
           }
         })
@@ -82,6 +85,7 @@
         await this.axios.get(url).then(response => {
           this.transactions = response.data
           for (let i = 0; i < this.transactions.length; i++) {
+            // sets previous sale and buyer indices
             if (this.transactions[i].purchaseType === "Buyer") {
               this.setBidderNumber(this.transactions[i].bidderNumber)
               this.setPreviousSaleNumber(this.transactions[i].saleNumber)
@@ -89,6 +93,7 @@
             }
           }
           for (let j = 0; j < this.exhibitors.length; j++) {
+            // sets previous sale index
             if (this.exhibitors[j].saleNumber === this.previousSaleNumber) this.setPreviousIndex(j)
           }
         })
@@ -98,6 +103,7 @@
         await this.axios.get(url).then(response => {
           this.buyers = response.data
           for (let i = 0; i < this.buyers.length; i++) {
+            // sets bidder index
             if (this.buyers[i].bidderNumber === this.bidderNumber) this.setBidderIndex(i)
           }
         })
