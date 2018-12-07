@@ -1,17 +1,18 @@
 <template>
     <div id="display">
-      <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length">
+      <!-- <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length"> -->
+        <section class="currentSale">
         <h1>Current Sale:</h1>
-        <h2>Name: {{ exhibitors[index].fullName }}</h2>
-        <h2>Species: {{ exhibitors[index].species }} </h2>
-        <h2>Weight: {{ exhibitors[index].checkInWeight }}</h2>
-        <h2>Club Name: {{ exhibitors[index].clubName }}</h2>
+        <h2>Name: {{ exhibitor.fullName }}</h2>
+        <h2>Species: {{ exhibitor.species }} </h2>
+        <h2>Weight: {{ exhibitor.checkInWeight }}</h2>
+        <h2>Club Name: {{ exhibitor.clubName }}</h2>
       </section>
-        <section class="currentSale" v-else>
+        <!-- <section class="currentSale" v-else>
         <h1>Current Sale:</h1>
         <h2>Please wait for the next sale</h2>
-      </section>
-      <section class="previousSale" v-if="exhibitors.length && buyers.length && transactions.length">
+      </section> -->
+      <!-- <section class="previousSale" v-if="exhibitors.length && buyers.length && transactions.length">
         <h1>Previous Sale</h1>
         <h2>Name: {{ exhibitors[previousIndex].fullName }}</h2>
         <h2>Species: {{ exhibitors[previousIndex].species }} </h2>
@@ -25,90 +26,48 @@
       <section class="previousSale" v-else>
         <h1>Previous Sale</h1>
         <h2>There are no previous sales</h2>
-      </section>
+      </section> -->
     </div>
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex'
   export default {
     data() {
       return {
-        users: [],
-        exhibitors: [],
-        transactions: [],
-        buyers: []
+        exhibitor: {checkInWeight: "", clubName: "", fullName: "", species: ""},
+        buyer: null
       }
     },
-    computed: {
-      ...mapState({
-        index: state => state.index,
-        previousIndex: state => state.previousIndex,
-        bidderIndex: state => state.bidderIndex,
-        saleNumber: state => state.saleNumber,
-        previousSaleNumber: state => state.previousSaleNumber,
-        bidderNumber: state => state.bidderNumber,
-        purchaseIndex: state => state.purchaseIndex
-      })
-    },
     created: function() {
-      this.fetchSaleNumber()
-      this.fetchExhibitors()
-      this.fetchTransactions()
-      this.fetchBuyers()
+      this.getExhibitorBySaleNum()
     },
     methods: {
-      async fetchSaleNumber() {
-        // gets the sale number from user collection
-        let url = `http://${process.env.HOST_NAME}:8081/user`
-        await this.axios.get(url).then(response => {
-          this.users = response.data
-          for (let i = 0; i < this.users.length; i++) {
-            // sets current sale
-            if (this.users[i].username === "Admin") this.setSaleNumber(this.users[i].saleNumber)
+      async getExhibitorBySaleNum () {
+        let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.$route.params.saleNumber}`
+        await this.axios.get(uri).then(response => {
+          if (response.data == null) {
+            this.exhibitor.fullName = ""
+            this.exhibitor.species = ""
+            this.exhibitor.checkInWeight = ""
+            this.exhibitor.clubName = ""
+          }
+          else {
+            this.exhibitor = response.data
           }
         })
       },
-      async fetchExhibitors() {
-        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
-        await this.axios.get(url).then(response => {
-          this.exhibitors = response.data
-          for (let i = 0; i < this.exhibitors.length; i++) {
-            // sets index for current sale
-            if (this.exhibitors[i].saleNumber === this.saleNumber) this.setIndex(i)
+      async getBuyerByBidderNum () {
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.$route.params.bidderNumber}`
+        await this.axios.get(uri).then(response => {
+          if (response.data == null) {
+            // this.buyerName = `Buyer with bidder number ${this.bidderNumber} does not exist.` 
+            console.log("Error!!!")
+          }
+          else {
+            this.buyer = response.data
           }
         })
-      },
-      async fetchTransactions() {
-        // retrieves the latest transaction
-        let url = `http://${process.env.HOST_NAME}:8081/transaction`
-        await this.axios.get(url).then(response => {
-          this.transactions = response.data
-          for (let i = 0; i < this.transactions.length; i++) {
-            // sets previous sale and buyer indices
-            if (this.transactions[i].purchaseType === "Buyer") {
-              this.setBidderNumber(this.transactions[i].bidderNumber)
-              this.setPreviousSaleNumber(this.transactions[i].saleNumber)
-              this.setPurchaseIndex(i)
-            }
-          }
-          for (let j = 0; j < this.exhibitors.length; j++) {
-            // sets previous sale index
-            if (this.exhibitors[j].saleNumber === this.previousSaleNumber) this.setPreviousIndex(j)
-          }
-        })
-      },
-      async fetchBuyers() {
-        let url = `http://${process.env.HOST_NAME}:8081/buyer`
-        await this.axios.get(url).then(response => {
-          this.buyers = response.data
-          for (let i = 0; i < this.buyers.length; i++) {
-            // sets bidder index
-            if (this.buyers[i].bidderNumber === this.bidderNumber) this.setBidderIndex(i)
-          }
-        })
-      },
-      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex'])
+      }
     }
   }
 </script>

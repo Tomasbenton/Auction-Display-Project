@@ -12,7 +12,9 @@
       <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
       <label class="nameLabel">Exhibitor Name: {{ exhibitorName }}</label>
-      <button>Display Current Exhibitor</button>
+      <router-link v-bind:to="{ name: 'Display', params: { 'saleNumber': saleNumber }}">
+        <button>Display Current Exhibitor</button>
+      </router-link>
       Bidder Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
