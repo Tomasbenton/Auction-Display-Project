@@ -48,13 +48,6 @@ export default {
 </script>
 
 <style>
-  * {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    transition: 0.3s ease;
-  }
-
   #app, body, #exhibitorTransaction {
     width: 100%;
     height: 100%;

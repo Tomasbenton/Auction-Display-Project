@@ -51,6 +51,7 @@
           }
         })
       },
+      // display 
       async displayCurrentExhibitor() {
         // gets the user id, stores saleNumber
         let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
