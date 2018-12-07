@@ -37,6 +37,20 @@ exhibitorRoutes.route('/:id').get((req, res) => {
   });
 });
 
+// Fetch single exhibitor by saleNumber
+exhibitorRoutes.route('/saleNumber/:saleNumber').get((req, res) => {
+    var saleNum = req.params.saleNumber;
+    Exhibitor.findOne({'saleNumber': saleNum}, (err, exhibitor) => {
+        if (err) {
+            console.log(err);
+            res.json(err)
+        }
+        else {
+            res.json(exhibitor);
+        }
+    });
+});
+
 // Update exhibitor
 exhibitorRoutes.route('/:id').put((req, res) => {
   Exhibitor.findById(req.params.id, (err, exhibitor) => {
