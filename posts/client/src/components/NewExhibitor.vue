@@ -35,16 +35,16 @@ export default {
   name: 'NewExhibitor',
   data () {
     return {
-      saleNumber: null,
-      fullName: null,
-      tag: null,
-      species: null,
-      animalDescription: null,
-      checkInWeight: null,
-      clubName: null,
-      showClassName: null,
-      placing: null,
-      buyback: null
+      saleNumber: '',
+      fullName: '',
+      tag: '',
+      species: '',
+      animalDescription: '',
+      checkInWeight: '',
+      clubName: '',
+      showClassName: '',
+      placing: '',
+      buyback: ''
     }
   },
   methods: {

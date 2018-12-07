@@ -31,6 +31,10 @@
         <a class="link" @click="deleteBuyer(buyer._id)">Delete</a>
       </tr>
     </table>
+    <div>
+      <button onclick="document.getElementById('file').click();">Import Buyers From CSV</button>
+      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
+    </div>
   </div>
 
 </template>
@@ -41,7 +45,20 @@
     data() {
       return {
         buyers: [],
-        index: 0
+        index: 0,
+        channel_name: '',
+        channel_fields: [],
+        channel_entries: [],
+        parse_header: [],
+        parse_csv: [],
+        sortOrders: {},
+        sortKey: '',
+        bidderNumber: null,
+        name: null,
+        contactName: null,
+        phone: null,
+        email: null,
+        logoFileName: null
       }
     },
 
@@ -58,7 +75,6 @@
         })
       },
       async deleteBuyer (id) {
-        // let uri = 'http://localhost:8081/buyer/' + id
         let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + id
         await this.axios.delete(uri).then((response) => {
           console.log(response)
@@ -124,6 +140,72 @@
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
+    },
+    sortBy: function (key) {
+      var vm = this
+      vm.sortKey = key
+      vm.sortOrders[key] = vm.sortOrders[key] * -1
+    },
+    csvJSON(csv) {
+      var vm = this
+      var lines = csv.split("\n")
+      var result = []
+      var headers = lines[0].split(",")
+      vm.parse_header = lines[0].split(",")
+      lines[0].split(",").forEach(function (key) {
+        vm.sortOrders[key] = 1
+      })
+
+      lines.map(function(line, indexLine) {
+        if (indexLine < 1) return // Jump header line
+
+        var obj = {}
+        var currentline = line.split(",")
+
+        headers.map(function(header, indexHeader) {
+          obj[header] = currentline[indexHeader].replace(/"/g, '').replace(null, '')
+        })
+
+        vm.addBuyer(obj)
+        result.push(obj)
+      })
+      result.pop() // remove the last item because undefined values
+      return result // JavaScript object
+    },
+    loadCSV(e) {
+      var vm = this
+      if (window.FileReader) {
+        var reader = new FileReader()
+        reader.readAsText(e.target.files[0])
+        // Handle errors load
+        reader.onload = function(event) {
+          var csv = event.target.result
+          vm.parse_csv = vm.csvJSON(csv)
+        }
+        reader.onerror = function(evt) {
+          if (evt.target.error.name == "NotReadableError") {
+            alert("Cannot read file !")
+          }
+        }
+      } else {
+        alert('FileReader are not supported in this browser.')
+      }
+    },
+    async addBuyer (obj) {
+      let newBuyer = {
+        bidderNumber: obj.bidderNumber,
+        name: obj.name,
+        contactName: obj.contactName,
+        phone: obj.phone,
+        email: obj.email,
+        logoFileName: obj.logoFileName
+      }
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer/add`
+      this.axios.post(uri, newBuyer).then((response) => {
+        console.log(response)
+      })
+      this.fetchBuyers()
+      this.$router.push({ name: 'Manage' })
     }
   }
 }

@@ -38,6 +38,10 @@
         <a class="link" @click="deleteExhibitor(exhibitor._id)">Delete</a>
       </tr>
     </table>
+		<div>
+      <button onclick="document.getElementById('file').click();">Import Exhibitors From CSV</button>
+      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
+    </div>
   </div>
 </template>
 
@@ -47,14 +51,35 @@
     data() {
       return {
         exhibitors: [],
-        index: 0
+        index: 0,
+				channel_name: '',
+        channel_fields: [],
+        channel_entries: [],
+        parse_header: [],
+        parse_csv: [],
+        sortOrders: {},
+        sortKey: '',
+				saleNumber: null,
+	      fullName: null,
+	      tag: null,
+	      species: null,
+	      animalDescription: null,
+	      checkInWeight: null,
+	      clubName: null,
+	      showClassName: null,
+	      placing: null,
+	      buyback: null
       }
     },
 
     created: function() {
       this.fetchExhibitors()
     },
-
+		filters: {
+	    capitalize: function (str) {
+	      return str.charAt(0).toUpperCase() + str.slice(1)
+	    }
+	  },
     methods: {
       fetchExhibitors() {
         // let uri = 'http://localhost:8081/exhibitor'
@@ -124,7 +149,7 @@
 
         return csvRows.join('\n')
       },
-      download(data) {
+      download (data) {
         const blob = new Blob([data], { type: 'text/csv' })
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
@@ -134,7 +159,72 @@
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
-      }
+      },
+			csvJSON(csv) {
+	      var vm = this
+	      var lines = csv.split("\n")
+	      var result = []
+	      var headers = lines[0].split(",")
+	      vm.parse_header = lines[0].split(",")
+	      lines[0].split(",").forEach(function (key) {
+	        vm.sortOrders[key] = 1
+	      })
+
+	      lines.map(function(line, indexLine) {
+	        if (indexLine < 1) return // Jump header line
+
+	        var obj = {}
+	        var currentline = line.split(",")
+
+	        headers.map(function(header, indexHeader) {
+	          obj[header] = currentline[indexHeader].replace(/"/g, '').replace(null, '')
+	        })
+
+	        vm.addExhibitor(obj)
+	        result.push(obj)
+	      })
+	      result.pop() // remove the last item because undefined values
+	      return result // JavaScript object
+	    },
+	    loadCSV(e) {
+	      var vm = this
+	      if (window.FileReader) {
+	        var reader = new FileReader()
+	        reader.readAsText(e.target.files[0])
+	        // Handle errors load
+	        reader.onload = function(event) {
+	          var csv = event.target.result
+	          vm.parse_csv = vm.csvJSON(csv)
+	        }
+	        reader.onerror = function(evt) {
+	          if (evt.target.error.name == "NotReadableError") {
+	            alert("Cannot read file !")
+	          }
+	        }
+	      } else {
+	        alert('FileReader are not supported in this browser.')
+	      }
+	    },
+			async addExhibitor (obj) {
+	      let newExhibitor = {
+	        saleNumber: obj.saleNumber,
+	        fullName: obj.fullName,
+	        tag: obj.tag,
+	        species: obj.species,
+	        animalDescription: obj.animalDescription,
+	        checkInWeight: obj.checkInWeight,
+	        clubName: obj.clubName,
+	        showClassName: obj.showClassName,
+	        placing: obj.placing,
+	        buyback: obj.buyback
+	      }
+	      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/add`
+	      this.axios.post(uri, newExhibitor).then((response) => {
+	        console.log(response)
+	      })
+				this.fetchExhibitors()
+	      this.$router.push({ name: 'Manage' })
+	    }
     }
   }
 </script>
