@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate, { Validator } from 'vee-validate'
+import store from './store/store'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
@@ -48,6 +49,7 @@ Validator.localize(dict)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

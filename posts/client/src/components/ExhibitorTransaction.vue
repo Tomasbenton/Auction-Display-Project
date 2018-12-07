@@ -9,37 +9,62 @@
     <main class="container">
       <h1>Exhibitor Transaction Table</h1>
       Sale Number:
-      <label class="errorLabel" for="saleNumber">{{ errors.first('saleNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number"  min="0" name="saleNumber" v-model="saleNumber">
-      <button>Enter</button>
+      <input type="number" name="saleNumber" v-model="saleNumber">
+      <button @click="displayCurrentExhibitor">Display Current Exhibitor</button>
       Bidder Number:
-      <label class="errorLabel">{{ errors.first('bidderNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="bidderNumber" v-model="bidderNumber">
+      <input type="number" name="bidderNumber" disabled v-model="bidderNumber">
       Amount:
-      <label class="errorLabel">{{ errors.first('purchaseAmount' )}}</label>
-      <input v-validate="'required|numeric'" type="number" min="0" name="purchaseAmount" v-model="purchaseAmount">
-      <button @click=validate>Submit</button>
+      <input type="number" name="purchaseAmount" disabled v-model="purchaseAmount">
+      <button name="addBtn" @click="addNewTransaction" disabled>Submit</button>
     </main>
   </div>
 </template>
 
 <script>
+  import {mapState, mapActions} from 'vuex'
   export default {
     name: 'ExhibitorTransaction',
     data () {
       return {
+        users: [],
         saleNumber: null,
-        bidderNumber: null,
-        purchaseAmount: null,
+        bidderNumber: 0,
+        purchaseAmount: 0,
         purchaseType: "Buyer"
       }
     },
+    computed: {
+      ...mapState({
+        userID: state => state.userID
+      })
+    },
+    created: function () {
+      this.fetchUser()
+    },
     methods: {
-      validate() {
-        this.$validator.validateAll()
-        if (!this.errors.any()) {
-          this.addNewTransaction()
+      async fetchUser() {
+        let url = `http://${process.env.HOST_NAME}:8081/user`
+        await this.axios.get(url).then(response => {
+          this.users = response.data
+          for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].username === "Admin") this.setUserID(this.users[i]._id)
+          }
+        })
+      },
+      async displayCurrentExhibitor() {
+        // gets the user id, stores saleNumber
+        let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
+        let transaction = {
+          saleNumber: this.saleNumber
         }
+        await this.axios.put(url, transaction).then(response => {
+          console.log(response)
+          // add input validity, only numbers
+          // clicking the display button should only enable the other fields if it's valid
+          document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
+          document.querySelector("input[name='purchaseAmount']").removeAttribute("disabled")
+          document.querySelector("button[name='addBtn']").removeAttribute("disabled")
+        })
       },
       async addNewTransaction() {
         let newTransaction = {
@@ -49,9 +74,10 @@
           purchaseType: this.purchaseType
         }
         let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        await this.axios.post(url, newTransaction).then((response) => { console.log(response)
         })
-      }
+      },
+      ...mapActions(['setUserID'])
     }
   }
 </script>

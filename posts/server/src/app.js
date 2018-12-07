@@ -43,14 +43,18 @@ db.createCollection("User", {
         password: {
           bsonType: "string",
           description: "must be a string and is required"
+        },
+        saleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
         }
       }
     }
   }
 })
 // Insert default Username: Admin, Password: Password document if it does not already exist
-db.collection('User').createIndex( { username: 1, password: 1 }, {unique:true} )
-db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password' })
+db.collection('User').createIndex( { username: 1, password: 1}, {unique:true} )
+db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password', 'saleNumber': 0})
 // Create Exhibitor Collection
 db.createCollection("Exhibitor", {
   validator: {
