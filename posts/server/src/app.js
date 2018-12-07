@@ -45,7 +45,7 @@ db.createCollection("User", {
           description: "must be a string and is required"
         },
         saleNumber: {
-          bsonType: "string",
+          bsonType: "number",
           description: "must be a number and is required"
         }
       }
