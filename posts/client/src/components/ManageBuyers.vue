@@ -8,6 +8,8 @@
         <button class="add">Add New Buyer</button>
       </router-link>
       <button @click=deleteAll()>Delete All Buyers</button>
+      <button onclick="document.getElementById('file').click();">Import Buyers</button>
+      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
       <button @click=getCsvReport()>Export All Buyers</button>
     </div>
     <table class="dataTable">
@@ -32,8 +34,6 @@
       </tr>
     </table>
     <div>
-      <button onclick="document.getElementById('file').click();">Import Buyers From CSV</button>
-      <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
     </div>
   </div>
 
