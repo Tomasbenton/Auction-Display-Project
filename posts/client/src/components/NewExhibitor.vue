@@ -2,6 +2,8 @@
   <div id="newExhibitor">
     <h1>Add Exhibitor</h1>
     <div class=form>
+      <!-- <label v-if=isDuplicateSaleNumber()>Error: Duplicate Sale Number</label> -->
+      <!-- <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label> -->
       <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
       <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label>
@@ -84,6 +86,11 @@ export default {
       this.showClassName = ''
       this.placing = ''
       this.buyback = ''
+    },
+    isDuplicateSaleNumber (checkNum) {
+      return this.exhibitors.some(exhibitor => {
+        if (this.checknum == exhibitor.saleNumber) return true
+      })
     }
   }
 }
