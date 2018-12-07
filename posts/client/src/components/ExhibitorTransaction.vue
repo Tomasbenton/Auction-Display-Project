@@ -11,17 +11,17 @@
       Sale Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
-      <label>Exhibitor Name: {{ exhibitorName }}</label>
+      <label class="nameLabel">Exhibitor Name: {{ exhibitorName }}</label>
       <button>Display Current Exhibitor</button>
       Bidder Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
-      <label>Buyer Name: {{ buyerName }}</label>
-      <button name="addtlBuyer">(+) Add Additional Buyer</button>
+      <label class="nameLabel">Buyer Name: {{ buyerName }}</label>
+      <button id="addtlBuyer" name="addtlBuyer">(+) Add Additional Buyer</button>
       Amount:
       <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
       <input v-validate="'required|numeric'" type="number" name="purchaseAmount" v-model="purchaseAmount">
-      <button name="addBtn">Submit</button>
+      <button name="addBtn">Submit & Go To Next Sale</button>
     </main>
   </div>
 </template>
@@ -73,6 +73,11 @@
     color: #404040;
     font-size: 14px;
     padding-top: 100px;
+  }
+
+  #addtlBuyer{
+    width: 50%;
+    /* float: left; */
   }
 
   .container{
