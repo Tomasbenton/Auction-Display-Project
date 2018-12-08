@@ -2,7 +2,8 @@
   <div id="editBuyer">
     <h1>Edit Buyer: {{ name }}</h1>
       <div class=form>
-        <label class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
+        <label v-if="duplicateBidderNumber" class="errorLabel" for="bidderNumber">Error: Duplicate Bidder Number. Bidder Number must be unique.</label>
+        <label v-else class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
         <input v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
         <label class="errorLabel" for="name" >{{ errors.first('name') }}</label>
         <input v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
@@ -16,7 +17,7 @@
         <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
         <button class="app_post_btn" @click=validate>Update</button>
         <router-link v-bind:to="{ name: 'Manage', params: { view: false } }">
-          <button>Return to Manage Data</button>
+          <button>Cancel</button>
         </router-link>
       </div>
   </div>
@@ -32,18 +33,40 @@ export default {
       contactName: '',
       phone: '',
       email: '',
-      logoFileName: ''
+      logoFileName: '',
+      buyers: [],
+      originalBidderNumber: ''
     }
   },
+
+  created: function() {
+    this.fetchBuyers()
+  },
+
   mounted () {
     this.getBuyer()
   },
+
+  computed: {
+    duplicateBidderNumber () {
+      return this.buyers.some(buyer => {
+        if (this.bidderNumber == buyer.bidderNumber && this.originalBidderNumber != this.bidderNumber) return true
+      })
+    }
+  },
+
   methods: {
+    fetchBuyers() {
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer`
+      this.axios.get(uri).then(response => {
+        this.buyers = response.data
+      })
+    },
     async getBuyer () {
-      // let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.$route.params.id
       await this.axios.get(uri).then(response => {
       this.bidderNumber = response.data.bidderNumber
+      this.originalBidderNumber = response.data.bidderNumber
       this.name = response.data.name
       this.contactName = response.data.contactName
       this.phone = response.data.phone
@@ -67,7 +90,6 @@ export default {
         email: this.email,
         logoFileName: this.logoFileName
       }
-      // let uri = 'http://localhost:8081/buyer/' + this.$route.params.id
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.$route.params.id
       await this.axios.put(uri, updatedBuyer).then((response) => {
         console.log(response)

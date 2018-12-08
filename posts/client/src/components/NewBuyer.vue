@@ -2,7 +2,8 @@
   <div id="newBuyer">
     <h1>Add Buyer</h1>
       <div class=form>
-        <label class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
+        <label v-if="duplicateBidderNumber" class="errorLabel" for="bidderNumber">Error: Duplicate Bidder Number. Bidder Number must be unique.</label>
+        <label v-else class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
         <input v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
         <label class="errorLabel" for="name" >{{ errors.first('name') }}</label>
         <input v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
@@ -32,10 +33,30 @@ export default {
       contactName: null,
       phone: null,
       email: null,
-      logoFileName: null
+      logoFileName: null,
+      buyers: []
     }
   },
+
+  created: function() {
+    this.fetchBuyers()
+  },
+
+  computed: {
+    duplicateBidderNumber () {
+      return this.buyers.some(buyer => {
+        if (this.bidderNumber == buyer.bidderNumber) return true
+      })
+    }
+  },
+
   methods: {
+    fetchBuyers() {
+      let uri = `http://${process.env.HOST_NAME}:8081/buyer`
+      this.axios.get(uri).then(response => {
+        this.buyers = response.data
+      })
+    },
     validate () {
       this.$validator.validateAll()
       if (!this.errors.any()) {

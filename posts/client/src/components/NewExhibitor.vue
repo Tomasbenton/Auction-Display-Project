@@ -2,9 +2,8 @@
   <div id="newExhibitor">
     <h1>Add Exhibitor</h1>
     <div class=form>
-      <!-- <label v-if=isDuplicateSaleNumber()>Error: Duplicate Sale Number</label> -->
-      <!-- <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label> -->
-      <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
+      <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
+      <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
       <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label>
       <input v-validate="'required|alpha_spaces'" type="text" name="fullName" placeholder="Full Name" v-model=fullName>
@@ -46,10 +45,30 @@ export default {
       clubName: '',
       showClassName: '',
       placing: '',
-      buyback: ''
+      buyback: '',
+      exhibitors: []
     }
   },
+
+  created: function() {
+      this.fetchExhibitors()
+  },
+
+  computed: {
+    duplicateSaleNumber () {
+      return this.exhibitors.some(exhibitor => {
+        if (this.saleNumber == exhibitor.saleNumber) return true
+      })
+    }
+  },
+  
   methods: {
+    fetchExhibitors() {
+      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor`
+      this.axios.get(uri).then(response => {
+        this.exhibitors = response.data
+        })
+    },
     validate () {
       this.$validator.validateAll()
       if (!this.errors.any()) {
@@ -86,11 +105,6 @@ export default {
       this.showClassName = ''
       this.placing = ''
       this.buyback = ''
-    },
-    isDuplicateSaleNumber (checkNum) {
-      return this.exhibitors.some(exhibitor => {
-        if (this.checknum == exhibitor.saleNumber) return true
-      })
     }
   }
 }

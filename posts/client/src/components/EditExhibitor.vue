@@ -2,7 +2,8 @@
   <div id="editExhibitor">
     <h1>Edit Exhibitor: {{ fullName }}</h1>
     <div class=form>
-      <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
+      <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
+      <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
       <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label> 
       <input v-validate="'required|alpha_spaces'" type="text" name="fullName" placeholder="Full Name" v-model=fullName>
@@ -24,7 +25,7 @@
       <input v-validate="'numeric'" type="text" name="buyback" placeholder="Buyback" v-model=buyback>
       <button class=app_post_btn @click=validate>Update</button>
       <router-link v-bind:to="{ name: 'Manage', params: { view: true } }">
-        <button>Return to Manage Data</button>
+        <button>Cancel</button>
       </router-link>
     </div>
   </div>
@@ -44,18 +45,41 @@ export default {
     clubName: '',
     showClassName: '',
     placing: '',
-    buyback: ''
+    buyback: '',
+    exhibitors: [],
+    originalSaleNum: ''
     }
   },
+
+  created: function() {
+    this.fetchExhibitors()
+  },
+
   mounted () {
     this.getExhibitor()
   },
+
+  computed: {
+    duplicateSaleNumber () {
+      return this.exhibitors.some(exhibitor => {
+        if (this.saleNumber == exhibitor.saleNumber && this.originalSaleNum != this.saleNumber) return true
+      })
+    }
+  },
+
   methods: {
+    fetchExhibitors() {
+      let uri = `http://${process.env.HOST_NAME}:8081/exhibitor`
+      this.axios.get(uri).then(response => {
+        this.exhibitors = response.data
+        })
+    },
+
     async getExhibitor () {
-      // let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
       let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + this.$route.params.id
       await this.axios.get(uri).then(response => {
         this.saleNumber = response.data.saleNumber
+        this.originalSaleNum = response.data.saleNumber
         this.fullName = response.data.fullName
         this.tag = response.data.tag
         this.species = response.data.species
@@ -67,12 +91,14 @@ export default {
         this.buyback = response.data.buyback
       })
     },
+
     validate () {
       this.$validator.validateAll()
       if (!this.errors.any()) {
         this.updatePost()
       }
     },
+
     async updatePost () {
       let updatedExhibitor = {
         id: this.$route.params.id,
@@ -87,7 +113,6 @@ export default {
         placing: this.placing,
         buyback: this.buyback
       }
-      // let uri = 'http://localhost:8081/exhibitor/' + this.$route.params.id
       let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/` + this.$route.params.id
       await this.axios.put(uri, updatedExhibitor).then((response) => {
         console.log(response)
