@@ -2,43 +2,46 @@
   <div id="manageExhibitors">
     <div id="control">
       <h1>Exhibitors</h1>
-      <!--<input type="text" placeholder="Search tag #">-->
       <router-link v-bind:to="{ name: 'NewExhibitor' }">
         <button class="add">Add New Exhibitor</button>
       </router-link>
       <button @click=deleteAll()>Delete All Exhibitors</button>
-      <button onclick="document.getElementById('file').click();">Import Exhibitors</button>
+      <button class="importExport" @click=getCsvReport()>Export All Exhibitors</button>
+      <button class="importExport" onclick="document.getElementById('file').click();">Import Exhibitors</button>
       <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
-      <button @click=getCsvReport()>Export All Exhibitors</button>
     </div>
     <table class="dataTable">
-      <tr>
-        <td><strong>Sale #</strong></td>
-        <td><strong>Full Name</strong></td>
-        <td><strong>Tag</strong></td>
-        <td><strong>Species</strong></td>
-        <td><strong>Animal Description</strong></td>
-        <td><strong>Check-in Weight</strong></td>
-        <td><strong>Club Name</strong></td>
-        <td><strong>Show Class Name</strong></td>
-        <td><strong>Placing</strong></td>
-        <td><strong>Buyback</strong></td>
-        <td><strong>Action</strong></td>
-      </tr>
-      <tr v-for="exhibitor in exhibitors" :key="exhibitor._id">
-        <td>{{ exhibitor.saleNumber }}</td>
-        <td>{{ exhibitor.fullName }}</td>
-        <td>{{ exhibitor.tag }}</td>
-        <td>{{ exhibitor.species }}</td>
-        <td>{{ exhibitor.animalDescription }}</td>
-        <td>{{ exhibitor.checkInWeight }}</td>
-        <td>{{ exhibitor.clubName }}</td>
-        <td>{{ exhibitor.showClassName }}</td>
-        <td>{{ exhibitor.placing }}</td>
-        <td>{{ exhibitor.buyback }}</td>
-        <router-link class="link" v-bind:to="{ name: 'EditExhibitor', params: { id: exhibitor._id } }">Edit</router-link> |
-        <a class="link" @click="deleteExhibitor(exhibitor._id)">Delete</a>
-      </tr>
+      <thead>
+        <tr>
+          <td @click="sort('saleNumber')" class="clickable"><strong>Sale #</strong></td>
+          <td @click="sort('fullName')" class="clickable"><strong>Full Name</strong></td>
+          <td @click="sort('tag')" class="clickable"><strong>Tag</strong></td>
+          <td @click="sort('species')" class="clickable"><strong>Species</strong></td>
+          <td @click="sort('animalDescription')" class="clickable"><strong>Animal Description</strong></td>
+          <td @click="sort('checkInWeight')" class="clickable"><strong>Check-in Weight</strong></td>
+          <td @click="sort('clubName')" class="clickable"><strong>Club Name</strong></td>
+          <td @click="sort('showClassName')" class="clickable"><strong>Show Class Name</strong></td>
+          <td @click="sort('placing')" class="clickable"><strong>Placing</strong></td>
+          <td @click="sort('buyback')" class="clickable"><strong>Buyback</strong></td>
+          <td><strong>Action</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="exhibitor in sortedExhibitors" :key="exhibitor.saleNumber">
+          <td>{{ exhibitor.saleNumber }}</td>
+          <td>{{ exhibitor.fullName }}</td>
+          <td>{{ exhibitor.tag }}</td>
+          <td>{{ exhibitor.species }}</td>
+          <td>{{ exhibitor.animalDescription }}</td>
+          <td>{{ exhibitor.checkInWeight }}</td>
+          <td>{{ exhibitor.clubName }}</td>
+          <td>{{ exhibitor.showClassName }}</td>
+          <td>{{ exhibitor.placing }}</td>
+          <td>{{ exhibitor.buyback }}</td>
+          <router-link class="clickable" v-bind:to="{ name: 'EditExhibitor', params: { id: exhibitor._id } }"><strong>Edit</strong></router-link> |
+          <a class="clickable" id="deleteBtn" @click="deleteExhibitor(exhibitor._id)"><strong>Delete</strong></a>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -66,18 +69,35 @@
 	      clubName: null,
 	      showClassName: null,
 	      placing: null,
-	      buyback: null
+        buyback: null,
+        currentSort: 'name',
+        currentSortDir: 'asc'
       }
     },
 
     created: function() {
       this.fetchExhibitors()
+      this.sort('saleNumber')
     },
+
+    computed: {
+      sortedExhibitors: function() {
+        return this.exhibitors.slice().sort((a, b) => {
+        let modifier = 1
+        if (this.currentSortDir === 'desc') modifier = -1
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier
+        return 0
+        })
+      }
+    },
+
 		filters: {
 	    capitalize: function (str) {
 	      return str.charAt(0).toUpperCase() + str.slice(1)
 	    }
-	  },
+    },
+    
     methods: {
       fetchExhibitors() {
         // let uri = 'http://localhost:8081/exhibitor'
@@ -222,7 +242,14 @@
 	      })
 				this.fetchExhibitors()
 	      this.$router.push({ name: 'Manage' })
-	    }
+      },
+      sort: function(s) {
+      // if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
+      }
+      this.currentSort = s
+      }
     }
   }
 </script>
@@ -265,5 +292,19 @@
     color: #339966;
     font-size: 14px;
     text-transform: uppercase;
+  }
+
+  .clickable:hover strong{
+    cursor: pointer;
+    color: #fadc23;
+    text-decoration: underline;
+  }
+
+  #deleteBtn:hover strong{
+    color: red;
+  }
+
+  .importExport{
+    float: right;
   }
 </style>

@@ -2,36 +2,38 @@
   <div id="manageBuyers">
     <div id="control">
       <h1>Buyers</h1>
-      <!--<input type="text" placeholder="Search tag #">
-      <button>Submit</button>-->
       <router-link v-bind:to="{ name: 'NewBuyer' }">
         <button class="add">Add New Buyer</button>
       </router-link>
       <button @click=deleteAll()>Delete All Buyers</button>
-      <button onclick="document.getElementById('file').click();">Import Buyers</button>
+      <button class="importExport" @click=getCsvReport()>Export All Buyers</button>
+      <button class="importExport" onclick="document.getElementById('file').click();">Import Buyers</button>
       <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
-      <button @click=getCsvReport()>Export All Buyers</button>
     </div>
     <table class="dataTable">
-      <tr>
-        <td><strong>Bidder Number</strong></td>
-        <td><strong>Name</strong></td>
-        <td><strong>Contact Name</strong></td>
-        <td><strong>Phone</strong></td>
-        <td><strong>Email</strong></td>
-        <td><strong>Logo Filename</strong></td>
-        <td><strong>Action</strong></td>
-      </tr>
-      <tr v-for="buyer in buyers" :key="buyer._id">
-        <td>{{ buyer.bidderNumber }}</td>
-        <td>{{ buyer.name }}</td>
-        <td>{{ buyer.contactName }}</td>
-        <td>{{ buyer.phone }}</td>
-        <td>{{ buyer.email }}</td>
-        <td>{{ buyer.logoFileName }}</td>
-        <router-link class="link" v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }">Edit</router-link> |
-        <a class="link" @click="deleteBuyer(buyer._id)">Delete</a>
-      </tr>
+      <thead>
+        <tr>
+          <td @click="sort('bidderNumber')" class="clickable"><strong>Bidder Number</strong></td>
+          <td @click="sort('name')" class="clickable"><strong>Name</strong></td>
+          <td @click="sort('contactName')" class="clickable"><strong>Contact Name</strong></td>
+          <td @click="sort('phone')" class="clickable"><strong>Phone</strong></td>
+          <td @click="sort('email')" class="clickable"><strong>Email</strong></td>
+          <td @click="sort('logoFileName')" class="clickable"><strong>Logo Filename</strong></td>
+          <td><strong>Action</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="buyer in sortedBuyers" :key="buyer.bidderNumber">
+          <td>{{ buyer.bidderNumber }}</td>
+          <td>{{ buyer.name }}</td>
+          <td>{{ buyer.contactName }}</td>
+          <td>{{ buyer.phone }}</td>
+          <td>{{ buyer.email }}</td>
+          <td>{{ buyer.logoFileName }}</td>
+          <router-link class="clickable" v-bind:to="{ name: 'EditBuyer', params: { id: buyer._id } }"><strong>Edit</strong></router-link> |
+          <a class="clickable" id="deleteBtn" @click="deleteBuyer(buyer._id)"><strong>Delete</strong></a>
+        </tr>
+      </tbody>
     </table>
     <div>
     </div>
@@ -58,17 +60,31 @@
         contactName: null,
         phone: null,
         email: null,
-        logoFileName: null
+        logoFileName: null,
+        currentSort: 'name',
+        currentSortDir: 'asc'
       }
     },
 
     created: function() {
       this.fetchBuyers()
+      this.sort('bidderNumber')
+    },
+
+    computed: {
+      sortedBuyers: function() {
+        return this.buyers.slice().sort((a, b) => {
+        let modifier = 1
+        if (this.currentSortDir === 'desc') modifier = -1
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier
+        return 0
+        })
+      }
     },
 
     methods: {
       fetchBuyers() {
-        // let uri = 'http://localhost:8081/buyer'
         let uri = `http://${process.env.HOST_NAME}:8081/buyer`
         this.axios.get(uri).then(response => {
           this.buyers = response.data
@@ -83,12 +99,10 @@
         this.$router.push({ name: 'Manage' })
     },
     async deleteAll() {
-      // let uri = 'http://localhost:8081/buyer/'
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/`
       var delCheck = confirm("Are you sure you want to delete ALL BUYERS?")
       if (delCheck) {
         for (var i = 0; i < this.buyers.length; i++) {
-          // uri = 'http://localhost:8081/buyer/' + this.buyers[i]._id
           uri = `http://${process.env.HOST_NAME}:8081/buyer/` + this.buyers[i]._id
 					this.axios.delete(uri).then((response) => {
 						console.log(response)
@@ -206,6 +220,13 @@
       })
       this.fetchBuyers()
       this.$router.push({ name: 'Manage' })
+    },
+    sort: function(s) {
+      // if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc'
+      }
+      this.currentSort = s
     }
   }
 }
@@ -254,5 +275,19 @@
   .link{
     color: #339966;
     text-transform: uppercase;
+  }
+
+  .clickable:hover strong{
+    cursor: pointer;
+    color: #fadc23;
+    text-decoration: underline;
+  }
+
+  #deleteBtn:hover strong{
+    color: red;
+  }
+
+  .importExport{
+    float: right;
   }
 </style>
