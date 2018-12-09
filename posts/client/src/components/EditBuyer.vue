@@ -10,7 +10,7 @@
         <label class="errorLabel" for="contactName" >{{ errors.first('contactName') }}</label>
         <input v-validate="'required|alpha_spaces'" type=text name=contactName placeholder="Contact Name" v-model=contactName>
         <label class="errorLabel" for="phone" >{{ errors.first('phone') }}</label>
-        <input v-validate="{ required:true, regex:/^(?:\(\d{3}\)|\d{3}-)\d{3}-\d{4}$/ }" type=text name=phone placeholder="Phone (555-555-5555)" v-model=phone>
+        <cleave v-validate="'required|digits:10'" v-model="phone" :options="options" name="phone" placeholder="Phone (555-555-5555)"></cleave>
         <label class="errorLabel" for="email" >{{ errors.first('email') }}</label>
         <input v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
         <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import Cleave from 'vue-cleave-component'
+import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
 export default {
   name: 'EditBuyer',
   data () {
@@ -32,11 +34,21 @@ export default {
       name: '',
       contactName: '',
       phone: '',
+      options: {
+        phone: true,
+        delimiter: '-',
+        phoneRegionCode: 'US'
+      },
       email: '',
       logoFileName: '',
       buyers: [],
       originalBidderNumber: ''
     }
+  },
+
+  components: {
+    Cleave,
+    CleavePhone
   },
 
   created: function() {
@@ -76,7 +88,7 @@ export default {
     },
     validate () {
       this.$validator.validateAll()
-      if (!this.errors.any()) {
+      if (!this.errors.any() && !this.duplicateBidderNumber) {
         this.updatePost()
       }
     },
@@ -86,7 +98,7 @@ export default {
         bidderNumber: this.bidderNumber,
         name: this.name,
         contactName: this.contactName,
-        phone: this.phone,
+        phone: this.phone.replace(/(\d{3})(\d{3})(\d{3})/, "$1-$2-$3"),
         email: this.email,
         logoFileName: this.logoFileName
       }

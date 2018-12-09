@@ -94,7 +94,7 @@ export default {
 
     validate () {
       this.$validator.validateAll()
-      if (!this.errors.any()) {
+      if (!this.errors.any() && !this.duplicateSaleNumber) {
         this.updatePost()
       }
     },

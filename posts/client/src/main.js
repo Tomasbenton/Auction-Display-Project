@@ -7,12 +7,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate, { Validator } from 'vee-validate'
 import store from './store/store'
+import Cleave from 'vue-cleave-component'
 require('./assets/css/layout.css')
 require('./assets/css/styling.css')
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(VeeValidate)
+Vue.use(Cleave)
 
 // Vee-Validate Validator config
 const dict = {
