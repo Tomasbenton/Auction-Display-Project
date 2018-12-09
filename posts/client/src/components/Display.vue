@@ -1,6 +1,7 @@
 <template>
     <div id="display">
-      <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length">
+      <!-- <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length"> -->
+      <section class="currentSale" :key="this.saleNumber" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length">
         <h1>Current Sale:</h1>
         <h2>Name: {{ exhibitors[index].fullName }}</h2>
         <h2>Species: {{ exhibitors[index].species }} </h2>
@@ -37,7 +38,10 @@
         users: [],
         exhibitors: [],
         transactions: [],
-        buyers: []
+        buyers: [],
+        saleNumber: null,
+        displayID: 0,
+        currentSaleCheck: false
       }
     },
     computed: {
@@ -45,29 +49,48 @@
         index: state => state.index,
         previousIndex: state => state.previousIndex,
         bidderIndex: state => state.bidderIndex,
-        saleNumber: state => state.saleNumber,
+        // saleNumber: state => state.saleNumber,
         previousSaleNumber: state => state.previousSaleNumber,
         bidderNumber: state => state.bidderNumber,
         purchaseIndex: state => state.purchaseIndex
       })
     },
     created: function() {
+      this.interval = setInterval(() => this.fetchSaleNumber(), 1000)
       this.fetchSaleNumber()
       this.fetchExhibitors()
-      this.fetchTransactions()
-      this.fetchBuyers()
+      // this.fetchTransactions()
+      // this.fetchBuyers()
     },
     methods: {
       async fetchSaleNumber() {
-        // gets the sale number from user collection
-        let url = `http://${process.env.HOST_NAME}:8081/user`
+        let uri = `http://${process.env.HOST_NAME}:8081/display`
+        await this.axios.get(uri).then(response => {
+          this.displayID = response.data[0]._id
+          this.saleNumber = response.data[0].saleNumber
+          this.currentSaleCheck = response.data[0].currentSaleCheck
+        })
+
+        let uri2 = `http://${process.env.HOST_NAME}:8081/display/` + this.displayID
+
+        if (this.currentSaleCheck === true) {
+          this.currentSaleCheck = false
+          let updatedCheck = {
+            saleNumber: this.saleNumber,
+            currentSaleCheck: this.currentSaleCheck
+          }
+          await this.axios.put(uri2, updatedCheck).then(response => { 
+            window.location.reload()
+          })
+        }
+        /* let url = `http://${process.env.HOST_NAME}:8081/user`
         await this.axios.get(url).then(response => {
           this.users = response.data
           for (let i = 0; i < this.users.length; i++) {
             // sets current sale
             if (this.users[i].username === "Admin") this.setSaleNumber(this.users[i].saleNumber)
           }
-        })
+        }) */
       },
       async fetchExhibitors() {
         let url = `http://${process.env.HOST_NAME}:8081/exhibitor`

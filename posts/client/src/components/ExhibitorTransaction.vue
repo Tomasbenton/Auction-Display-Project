@@ -37,7 +37,10 @@
         purchaseAmount: 0,
         buyerName: "",
         exhibitorName: "",
-        purchaseType: "Buyer"
+        purchaseType: "Buyer",
+        currentSaleCheck: false,
+        previousSaleCheck: false,
+        displayID: 0
       }
     },
     computed: {
@@ -46,32 +49,24 @@
       })
     },
     created: function () {
-      this.fetchUser()
+      this.fetchDisplay()
     },
     methods: {
-      async fetchUser() {
-        let url = `http://${process.env.HOST_NAME}:8081/user`
+      async fetchDisplay() {
+        let url = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(url).then(response => {
-          this.users = response.data
-          for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === "Admin") this.setUserID(this.users[i]._id)
-          }
+          this.displayID = response.data[0]._id
         })
       },
-      // display 
       async displayCurrentExhibitor() {
-        // gets the user id, stores saleNumber
-        let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
-        let transaction = {
-          saleNumber: this.saleNumber
+        this.currentSaleCheck = true
+        let updatedSaleNumber = {
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck
         }
-        await this.axios.put(url, transaction).then(response => {
+        let uri = `http://${process.env.HOST_NAME}:8081/display/` + this.displayID
+        await this.axios.put(uri, updatedSaleNumber).then((response) => {
           console.log(response)
-          // add input validity, only numbers
-          // clicking the display button should only enable the other fields if it's valid
-          /* document.querySelector("input[name='bidderNumber']").removeAttribute("disabled")
-          document.querySelector("input[name='purchaseAmount']").removeAttribute("disabled")
-          document.querySelector("button[name='addBtn']").removeAttribute("disabled") */
         })
       },
       async addNewTransaction() {
@@ -82,7 +77,8 @@
           purchaseType: this.purchaseType
         }
         let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        await this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        await this.axios.post(url, newTransaction).then((response) => {
+          console.log(response)
         })
       },
       async getExhibitorBySaleNum () {
@@ -146,7 +142,7 @@
 
   button{
     display: block;
-    margin: -25px 0px 30px auto;
+    margin: 0px 0px 30px auto;
     padding: 5px 10px;
     width: 100%;
     height: 50px;

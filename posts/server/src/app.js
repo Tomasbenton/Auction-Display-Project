@@ -7,6 +7,7 @@ const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 const userRoutes = require('../exproutes/user.route');
 const transactionRoutes = require('../exproutes/transaction.route');
+const displayRoutes = require('../exproutes/display.route');
 require('dotenv').config();
 
 // Express.js
@@ -18,6 +19,7 @@ app.use('/exhibitor', exhibitorRoutes);
 app.use('/buyer', buyerRoutes);
 app.use('/user', userRoutes);
 app.use('/transaction', transactionRoutes);
+app.use('/display', displayRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');
@@ -168,6 +170,31 @@ db.createCollection("Transaction", {
     }
   }
 })
+// Create Display Collection
+db.createCollection("Display", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["saleNumber", "currentSaleCheck", "previousSaleCheck"],
+      properties: {
+        saleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        currentSaleCheck: {
+          bsonType: "boolean",
+          description: "must be a boolean and is required"
+        },
+        previousSaleCheck: {
+          bsonType: "boolean",
+          description: "must be a boolean and is required"
+        }
+      }
+    }
+  }
+})
+db.collection('Display').createIndex( { saleNumber: 1, currentSaleCheck: 1, previousSaleCheck: 1 }, {unique:true} )
+db.collection('Display').insertOne( {'saleNumber': 0, 'currentSaleCheck': false, 'previousSaleCheck' : false})
 
 // Node API endpoint
 var port = process.env.PORT || 8081
