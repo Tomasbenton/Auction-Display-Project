@@ -144,13 +144,13 @@ db.createCollection("Transaction", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["saleNumber", "bidders", "purchaseAmount", "purchaseType"],
+      required: ["saleNumber", "bidderNumber", "purchaseAmount", "purchaseType"],
       properties: {
         saleNumber: {
           bsonType: "number",
           description: "must be a number and is required"
         },
-        bidders: {
+        bidderNumber: {
           bsonType: "string",
           description: "must be a string and is required"
         },
@@ -171,21 +171,29 @@ db.createCollection("Display", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["saleNumber", "currentSaleCheck", "previousSaleCheck"],
+      required: ["saleNumber", "previousSaleNumber", "showCurrentSale", "showPreviousSale", "showCurrentSaleSection", "showPreviousSaleSection"],
       properties: {
         saleNumber: {
           bsonType: "number",
           description: "must be a number and is required"
         },
-        currentSaleCheck: {
-          bsonType: "boolean",
-          description: "must be a boolean and is required"
-        },
-        previousSaleCheck: {
-          bsonType: "boolean",
-          description: "must be a boolean and is required"
+        previousSaleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
         },
         showCurrentSale: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
+        },
+        showPreviousSale: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
+        },
+        showCurrentSaleSection: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
+        },
+        showPreviousSaleSection: {
           bsonType: "boolean",
           description: "must be a boolean in enum {Buyer, Addon} and is required"
         }
@@ -193,8 +201,8 @@ db.createCollection("Display", {
     }
   }
 })
-db.collection('Display').createIndex( { saleNumber: 1, currentSaleCheck: 1, previousSaleCheck: 1 }, {unique:true} )
-db.collection('Display').insertOne( {'saleNumber': 0, 'currentSaleCheck': false, 'previousSaleCheck' : false})
+db.collection('Display').createIndex( { saleNumber: 1, previousSaleNumber:1, showCurrentSale: 1, showPreviousSale: 1, showCurrentSaleSection: 1, showPreviousSaleSection: 1}, {unique:true} )
+db.collection('Display').insertOne( {'saleNumber': 0, 'previousSaleNumber': 0, 'showCurrentSale': false, 'showPreviousSale' : false, 'showCurrentSaleSection': false, 'showPreviousSaleSection': false})
 
 // Node API endpoint
 var port = process.env.PORT || 8081

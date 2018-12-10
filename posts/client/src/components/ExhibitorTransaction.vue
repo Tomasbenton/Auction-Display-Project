@@ -32,16 +32,17 @@
     name: 'ExhibitorTransaction',
     data () {
       return {
-        users: [],
         saleNumber: 0,
+        previousSaleNumber: 0,
         bidderNumber: 0,
         purchaseAmount: 0,
         buyerName: "",
         exhibitorName: "",
         purchaseType: "Buyer",
-        currentSaleCheck: false,
-        previousSaleCheck: false,
         showCurrentSale: false,
+        showPreviousSale: false,
+        showCurrentSaleSection: false,
+        showPreviousSaleSection: false,
         displayID: 0,
         bidders: []
       }
@@ -57,47 +58,52 @@
     methods: {
       /*
         FUNCTIONALITY
-        1) display the current exhibitor
+        1) display the current exhibitor [x]
           - change sale number in display
           - check for data
-          - reload paege
-        2) have an array of bidders if they want to add more
+          - reload page
+        2) have an array of bidders if they want to add more [x]
           - store as string
-        3) add a new transaction
+        3) add a new transaction [x]
         --- add input validation for bidder field
       */
       async fetchDisplay() {
         let url = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(url).then(response => {
-          this.displayID = response.data[0]._id
+          if (response.data.length >= 1) this.displayID = response.data[0]._id
         })
       },
       async displayCurrentExhibitor() {
-        this.currentSaleCheck = true
+        // sets flag to display the current sale
         this.showCurrentSale = true
-        let updatedSaleNumber = {
+        // this.showCurrentSaleSection = true
+        let state = {
           saleNumber: this.saleNumber,
-          currentSaleCheck: this.currentSaleCheck,
-          previousSaleCheck: this.previousSaleCheck,
-          showCurrentSale: this.showCurrentSale
+          previousSaleNumber: this.previousSaleNumber,
+          showCurrentSale: this.showCurrentSale,
+          showPreviousSale: this.showPreviousSale,
+          showCurrentSaleSection: this.showCurrentSaleSection,
+          showPreviousSaleSection: this.showPreviousSaleSection
         }
-        console.log(this.showCurrentSale)
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
-        await this.axios.put(uri, updatedSaleNumber).then((response) => { })
+        await this.axios.put(uri, state).then((response) => { })
       },
       async addNewBidder() {
+        // pushes to array if there's more than on bidder number [x]
+        // has a confirmation message that it's been added to the table [ ]
         this.bidders.push(this.bidderNumber)
+        console.log(this.bidders)
+        // resets input field
         this.bidderNumber = ""
       },
       async addNewTransaction() {
-        // checks how many bidders there are
+        // checks how many bidders there are, joins it if there's more than one
         if (this.bidders.length > 1) this.bidders = this.bidders.join('-')
         else this.bidders = this.bidderNumber.toString()
-        console.log(this.bidders)
 
         let newTransaction = {
           saleNumber: this.saleNumber,
-          bidders: this.bidders,
+          bidderNumber: this.bidders,
           purchaseAmount: this.purchaseAmount,
           purchaseType: this.purchaseType
         }
@@ -105,15 +111,23 @@
         await this.axios.post(uri, newTransaction).then((response) => {
           console.log(response)
         })
-        this.previousSaleCheck = true
-        this.showCurrentSale = false
-        let updatedCheck = {
+
+        // sets flag to show previous sale
+        this.showPreviousSale = true
+        // this.showCurrentSaleSection = false
+        // this.showPreviousSaleSection = true
+        this.previousSaleNumber = this.saleNumber
+        console.log(this.previousSaleNumber)
+        let state = {
           saleNumber: this.saleNumber,
-          currentSaleCheck: this.currentSaleCheck,
-          previousSaleCheck: this.previousSaleCheck,
-          showCurrentSale: this.showCurrentSale
+          previousSaleNumber: this.previousSaleNumber,
+          showCurrentSale: this.showCurrentSale,
+          showPreviousSale: this.showPreviousSale,
+          showCurrentSaleSection: this.showCurrentSaleSection,
+          showPreviousSaleSection: this.showPreviousSaleSection
         }
-        await this.axios.put(`http://${process.env.HOST_NAME}:8081/display/` + this.displayID, updatedCheck).then(response => { })
+        await this.axios.put(`http://${process.env.HOST_NAME}:8081/display/` + this.displayID, state).then(response => { })
+        // empties array of bidders
         this.bidders = []
       },
       async getExhibitorBySaleNum () {

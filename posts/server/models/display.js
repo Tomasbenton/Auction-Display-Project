@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 
 var DisplaySchema = new Schema({
   saleNumber: Number,
-  currentSaleCheck: Boolean,
-  previousSaleCheck: Boolean,
-  showCurrentSale: Boolean
+  previousSaleNumber: Number,
+  showCurrentSale: Boolean,
+  showPreviousSale: Boolean,
+  showCurrentSaleSection: Boolean,
+  showPreviousSaleSection: Boolean
 },{
     collection: 'Display'
 });

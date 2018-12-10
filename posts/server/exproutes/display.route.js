@@ -43,9 +43,11 @@ displayRoutes.route('/:id').put((req, res) => {
       return next(new Error('Error getting the display!'));
     else {
         display.saleNumber = req.body.saleNumber;
-        display.currentSaleCheck = req.body.currentSaleCheck;
-        display.previousSaleCheck = req.body.previousSaleCheck;
+        display.previousSaleNumber = req.body.previousSaleNumber;
         display.showCurrentSale = req.body.showCurrentSale;
+        display.showPreviousSale = req.body.showPreviousSale;
+        display.showCurrentSaleSection = req.body.showCurrentSaleSection;
+        display.showPreviousSaleSection = req.body.showPreviousSaleSection;
         display.save().then( display => {
           res.json('Display updated successfully');
       })

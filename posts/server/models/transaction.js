@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 var TransactionSchema = new Schema({
   saleNumber: Number,
-  bidders: String,
+  bidderNumber: String,
   purchaseAmount: Number,
   purchaseType: String
 },{
