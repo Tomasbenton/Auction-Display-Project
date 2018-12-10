@@ -80,7 +80,7 @@
       async addNewTransaction() {
         let newTransaction = {
           saleNumber: this.saleNumber,
-          bidderNumber: this.bidders,
+          bidderNumber: this.bidderNumber,
           purchaseAmount: this.purchaseAmount,
           purchaseType: this.purchaseType
         }

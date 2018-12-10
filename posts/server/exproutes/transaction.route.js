@@ -28,6 +28,20 @@ transactionRoutes.route('/').get(function (req, res) {
     })
 })
 
+// Fetch latest transaction
+transactionRoutes.route('/saleNumber/:saleNumber').get((req, res) => {
+  var saleNum = req.params.saleNumber
+  Transaction.find({ 'saleNumber' : saleNum }, (err, transaction) => {
+    if (err) {
+      console.log(err);
+      res.json(err)
+    }
+    else {
+        res.json(transaction);
+    }
+  });
+});
+
 // Fetch single transaction
 transactionRoutes.route('/:id').get((req, res) => {
   var id = req.params.id;
