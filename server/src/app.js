@@ -171,7 +171,7 @@ db.createCollection("Display", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["saleNumber", "previousSaleNumber", "showCurrentSale", "showPreviousSale", "showCurrentSaleSection", "showPreviousSaleSection"],
+      required: ["saleNumber", "previousSaleNumber", "showCurrentSale", "showPreviousSale"],
       properties: {
         saleNumber: {
           bsonType: "number",
@@ -188,21 +188,13 @@ db.createCollection("Display", {
         showPreviousSale: {
           bsonType: "boolean",
           description: "must be a boolean in enum {Buyer, Addon} and is required"
-        },
-        showCurrentSaleSection: {
-          bsonType: "boolean",
-          description: "must be a boolean in enum {Buyer, Addon} and is required"
-        },
-        showPreviousSaleSection: {
-          bsonType: "boolean",
-          description: "must be a boolean in enum {Buyer, Addon} and is required"
         }
       }
     }
   }
 })
-db.collection('Display').createIndex( { saleNumber: 1, previousSaleNumber:1, showCurrentSale: 1, showPreviousSale: 1, showCurrentSaleSection: 1, showPreviousSaleSection: 1}, {unique:true} )
-db.collection('Display').insertOne( {'saleNumber': 0, 'previousSaleNumber': 0, 'showCurrentSale': false, 'showPreviousSale' : false, 'showCurrentSaleSection': false, 'showPreviousSaleSection': false})
+db.collection('Display').createIndex( { saleNumber: 1, previousSaleNumber:1}, {unique:true} )
+db.collection('Display').insertOne( {'saleNumber': 0, 'previousSaleNumber': 0, 'showCurrentSale': false, 'showPreviousSale' : false})
 
 // Node API endpoint
 var port = process.env.PORT || 8081

@@ -1,13 +1,13 @@
 <template>
-  <div id="exhibitorTransaction">
+  <div id="addonTransaction">
     <router-link v-bind:to="{ name: 'Admin' }">
       <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
-    <router-link to="/transaction/addon">
-      <button class="topBtn"><span class="arrow">&#8596;</span> Go to Addon Transaction Table</button>
+    <router-link to="/transaction/buyer">
+      <button class="topBtn"><span class="arrow">&#8596;</span> Go to Buyer Transaction Table</button>
     </router-link>
     <main class="container">
-      <h1>Create Buyer Transaction</h1>
+      <h1>Create Addon Transaction</h1>
       Sale Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
@@ -16,7 +16,6 @@
       Bidder Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
-      <button @click="addNewBidder">Add Another Bidder</button>
       <label class="nameLabel">Buyer Name: {{ buyerName }}</label>
       Amount:
       <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
@@ -27,83 +26,48 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex'
   export default {
-    name: 'ExhibitorTransaction',
+    name: 'AddonTransaction',
     data () {
       return {
         saleNumber: 0,
         previousSaleNumber: 0,
         bidderNumber: 0,
         purchaseAmount: 0,
-        buyerName: "",
-        exhibitorName: "",
-        purchaseType: "Buyer",
-        showCurrentSale: false,
-        showPreviousSale: false,
-        showCurrentSaleSection: false,
-        showPreviousSaleSection: false,
+        purchaseType: "Addon",
+        currentSaleCheck: false,
+        previousSaleCheck: false,
         displayID: 0,
-        bidders: []
+        buyerName: "",
+        exhibitorName: ""
       }
-    },
-    computed: {
-      ...mapState({
-        userID: state => state.userID
-      })
     },
     created: function () {
       this.fetchDisplay()
     },
     methods: {
-      /*
-        FUNCTIONALITY
-        1) display the current exhibitor [x]
-          - change sale number in display
-          - check for data
-          - reload page
-        2) have an array of bidders if they want to add more [x]
-          - store as string
-        3) add a new transaction [x]
-        --- add input validation for bidder field
-      */
       async fetchDisplay() {
         let url = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(url).then(response => {
-          if (response.data.length >= 1) this.displayID = response.data[0]._id
+          this.displayID = response.data[0]._id
         })
       },
       async displayCurrentExhibitor() {
         // sets flag to display the current sale
         this.showCurrentSale = true
-        // this.showCurrentSaleSection = true
         let state = {
           saleNumber: this.saleNumber,
           previousSaleNumber: this.previousSaleNumber,
           showCurrentSale: this.showCurrentSale,
-          showPreviousSale: this.showPreviousSale,
-          showCurrentSaleSection: this.showCurrentSaleSection,
-          showPreviousSaleSection: this.showPreviousSaleSection
+          showPreviousSale: this.showPreviousSale
         }
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
         await this.axios.put(uri, state).then((response) => { })
       },
-      async addNewBidder() {
-        // pushes to array if there's more than on bidder number [x]
-        // has a confirmation message that it's been added to the table [ ]
-        this.bidders.push(this.bidderNumber)
-        console.log(this.bidders)
-        // resets input field
-        this.bidderNumber = ""
-      },
       async addNewTransaction() {
-        // checks how many bidders there are, joins it if there's more than one
-        if (this.bidders.length > 1) this.bidders = this.bidders.join('-')
-        else this.bidders = this.bidderNumber.toString()
-
         let newTransaction = {
           saleNumber: this.saleNumber,
-          bidderNumber: this.bidders,
+          bidderNumber: this.bidderNumber,
           purchaseAmount: this.purchaseAmount,
           purchaseType: this.purchaseType
         }
@@ -111,24 +75,6 @@
         await this.axios.post(uri, newTransaction).then((response) => {
           console.log(response)
         })
-
-        // sets flag to show previous sale
-        this.showPreviousSale = true
-        // this.showCurrentSaleSection = false
-        // this.showPreviousSaleSection = true
-        // this.previousSaleNumber = this.saleNumber
-        console.log(this.previousSaleNumber)
-        let state = {
-          saleNumber: this.saleNumber,
-          previousSaleNumber: this.previousSaleNumber,
-          showCurrentSale: this.showCurrentSale,
-          showPreviousSale: this.showPreviousSale,
-          showCurrentSaleSection: this.showCurrentSaleSection,
-          showPreviousSaleSection: this.showPreviousSaleSection
-        }
-        await this.axios.put(`http://${process.env.HOST_NAME}:8081/display/` + this.displayID, state).then(response => { })
-        // empties array of bidders
-        this.bidders = []
       },
       async getExhibitorBySaleNum () {
         let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.saleNumber}`
@@ -151,14 +97,13 @@
             this.buyerName = response.data.name
           }
         })
-      },
-      ...mapActions(['setUserID'])
+      }
     }
   }
 </script>
 
 <style scoped>
-  #exhibitorTransaction{
+  #addonTransaction{
     width: 100%;
     height: 100%;
     text-align: center;
@@ -191,7 +136,6 @@
 
   button{
     display: block;
-    margin: 0px 0px 30px auto;
     padding: 5px 10px;
     width: 100%;
     height: 50px;

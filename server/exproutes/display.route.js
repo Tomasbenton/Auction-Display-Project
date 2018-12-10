@@ -46,8 +46,6 @@ displayRoutes.route('/:id').put((req, res) => {
         display.previousSaleNumber = req.body.previousSaleNumber;
         display.showCurrentSale = req.body.showCurrentSale;
         display.showPreviousSale = req.body.showPreviousSale;
-        display.showCurrentSaleSection = req.body.showCurrentSaleSection;
-        display.showPreviousSaleSection = req.body.showPreviousSaleSection;
         display.save().then( display => {
           res.json('Display updated successfully');
       })

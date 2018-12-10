@@ -21,14 +21,17 @@ export default {
       input: {
         username: "",
         password: ""
-      }
+      },
+      displayID: 0
     }
   },
 
   beforeCreate() {
     this.$parent.authenticated = false
   },
-
+  created() {
+    this.resetDisplay()
+  },
   methods: {
     login() {
       if (this.input.username != "" && this.input.password != "") {
@@ -45,6 +48,23 @@ export default {
         console.log("Username and password are required")
         document.getElementById("hidden").innerHTML = "Username and password are required"
       }
+    },
+    async resetDisplay() {
+      let url = `http://${process.env.HOST_NAME}:8081/display`
+        await this.axios.get(url).then(response => {
+          if (response.data.length >= 1) this.displayID = response.data[0]._id
+        })
+
+        let state = {
+          saleNumber: 0,
+          previousSaleNumber: 0,
+          showCurrentSale: false,
+          showPreviousSale: false,
+          showCurrentSaleSection: false,
+          showPreviousSaleSection: false
+        }
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        await this.axios.put(uri, state).then((response) => { })
     }
   }
 }

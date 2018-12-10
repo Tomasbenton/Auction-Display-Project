@@ -7,7 +7,7 @@
 	<router-link to="/display"><button>Current/Previous Sale Display</button></router-link>
 	<router-link to="/exhibitor"><button>List of Exhibitors</button></router-link>
 	<router-link to="/buyer"><button>Buyer/Addons Display</button></router-link>
-  <router-link to="/transaction/exhibitor"><button>Exhibitor Transaction Table</button></router-link>
+  <router-link to="/transaction/buyer"><button>Buyer Transaction Table</button></router-link>
   <router-link to="/transaction/addon"><button>Addon Transaction Table</button></router-link>
 	<router-link to="/admin" class-active="active" v-on:click.native="logout()" replace><button class="logout">Logout</button></router-link>
   <router-view @authenticated="setAuthenticated" />

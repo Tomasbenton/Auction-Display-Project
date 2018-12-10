@@ -21,10 +21,10 @@
           <section v-if="buyer !== null" v-for="buyer in buyers" :key="buyer._id">
             <h2> {{ buyer.name }} </h2>
           </section>
-          <h2>Addons:</h2>
+          <!-- <h2>Addons:</h2>
           <section v-if="addOn !== null" v-for="addOn in addOns" :key="addOn._id">
             <h2> {{ addOn.name }} </h2>
-          </section>
+          </section> -->
         </section>
         <section class="previousSale" v-else>
           <h1>Previous Sale</h1>
@@ -32,7 +32,7 @@
         </section>
       </section>
       <section v-else>
-        Loading...
+        Loading... Please submit a current sale.
       </section>
     </div>
 </template>
@@ -50,26 +50,17 @@
         addOns: [],
         previousSaleNumber: 0,
         displayID: 0,
-        previousSaleCheck: false,
         purchaseAmount: 0,
         bidderNumber: 0,
         bidderNumbers: 0,
         bidders: [],
         showCurrentSale: false,
-        showPreviousSale: false,
-        showCurrentSaleSection: false,
-        showPreviousSaleSection: false
+        showPreviousSale: false
       }
     },
     computed: {
       ...mapState({
-        index: state => state.index,
-        previousIndex: state => state.previousIndex,
-        bidderIndex: state => state.bidderIndex,
         saleNumber: state => state.saleNumber
-        // previousSaleNumber: state => state.previousSaleNumber,
-        // bidderNumber: state => state.bidderNumber
-        // purchaseAmount: state => state.purchaseAmount
       })
     },
     created: function() {
@@ -104,8 +95,8 @@
         this.fetchPreviousExhibitor()
         this.fetchTransaction()
         this.fetchBuyers()
-        this.fetchAddOns()
-        this.fetchAddOnBuyers()
+        // this.fetchAddOns()
+        // this.fetchAddOnBuyers()
       },
       async displayCurrentSale() {
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
@@ -114,24 +105,18 @@
           saleNumber: this.saleNumber,
           previousSaleNumber: this.previousSaleNumber,
           showCurrentSale: this.showCurrentSale,
-          showPreviousSale: this.showPreviousSale,
-          showCurrentSaleSection: this.showCurrentSaleSection,
-          showPreviousSaleSection: this.showPreviousSaleSection
+          showPreviousSale: this.showPreviousSale
         }
         await this.axios.put(uri, state).then(response => {})
       },
       async displayPreviousSale() {
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
         this.showPreviousSale = false
-        // this.showPreviousSaleSection = true
-        // this.showCurrentSaleSection = false
         let updatedCheck = {
           saleNumber: this.saleNumber,
           previousSaleNumber: this.previousSaleNumber,
           showCurrentSale: this.showCurrentSale,
-          showPreviousSale: this.showPreviousSale,
-          showCurrentSaleSection: this.showCurrentSaleSection,
-          showPreviousSaleSection: this.showPreviousSaleSection
+          showPreviousSale: this.showPreviousSale
         }
         await this.axios.put(uri, updatedCheck).then(response => { })
         window.location.reload()
@@ -171,20 +156,22 @@
       },
       async fetchBuyers() {
         this.parseBidderNumber()
-        if (this.bidderNumbers.length > 1) {
+        // bad code, it's supposed to list all bidders
+        /* if (this.bidderNumbers.length > 1) {
           for (let i = 0; i < this.bidderNumbers.length; i++) {
             let url = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers[i]}`
             await this.axios.get(url).then(response => {
               this.buyers[i] = response.data
             })
           }
-        } else {
+        } else { */
           let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers}`
           await this.axios.get(uri).then(response => {
             this.buyers[0] = response.data
           })
-        }
+        // }
       },
+      /*
       async fetchAddOns() {
         let uri = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.previousSaleNumber}`
         await this.axios.get(uri).then(response => {
@@ -211,9 +198,9 @@
               this.addOns[0] = response.data
           })
         }
-      },
+      },*/
       parseBidderNumber() {
-        if (this.bidderNumber.length > 1) {
+        /* if (this.bidderNumber.length > 1) {
           let array = this.bidderNumber.split("-")
           for (let i = 0; i < array.length; i++) {
             // console.log(this.bidderNumbers)
@@ -222,11 +209,11 @@
             // this.bidderNumbers[i] = parseInt(array[i])
             // console.log(this.bidderNumbers[i])
           }
-        } else {
+        } else { */
           this.bidderNumbers = parseInt(this.bidderNumber)
-        }
+        // }
       },
-      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseAmount'])
+      ...mapActions(['setSaleNumber'])
     }
   }
 </script>
