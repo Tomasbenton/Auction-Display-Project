@@ -12,7 +12,7 @@ import NewExhibitor from '@/components/NewExhibitor'
 import NewBuyer from '@/components/NewBuyer'
 import EditBuyer from '@/components/EditBuyer'
 import EditExhibitor from '@/components/EditExhibitor'
-import ExhibitorTransaction from '@/components/ExhibitorTransaction'
+import BuyerTransaction from '@/components/BuyerTransaction'
 import AddonTransaction from '@/components/AddonTransaction'
 
 Vue.use(Router)
@@ -87,9 +87,9 @@ export default new Router({
       component: EditExhibitor
     },
     {
-      path: '/transaction/exhibitor',
-      name: 'ExhibitorTransaction',
-      component: ExhibitorTransaction
+      path: '/transaction/buyer',
+      name: 'BuyerTransaction',
+      component: BuyerTransaction
     },
     {
       path: '/transaction/addon',
