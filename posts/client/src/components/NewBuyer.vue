@@ -50,7 +50,7 @@ export default {
     CleavePhone
   },
 
-  created: function() {
+  created () {
     this.fetchBuyers()
   },
 
@@ -90,8 +90,21 @@ export default {
         console.log(response)
       })
     },
+    getNextAvailableBidderNumber () {
+      var existingBidderNumbers = []
+      var buyer
+
+      this.fetchBuyers()
+      for (buyer of this.buyers) {
+        existingBidderNumbers.push(buyer.bidderNumber)
+      }
+      existingBidderNumbers.push(parseInt(this.bidderNumber))
+
+      var max = parseInt(Math.max(...existingBidderNumbers))
+      return max + 1
+    },
     resetBuyer () {
-      this.bidderNumber++
+      this.bidderNumber = this.getNextAvailableBidderNumber()
       this.name = ''
       this.contactName = ''
       this.phone = ''

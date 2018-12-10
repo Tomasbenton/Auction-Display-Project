@@ -50,7 +50,7 @@ export default {
     }
   },
 
-  created: function() {
+  created () {
       this.fetchExhibitors()
   },
 
@@ -94,8 +94,21 @@ export default {
         console.log(response)
       })
     },
+    getNextAvailableSaleNumber () {
+      var existingSaleNumbers = []
+      var exhibitor
+
+      this.fetchExhibitors()
+      for (exhibitor of this.exhibitors) {
+        existingSaleNumbers.push(exhibitor.saleNumber)
+      }
+      existingSaleNumbers.push(parseInt(this.saleNumber))
+
+      var max = parseInt(Math.max(...existingSaleNumbers))
+      return max + 1
+    },
     resetExhibitor () {
-      this.saleNumber++
+      this.saleNumber = this.getNextAvailableSaleNumber()
       this.fullName = ''
       this.tag = ''
       this.species = ''
