@@ -3,20 +3,25 @@
     <router-link v-bind:to="{ name: 'Admin' }">
       <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
-    <router-link to="/transaction/exhibitor">
+    <router-link to="/transaction/addon">
       <button class="topBtn"><span class="arrow">&#8596;</span> Go to Buyer Transaction Table</button>
     </router-link>
-    <div class="container">
-      <h1>Addon Transaction Table</h1>
-      Sale Number: 
-      <input type="number" name="saleNumber" v-model="saleNumber">
+    <main class="container">
+      <h1>Create Addon Transaction</h1>
+      Sale Number:
+      <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
+      <label class="nameLabel">Exhibitor Name: {{ exhibitorName }}</label>
       <button @click="displayCurrentExhibitor">Submit Current Sale</button>
-      Bidder Number: 
-      <input type="number" name="bidderNumber" v-model="bidderNumber">
+      Bidder Number:
+      <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
+      <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
+      <label class="nameLabel">Buyer Name: {{ buyerName }}</label>
       Amount:
-      <input type="number" name="purchaseAmount" v-model="purchaseAmount">
-      <button name="addBtn" @click="addNewTransaction">Submit</button>
-    </div>
+      <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
+      <input v-validate="'required|numeric'" type="number" name="purchaseAmount" v-model="purchaseAmount">
+      <button name="addBtn" @click="addNewTransaction">Submit & Go To Next Sale</button>
+    </main>
   </div>
 </template>
 
@@ -27,13 +32,18 @@
     data () {
       return {
         users: [],
-        saleNumber: null,
+        saleNumber: 0,
+        previousSaleNumber: 0,
         bidderNumber: 0,
         purchaseAmount: 0,
         purchaseType: "Addon",
         currentSaleCheck: false,
         previousSaleCheck: false,
-        displayID: 0
+        displayID: 0,
+        buyerName: "",
+        exhibitorName: "",
+        showCurrentSaleSection: false,
+        showPreviousSaleSection: false
       }
     },
     computed: {
@@ -52,24 +62,53 @@
         })
       },
       async displayCurrentExhibitor() {
-        this.currentSaleCheck = true
-        let updatedSaleNumber = {
+        // sets flag to display the current sale
+        this.showCurrentSale = true
+        // this.showCurrentSaleSection = true
+        if (this.saleNumber > 1) this.previousSaleNumber = this.saleNumber - 1
+        let state = {
           saleNumber: this.saleNumber,
-          currentSaleCheck: this.currentSaleCheck,
-          previousSaleCheck: this.previousSaleCheck
+          previousSaleNumber: this.previousSaleNumber,
+          showCurrentSale: this.showCurrentSale,
+          showPreviousSale: this.showPreviousSale,
+          showCurrentSaleSection: this.showCurrentSaleSection,
+          showPreviousSaleSection: this.showPreviousSaleSection
         }
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
-        await this.axios.put(uri, updatedSaleNumber).then((response) => { })
+        await this.axios.put(uri, state).then((response) => { })
       },
       async addNewTransaction() {
         let newTransaction = {
           saleNumber: this.saleNumber,
-          bidderNumber: this.bidderNumber,
+          bidderNumber: this.bidders,
           purchaseAmount: this.purchaseAmount,
           purchaseType: this.purchaseType
         }
-        let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        await this.axios.post(url, newTransaction).then((response) => { console.log(response)
+        let uri = `http://${process.env.HOST_NAME}:8081/transaction/add`
+        await this.axios.post(uri, newTransaction).then((response) => {
+          console.log(response)
+        })
+      },
+      async getExhibitorBySaleNum () {
+        let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.saleNumber}`
+        await this.axios.get(uri).then(response => {
+          if (response.data == null) {
+            this.exhibitorName = `Exhibitor with sale number ${this.saleNumber} does not exist.` 
+          }
+          else {
+            this.exhibitorName = response.data.fullName
+          }
+        })
+      },
+      async getBuyerByBidderNum () {
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumber}`
+        await this.axios.get(uri).then(response => {
+          if (response.data == null) {
+            this.buyerName = `Buyer with bidder number ${this.bidderNumber} does not exist.` 
+          }
+          else {
+            this.buyerName = response.data.name
+          }
         })
       },
       ...mapActions(['setUserID'])

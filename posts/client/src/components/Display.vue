@@ -34,7 +34,6 @@
   export default {
     data() {
       return {
-        users: [],
         exhibitor: [],
         previousExhibitor: [],
         transaction: [],
@@ -42,7 +41,6 @@
         previousSaleNumber: 0,
         displayID: 0,
         previousSaleCheck: false,
-        num: 0,
         purchaseAmount: 0,
         bidderNumbers: 0,
         bidders: [],
