@@ -5,7 +5,7 @@
           <h1>Current Sale:</h1>
           <h2>Name: {{exhibitor.fullName}}</h2>
           <h2>Species: {{exhibitor.species}}</h2>
-          <h2>Weight: {{exhibitor.checkInWeight}}</h2>
+          <h2>Weight: {{exhibitor.checkInWeight}} lbs</h2>
         </section>
         <section class="currentSale" v-else>
           <h1>Current Sale:</h1>
@@ -16,7 +16,7 @@
           <h2>Name: {{ previousExhibitor.fullName }}</h2>
           <h2>Species: {{ previousExhibitor.species }}</h2>
           <h2>Check in weight: {{ previousExhibitor.checkInWeight }}</h2>
-          <h2>Total Purchase Amount: {{ purchaseAmount }}</h2>
+          <h2>Total Purchase Amount: ${{ purchaseAmount }}</h2>
           <h2>Buyers:</h2>
           <section v-if="buyer !== null" v-for="buyer in buyers" :key="buyer._id">
             <h2> {{ buyer.name }} </h2>
@@ -46,8 +46,8 @@
         previousExhibitor: [],
         transaction: [],
         buyers: [],
-        addOnNumbers: [],
-        addOns: [],
+        // addOnNumbers: [],
+        // addOns: [],
         previousSaleNumber: 0,
         displayID: 0,
         purchaseAmount: 0,
@@ -166,7 +166,7 @@
         } else { */
           let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers}`
           await this.axios.get(uri).then(response => {
-            this.buyers[0] = response.data
+            if (response.data !== null) this.buyers[0] = response.data
           })
         // }
       },
