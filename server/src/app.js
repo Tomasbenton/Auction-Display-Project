@@ -7,6 +7,7 @@ const exhibitorRoutes = require('../exproutes/exhibitor.route');
 const buyerRoutes = require('../exproutes/buyer.route');
 const userRoutes = require('../exproutes/user.route');
 const transactionRoutes = require('../exproutes/transaction.route');
+const displayRoutes = require('../exproutes/display.route');
 require('dotenv').config();
 
 // Express.js
@@ -18,6 +19,7 @@ app.use('/exhibitor', exhibitorRoutes);
 app.use('/buyer', buyerRoutes);
 app.use('/user', userRoutes);
 app.use('/transaction', transactionRoutes);
+app.use('/display', displayRoutes);
 
 // Mongodb / Mongoose
 var mongoose = require('mongoose');
@@ -43,10 +45,6 @@ db.createCollection("User", {
         password: {
           bsonType: "string",
           description: "must be a string and is required"
-        },
-        saleNumber: {
-          bsonType: "number",
-          description: "must be a number and is required"
         }
       }
     }
@@ -54,7 +52,7 @@ db.createCollection("User", {
 })
 // Insert default Username: Admin, Password: Password document if it does not already exist
 db.collection('User').createIndex( { username: 1, password: 1}, {unique:true} )
-db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password', 'saleNumber': 0})
+db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password'})
 // Create Exhibitor Collection
 db.createCollection("Exhibitor", {
   validator: {
@@ -153,8 +151,8 @@ db.createCollection("Transaction", {
           description: "must be a number and is required"
         },
         bidderNumber: {
-          bsonType: "number",
-          description: "must be a number and is required"
+          bsonType: "string",
+          description: "must be a string and is required"
         },
         purchaseAmount: {
           bsonType: "number",
@@ -168,6 +166,35 @@ db.createCollection("Transaction", {
     }
   }
 })
+// Create Display Collection
+db.createCollection("Display", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["saleNumber", "previousSaleNumber", "showCurrentSale", "showPreviousSale"],
+      properties: {
+        saleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        previousSaleNumber: {
+          bsonType: "number",
+          description: "must be a number and is required"
+        },
+        showCurrentSale: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
+        },
+        showPreviousSale: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
+        }
+      }
+    }
+  }
+})
+db.collection('Display').createIndex( { saleNumber: 1, previousSaleNumber:1}, {unique:true} )
+db.collection('Display').insertOne( {'saleNumber': 0, 'previousSaleNumber': 0, 'showCurrentSale': false, 'showPreviousSale' : false})
 
 // Node API endpoint
 var port = process.env.PORT || 8081

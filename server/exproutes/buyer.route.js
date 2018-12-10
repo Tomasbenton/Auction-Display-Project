@@ -37,6 +37,20 @@ buyerRoutes.route('/:id').get((req, res) => {
   });
 });
 
+// Fetch single buyer by bidderNumber
+buyerRoutes.route('/bidderNumber/:bidderNumber').get((req, res) => {
+    var bidderNum = req.params.bidderNumber;
+    Buyer.findOne({'bidderNumber': bidderNum}, (err, buyer) => {
+        if (err) {
+            console.log(err);
+            res.json(err)
+        }
+        else {
+            res.json(buyer);
+        }
+    });
+});
+
 // Update buyer
 buyerRoutes.route('/:id').put((req, res) => {
   Buyer.findById(req.params.id, (err, buyer) => {

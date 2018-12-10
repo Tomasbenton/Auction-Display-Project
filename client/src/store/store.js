@@ -7,7 +7,7 @@ const BIDDER_INDEX = 'BIDDER_INDEX'
 const SALE_NUMBER = 'SALE_NUMBER'
 const PREVIOUS_SALE_NUMBER = 'PREVIOUS_SALE_NUMBER'
 const BIDDER_NUMBER = 'BIDDER_NUMBER'
-const PURCHASE_INDEX = 'PURCHASE_INDEX'
+const PURCHASE_AMOUNT = 'PURCHASE_AMOUNT'
 const USER_ID = 'USER_ID'
 
 Vue.use(Vuex)
@@ -19,7 +19,7 @@ const state = {
 	saleNumber: 0,
 	previousSaleNumber: 0,
 	bidderNumber: 0,
-	purchaseIndex: 0,
+	purchaseAmount: 0,
 	userID: 0
 }
 
@@ -42,8 +42,8 @@ const mutations = {
 	[BIDDER_NUMBER] (state, num) {
 		state.bidderNumber = num
 	},
-	[PURCHASE_INDEX] (state, num) {
-		state.purchaseIndex = num
+	[PURCHASE_AMOUNT] (state, num) {
+		state.purchaseAmount = num
 	},
 	[USER_ID] (state, string) {
 		state.userID = string
@@ -69,8 +69,8 @@ const actions = {
 	setBidderNumber ({commit}, num) {
 		commit(BIDDER_NUMBER, num)
 	},
-	setPurchaseIndex ({commit}, num) {
-		commit(PURCHASE_INDEX, num)
+	setPurchaseAmount ({commit}, num) {
+		commit(PURCHASE_AMOUNT, num)
 	},
 	setUserID ({commit}, string) {
 		commit(USER_ID, string)
