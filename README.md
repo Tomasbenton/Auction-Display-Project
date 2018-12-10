@@ -1,3 +1,4 @@
+![alt text](https://github.com/Cahough/Auction-Display-Project/blob/master/client/src/assets/Logos.png "Logo Title Text 1")
 # Auction Display Project
 Auction Display Project is a project created to help display exhibitor, buyer, addon buyer, and sale information during a live county fair auction. The application is comprised of a front-end web application server, a back-end API server, and a database server that can all be run on a host machine inside of a local network. The system is designed to connect with other computers or Raspberry PI or similar devices that act as endpoints for displaying the data on a monitor(s).
 
