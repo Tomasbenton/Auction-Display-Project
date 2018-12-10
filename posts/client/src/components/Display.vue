@@ -140,6 +140,12 @@
         })
       },
       async fetchPreviousExhibitor() {
+        // gets sale number for most recent transaction
+        await this.axios.get(`http://${process.env.HOST_NAME}:8081/transaction`).then(response => {
+          if (response.data.length > 0) {
+            this.previousSaleNumber = response.data[response.data.length - 1].saleNumber
+          }
+        })
         // fetches the previous exhibitor by its sale number
         let url = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.previousSaleNumber}`
         await this.axios.get(url).then(response => {

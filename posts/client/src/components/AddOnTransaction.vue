@@ -3,7 +3,7 @@
     <router-link v-bind:to="{ name: 'Admin' }">
       <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
-    <router-link to="/transaction/addon">
+    <router-link to="/transaction/buyer">
       <button class="topBtn"><span class="arrow">&#8596;</span> Go to Buyer Transaction Table</button>
     </router-link>
     <main class="container">
@@ -65,7 +65,7 @@
         // sets flag to display the current sale
         this.showCurrentSale = true
         // this.showCurrentSaleSection = true
-        if (this.saleNumber > 1) this.previousSaleNumber = this.saleNumber - 1
+        // if (this.saleNumber > 1) this.previousSaleNumber = this.saleNumber - 1
         let state = {
           saleNumber: this.saleNumber,
           previousSaleNumber: this.previousSaleNumber,

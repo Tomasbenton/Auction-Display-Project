@@ -116,7 +116,7 @@
         this.showPreviousSale = true
         // this.showCurrentSaleSection = false
         // this.showPreviousSaleSection = true
-        this.previousSaleNumber = this.saleNumber
+        // this.previousSaleNumber = this.saleNumber
         console.log(this.previousSaleNumber)
         let state = {
           saleNumber: this.saleNumber,
