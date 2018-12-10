@@ -1,7 +1,7 @@
 const express = require('express')
 const exhibitorRoutes = express.Router()
 
-const Exhibitor = require('../models/Exhibitor')
+const Exhibitor = require('../models/exhibitor.js')
 
 // Add an exhibitor
 exhibitorRoutes.route('/add').post(function (req, res) {

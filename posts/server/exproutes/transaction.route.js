@@ -1,7 +1,7 @@
 const express = require('express')
 const transactionRoutes = express.Router()
 
-const Transaction = require('../models/Transaction')
+const Transaction = require('../models/transaction.js')
 
 // Add a transaction
 transactionRoutes.route('/add').post(function (req, res) {

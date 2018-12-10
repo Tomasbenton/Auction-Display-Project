@@ -1,7 +1,7 @@
 const express = require('express')
 const buyerRoutes = express.Router()
 
-const Buyer = require('../models/Buyer')
+const Buyer = require('../models/buyer.js')
 
 // Add a buyer
 buyerRoutes.route('/add').post(function (req, res) {

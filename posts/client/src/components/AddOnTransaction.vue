@@ -23,7 +23,7 @@
 <script>
   import {mapState, mapActions} from 'vuex'
   export default {
-    name: 'AddonTransaction',
+    name: 'AddOnTransaction',
     data () {
       return {
         users: [],
