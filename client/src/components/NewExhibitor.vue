@@ -23,6 +23,7 @@
       <input v-validate="''" type="text" name="placing" placeholder="Placing" v-model=placing>
       <label class="errorLabel" for="buyback" >{{ errors.first('buyback') }}</label>
       <input v-validate="'numeric'" type="text" name="buyback" placeholder="Buyback" v-model=buyback>
+      <div class="confirmLabelContainer"><label id="confirmLabel"></label></div>
       <button class=app_post_btn @click=validate>Add</button>
       <router-link v-bind:to="{ name: 'Manage', params: {view: true } }">
         <button>Return to Manage</button>
@@ -61,7 +62,7 @@ export default {
       })
     }
   },
-  
+
   methods: {
     fetchExhibitors() {
       let uri = `http://${process.env.HOST_NAME}:8081/exhibitor`
@@ -72,6 +73,7 @@ export default {
     validate () {
       this.$validator.validateAll()
       if (!this.errors.any() && !this.duplicateSaleNumber) {
+        this.confirmAdd()
         this.addExhibitor()
         this.resetExhibitor()
       }
@@ -92,6 +94,12 @@ export default {
       let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/add`
       this.axios.post(uri, newExhibitor).then((response) => {
         console.log(response)
+        if (response.status == 200) {
+          this.$validator.errors.clear()
+          this.confirmAdd('success')
+        } else {
+          this.confirmAdd('fail')
+        }
       })
     },
     getNextAvailableSaleNumber () {
@@ -118,6 +126,15 @@ export default {
       this.showClassName = ''
       this.placing = ''
       this.buyback = ''
+    },
+    confirmAdd(sts) {
+      if (sts == 'success') {
+        document.getElementById("confirmLabel").innerText = "Added successfully!"
+      } else if (sts == 'fail') {
+        document.getElementById("confirmLabel").innerText = "Exhibitor not added"
+      } else {
+        document.getElementById("confirmLabel").innerText = ''
+      }
     }
   }
 }
@@ -128,7 +145,10 @@ export default {
     margin: 0 auto;
     padding-bottom: 50px;
   }
-
+  .confirmLabelContainer{
+    margin-bottom: 10px;
+    color: #32CD32;
+  }
   input{
     border: 1px solid #f1f1f1;
     height: 50px;

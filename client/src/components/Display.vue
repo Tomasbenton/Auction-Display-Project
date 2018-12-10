@@ -196,7 +196,7 @@
               this.addOns[0] = response.data
           })
         }
-      },*/
+      }, */
       parseBidderNumber() {
         /* if (this.bidderNumber.length > 1) {
           let array = this.bidderNumber.split("-")

@@ -15,6 +15,7 @@
         <input v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
         <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
         <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
+        <div class="confirmLabelContainer"><label id="confirmLabel"></label></div>
         <button class=app_post_btn @click=validate>Add</button>
         <router-link v-bind:to="{ name: 'Manage', params: {view: false} }">
           <button>Return to Manage</button>
@@ -72,6 +73,7 @@ export default {
     validate () {
       this.$validator.validateAll()
       if (!this.errors.any() && !this.duplicateBidderNumber) {
+        this.confirmAdd()
         this.addBuyer()
         this.resetBuyer()
       }
@@ -88,6 +90,12 @@ export default {
       let uri = `http://${process.env.HOST_NAME}:8081/buyer/add`
       this.axios.post(uri, newBuyer).then((response) => {
         console.log(response)
+        if (response.status == 200) {
+          this.$validator.errors.clear()
+          this.confirmAdd('success')
+        } else {
+          this.confirmAdd('fail')
+        }
       })
     },
     getNextAvailableBidderNumber () {
@@ -115,6 +123,15 @@ export default {
     {
       this.phone.value = this.phone.value.replace(/\D/g, '')
       this.phone.value = this.phone.value.slice(0, 3) + "-" + this.phone.value.slice(3, 6) + "-" + this.phone.value.slice(6, 15)
+    },
+    confirmAdd(sts) {
+      if (sts == 'success') {
+        document.getElementById("confirmLabel").innerText = "Added successfully!"
+      } else if (sts == 'fail') {
+        document.getElementById("confirmLabel").innerText = "Exhibitor not added"
+      } else {
+        document.getElementById("confirmLabel").innerText = ''
+      }
     }
   }
 }
@@ -125,6 +142,10 @@ export default {
     margin: 0 auto;
   }
 
+  .confirmLabelContainer{
+    margin-bottom: 10px;
+    color: #32CD32;
+  }
   input{
     border: 1px solid #f1f1f1;
     height: 50px;
