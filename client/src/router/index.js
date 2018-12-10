@@ -13,7 +13,7 @@ import NewBuyer from '@/components/NewBuyer'
 import EditBuyer from '@/components/EditBuyer'
 import EditExhibitor from '@/components/EditExhibitor'
 import BuyerTransaction from '@/components/BuyerTransaction'
-import AddonTransaction from '@/components/AddonTransaction'
+import AddOnTransaction from '@/components/AddonTransaction'
 
 Vue.use(Router)
 

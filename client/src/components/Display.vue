@@ -170,8 +170,7 @@
           })
         // }
       },
-      /*
-      async fetchAddOns() {
+      /* async fetchAddOns() {
         let uri = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.previousSaleNumber}`
         await this.axios.get(uri).then(response => {
           if (response.data.length > 0) {

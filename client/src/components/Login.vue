@@ -57,9 +57,7 @@ export default {
           saleNumber: 0,
           previousSaleNumber: 0,
           showCurrentSale: false,
-          showPreviousSale: false,
-          showCurrentSaleSection: false,
-          showPreviousSaleSection: false
+          showPreviousSale: false
         }
         let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
         await this.axios.put(uri, state).then((response) => { })
