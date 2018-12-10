@@ -26,13 +26,11 @@ git clone https://github.com/Cahough/Auction-Display-Project.git
 
 Go to client directory and install node modules
 ```bash
-cd posts
 cd client
 npm install
 ```
 Go to server directory and install node modules
 ```bash
-cd posts
 cd server
 npm install
 ```
@@ -42,13 +40,11 @@ To start the web application server:
 * Start MongoDB server - see the *Tutorials* section for your specific operating system on the [installation page](https://docs.mongodb.com/manual/installation/) for how to start Mongo. (Run on default port 27017)
 * Start client-side Vue.js server (starts at url [http://localhost:8080/](http://localhost:8080/) | default username: Admin password: Password)
 ```bash
-cd posts
 cd client
 npm run dev
 ```
 * Start back-end Node.js server
 ```bash
-cd posts
 cd server
 npm start
 ```
@@ -71,8 +67,8 @@ ipconfig
 ```bash
 hostname
 ```
-* Replace HOST_NAME value:`"'localhost'"` in `~/posts/client/config/dev.env.js` with your computer's [ip.address] or [hostname.local]
-* Replace HOST_NAME value=`localhost` (plain-text) in `~/posts/server/.env` with your computer's [ip.address] or [hostname.local]
+* Replace HOST_NAME value:`"'localhost'"` in `~/client/config/dev.env.js` with your computer's [ip.address] or [hostname.local]
+* Replace HOST_NAME value=`localhost` (plain-text) in `~/server/.env` with your computer's [ip.address] or [hostname.local]
 * (Recommended) Change/add `username` and `password` in *'User'* collection in database using either Mongo shell or a database client such as [MongoDB Compass](https://www.mongodb.com/products/compass) so that default username and password are not used.
 
 Once the hostname has been changed properly, other devices on the same local area network will be able to access the web application at the url [http://[ip.address]:8080/login](http://[ip.address]:8080/login) / [http://hostname.local:8080/login](http://hostname.local:8080/login).
