@@ -61,7 +61,7 @@ By default, the servers all run on localhost which will not allow other devices 
 ```bash
 ifconfig
 ```
-or
+
 * Get computer's ip address (windows)
 ```bash
 ipconfig
