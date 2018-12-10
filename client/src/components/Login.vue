@@ -1,16 +1,16 @@
 <template>
-	<div id='login'>
-		<img class='logo' src='../assets/4H_Logo.png'>
+  <div id='login'>
+    <img class='logo' src='../assets/4H_Logo.png'>
     <img class='logo' src='../assets/FFA_Logo.png'>
-		<h1>Admin Login</h1>
-		<form>
-			<input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
-			<input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
+    <h1>Admin Login</h1>
+    <form>
+      <input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
+      <input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
       <p class='errorMsg' id="hidden"></p>
-			<button type="button" name="login" v-on:click="login()">Login</button>
-			<!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
-		</form>
-	</div>
+      <button type="button" name="login" v-on:click="login()">Login</button>
+      <!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
+    </form>
+  </div>
 </template>
 
 <script>
@@ -25,7 +25,6 @@ export default {
       displayID: 0
     }
   },
-
   beforeCreate() {
     this.$parent.authenticated = false
   },
@@ -54,7 +53,6 @@ export default {
         await this.axios.get(url).then(response => {
           if (response.data.length >= 1) this.displayID = response.data[0]._id
         })
-
         let state = {
           saleNumber: 0,
           previousSaleNumber: 0,
@@ -79,11 +77,9 @@ export default {
     text-align: center;
     font-family: 'Open Sans', Arial, sans-serif;
   }
-
   h1{
     color: #339966;
   }
-
   button{
     display: block;
     margin-left: auto;
@@ -91,13 +87,11 @@ export default {
     height: 50px;
     width: 100%;
   }
-
   .errorMsg{
     color: #ff0000;
     font-size: 14px;
     float: left;
   }
-
   input{
     height: 50px;
     border-bottom:1px solid #339966;
