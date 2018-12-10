@@ -4,13 +4,13 @@
       <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
     <router-link to="/transaction/exhibitor">
-      <button class="topBtn"><span class="arrow">&#8596;</span> Go to Exhibitor Transaction Table</button>
+      <button class="topBtn"><span class="arrow">&#8596;</span> Go to Buyer Transaction Table</button>
     </router-link>
     <div class="container">
       <h1>Addon Transaction Table</h1>
       Sale Number: 
       <input type="number" name="saleNumber" v-model="saleNumber">
-      <button @click="displayCurrentExhibitor">Enter</button>
+      <button @click="displayCurrentExhibitor">Submit Current Sale</button>
       Bidder Number: 
       <input type="number" name="bidderNumber" v-model="bidderNumber">
       Amount:
@@ -30,7 +30,10 @@
         saleNumber: null,
         bidderNumber: 0,
         purchaseAmount: 0,
-        purchaseType: "Addon"
+        purchaseType: "Addon",
+        currentSaleCheck: false,
+        previousSaleCheck: false,
+        displayID: 0
       }
     },
     computed: {
@@ -39,27 +42,24 @@
       })
     },
     created: function () {
-      this.fetchUser()
+      this.fetchDisplay()
     },
     methods: {
-      async fetchUser() {
-        let url = `http://${process.env.HOST_NAME}:8081/user`
+      async fetchDisplay() {
+        let url = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(url).then(response => {
-          this.users = response.data
-          for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === "Admin") this.setUserID(this.users[i]._id)
-          }
+          this.displayID = response.data[0]._id
         })
       },
       async displayCurrentExhibitor() {
-        // gets user id, stores sale number
-        let url = `http://${process.env.HOST_NAME}:8081/user/${this.userID}`
-        let transaction = {
-          saleNumber: this.saleNumber
+        this.currentSaleCheck = true
+        let updatedSaleNumber = {
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck
         }
-        await this.axios.put(url, transaction).then(response => {
-          console.log(response)
-        })
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        await this.axios.put(uri, updatedSaleNumber).then((response) => { })
       },
       async addNewTransaction() {
         let newTransaction = {
@@ -111,7 +111,6 @@
 
   button{
     display: block;
-    margin: -25px 0px 30px auto;
     padding: 5px 10px;
     width: 100%;
     height: 50px;

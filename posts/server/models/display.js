@@ -5,6 +5,7 @@ var DisplaySchema = new Schema({
   saleNumber: Number,
   currentSaleCheck: Boolean,
   previousSaleCheck: Boolean,
+  showCurrentSale: Boolean
 },{
     collection: 'Display'
 });

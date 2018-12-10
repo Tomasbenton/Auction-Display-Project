@@ -1,31 +1,47 @@
 <template>
     <div id="display">
-      <!-- <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length"> -->
-      <section class="currentSale" :key="this.saleNumber" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length">
-        <h1>Current Sale:</h1>
-        <h2>Name: {{ exhibitors[index].fullName }}</h2>
-        <h2>Species: {{ exhibitors[index].species }} </h2>
-        <h2>Weight: {{ exhibitors[index].checkInWeight }}</h2>
-        <h2>Club Name: {{ exhibitors[index].clubName }}</h2>
-      </section>
+      <section v-if="saleNumber">
+        <!-- <section class="currentSale" v-if="(saleNumber !== previousSaleNumber) && exhibitors.length"> -->
+        <section class="currentSale" v-if="showCurrentSale === true">
+          <h1>Current Sale:</h1>
+          <h2>Name: {{exhibitor.fullName}}</h2>
+          <h2>Species: {{exhibitor.species}}</h2>
+          <h2>Weight: {{exhibitor.checkInWeight}}</h2>
+        </section>
         <section class="currentSale" v-else>
-        <h1>Current Sale:</h1>
-        <h2>Please wait for the next sale</h2>
+          <h1>Current Sale:</h1>
+          <h2>Please wait for the next sale</h2>
+        </section>
+        <!-- <section class="previousSale" v-if="exhibitors.length && buyers.length && transactions.length">
+          <h1>Previous Sale</h1>
+          <h2>Name: {{ exhibitors[previousIndex].fullName }}</h2>
+          <h2>Species: {{ exhibitors[previousIndex].species }} </h2>
+          <h2>Weight: {{ exhibitors[previousIndex].checkInWeight }}</h2>
+          <h2>Club Name: {{ exhibitors[previousIndex].clubName }}</h2>
+          <div class="buyerInfo">
+            <h2>Buyer: {{ buyers[bidderIndex].name }}</h2>
+            <h2>Purchase Amount: ${{ transactions[purchaseIndex].purchaseAmount }}</h2>
+          </div>
+        </section> -->
+        <section class="previousSale" v-if="showCurrentSale === false">
+          <h1>Previous Sale</h1>
+          <h2>Name: {{ exhibitor.fullName }}</h2>
+          <h2>Species: {{ exhibitor.species }}</h2>
+          <h2>Check in weight: {{ exhibitor.checkInWeight }}</h2>
+          <h2>Total Purchase Amount: {{ purchaseAmount }}</h2>
+          <h2>Buyers:</h2>
+          <section v-if="bidders.length" v-for="bidder in bidders" :key="bidder._id">
+            <h2> {{bidder.name}} </h2>
+          </section>
+          <h2>Addons:</h2>
+        </section>
+        <section class="previousSale" v-else>
+          <h1>Previous Sale</h1>
+          <h2>There are no previous sales</h2>
+        </section>
       </section>
-      <section class="previousSale" v-if="exhibitors.length && buyers.length && transactions.length">
-        <h1>Previous Sale</h1>
-        <h2>Name: {{ exhibitors[previousIndex].fullName }}</h2>
-        <h2>Species: {{ exhibitors[previousIndex].species }} </h2>
-        <h2>Weight: {{ exhibitors[previousIndex].checkInWeight }}</h2>
-        <h2>Club Name: {{ exhibitors[previousIndex].clubName }}</h2>
-        <div class="buyerInfo">
-          <h2>Buyer: {{ buyers[bidderIndex].name }}</h2>
-          <h2>Purchase Amount: ${{ transactions[purchaseIndex].purchaseAmount }}</h2>
-        </div>
-      </section>
-      <section class="previousSale" v-else>
-        <h1>Previous Sale</h1>
-        <h2>There are no previous sales</h2>
+      <section v-else>
+        Loading...
       </section>
     </div>
 </template>
@@ -36,12 +52,19 @@
     data() {
       return {
         users: [],
-        exhibitors: [],
+        exhibitor: [],
+        previousExhibitor: [],
         transactions: [],
         buyers: [],
-        saleNumber: null,
+        previousSaleNumber: 0,
         displayID: 0,
-        currentSaleCheck: false
+        currentSaleCheck: false,
+        previousSaleCheck: false,
+        num: 0,
+        purchaseAmount: 0,
+        bidderNumbers: 0,
+        bidders: [],
+        showCurrentSale: null
       }
     },
     computed: {
@@ -49,89 +72,135 @@
         index: state => state.index,
         previousIndex: state => state.previousIndex,
         bidderIndex: state => state.bidderIndex,
-        // saleNumber: state => state.saleNumber,
-        previousSaleNumber: state => state.previousSaleNumber,
-        bidderNumber: state => state.bidderNumber,
-        purchaseIndex: state => state.purchaseIndex
+        saleNumber: state => state.saleNumber
+        // previousSaleNumber: state => state.previousSaleNumber,
+        // bidderNumber: state => state.bidderNumber
+        // purchaseAmount: state => state.purchaseAmount
       })
     },
     created: function() {
-      this.interval = setInterval(() => this.fetchSaleNumber(), 1000)
+      setInterval(() => this.fetchSaleNumber(), 500)
+      // setInterval(() => this.displayCurrentSale(), 1000)
+      // setInterval(() => this.displayPreviousSale(), 1000)
       this.fetchSaleNumber()
-      this.fetchExhibitors()
       // this.fetchTransactions()
+      // this.fetchBiddersNumbers()
       // this.fetchBuyers()
+      // this.fetchTransactions()
+      // this.fetchExhibitor()
     },
     methods: {
       async fetchSaleNumber() {
         let uri = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(uri).then(response => {
           this.displayID = response.data[0]._id
-          this.saleNumber = response.data[0].saleNumber
+          this.setSaleNumber(response.data[0].saleNumber)
           this.currentSaleCheck = response.data[0].currentSaleCheck
+          this.previousSaleCheck = response.data[0].previousSaleCheck
+          this.showCurrentSale = true
         })
-
-        let uri2 = `http://${process.env.HOST_NAME}:8081/display/` + this.displayID
-
-        if (this.currentSaleCheck === true) {
-          this.currentSaleCheck = false
-          let updatedCheck = {
-            saleNumber: this.saleNumber,
-            currentSaleCheck: this.currentSaleCheck
-          }
-          await this.axios.put(uri2, updatedCheck).then(response => { 
-            window.location.reload()
-          })
+        if (this.currentSaleCheck === true) this.displayCurrentSale()
+        if (this.previousSaleCheck === true) {
+          this.displayPreviousSale()
         }
-        /* let url = `http://${process.env.HOST_NAME}:8081/user`
-        await this.axios.get(url).then(response => {
-          this.users = response.data
-          for (let i = 0; i < this.users.length; i++) {
-            // sets current sale
-            if (this.users[i].username === "Admin") this.setSaleNumber(this.users[i].saleNumber)
-          }
-        }) */
+        this.fetchTransactions()
+        this.fetchExhibitor()
+        this.fetchBuyers()
+        this.hideCurrentSale()
+        // this.fetchPreviousExhibitor()
       },
-      async fetchExhibitors() {
-        let url = `http://${process.env.HOST_NAME}:8081/exhibitor`
+      async displayCurrentSale() {
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        this.currentSaleCheck = false
+        this.showCurrentSale = true
+        let updatedCheck = {
+          displayID: this.displayID,
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck,
+          showCurrentSale: this.showCurrentSale
+        }
+        await this.axios.put(uri, updatedCheck).then(response => { 
+          window.location.reload()
+        })
+      },
+      async displayPreviousSale() {
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        this.previousSaleCheck = false
+        this.showCurrentSale = false
+        let updatedCheck = {
+          displayID: this.displayID,
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck,
+          showCurrentSale: this.showCurrentSale
+        }
+        await this.axios.put(uri, updatedCheck).then(response => {
+          window.location.reload()
+        })
+      },
+      async hideCurrentSale() {
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        this.showCurrentSale = false
+        let updatedCheck = {
+          displayID: this.displayID,
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck,
+          showCurrentSale: this.showCurrentSale
+        }
+        await this.axios.put(uri, updatedCheck).then(response => { 
+        })
+      },
+      async fetchExhibitor() {
+        let url = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.saleNumber}`
+        console.log(this.saleNumber)
         await this.axios.get(url).then(response => {
-          this.exhibitors = response.data
-          for (let i = 0; i < this.exhibitors.length; i++) {
-            // sets index for current sale
-            if (this.exhibitors[i].saleNumber === this.saleNumber) this.setIndex(i)
-          }
+          this.exhibitor = response.data
         })
       },
       async fetchTransactions() {
-        // retrieves the latest transaction
-        let url = `http://${process.env.HOST_NAME}:8081/transaction`
+        let url = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.saleNumber}`
         await this.axios.get(url).then(response => {
-          this.transactions = response.data
-          for (let i = 0; i < this.transactions.length; i++) {
-            // sets previous sale and buyer indices
-            if (this.transactions[i].purchaseType === "Buyer") {
-              this.setBidderNumber(this.transactions[i].bidderNumber)
-              this.setPreviousSaleNumber(this.transactions[i].saleNumber)
-              this.setPurchaseIndex(i)
-            }
-          }
-          for (let j = 0; j < this.exhibitors.length; j++) {
-            // sets previous sale index
-            if (this.exhibitors[j].saleNumber === this.previousSaleNumber) this.setPreviousIndex(j)
-          }
+          this.transaction = response.data
+          if (response.data.length) this.purchaseAmount = response.data[0].purchaseAmount
+          else this.transactions = null
         })
       },
       async fetchBuyers() {
-        let url = `http://${process.env.HOST_NAME}:8081/buyer`
-        await this.axios.get(url).then(response => {
-          this.buyers = response.data
+        if (this.buyers.length > 1) {
           for (let i = 0; i < this.buyers.length; i++) {
-            // sets bidder index
-            if (this.buyers[i].bidderNumber === this.bidderNumber) this.setBidderIndex(i)
+            let url = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.buyers[i]}`
+            await this.axios.get(url).then(response => {
+              this.bidders[i] = response.data
+            })
           }
-        })
+        } else {
+          let url = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.buyers}`
+          await this.axios.get(url).then(response => {
+            this.bidders = response.data
+          })
+        }
       },
-      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseIndex'])
+      async fetchBiddersNumbers() {
+        // ideally, there should be only one transaction per sale number
+        let url = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.saleNumber}`
+        await this.axios.get(url).then(response => {
+          this.bidderNumbers = response.data[0].bidders
+        })
+        this.parseBidderNumbers()
+      },
+      parseBidderNumbers() {
+        if (this.bidderNumbers.length > 1) {
+          let array = this.bidderNumbers.split("-")
+          for (let i = 0; i < array.length; i++) {
+            this.buyers[i] = parseInt(array[i])
+          }
+        } else {
+          this.buyers = parseInt(this.bidderNumbers)
+        }
+      },
+      ...mapActions(['setIndex', 'setPreviousIndex', 'setBidderIndex', 'setSaleNumber', 'setPreviousSaleNumber', 'setBidderNumber', 'setPurchaseAmount'])
     }
   }
 </script>

@@ -45,10 +45,6 @@ db.createCollection("User", {
         password: {
           bsonType: "string",
           description: "must be a string and is required"
-        },
-        saleNumber: {
-          bsonType: "number",
-          description: "must be a number and is required"
         }
       }
     }
@@ -56,7 +52,7 @@ db.createCollection("User", {
 })
 // Insert default Username: Admin, Password: Password document if it does not already exist
 db.collection('User').createIndex( { username: 1, password: 1}, {unique:true} )
-db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password', 'saleNumber': 0})
+db.collection('User').insertOne( {'username': 'Admin', 'password': 'Password'})
 // Create Exhibitor Collection
 db.createCollection("Exhibitor", {
   validator: {
@@ -148,15 +144,15 @@ db.createCollection("Transaction", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["saleNumber", "bidderNumber", "purchaseAmount", "purchaseType"],
+      required: ["saleNumber", "bidders", "purchaseAmount", "purchaseType"],
       properties: {
         saleNumber: {
           bsonType: "number",
           description: "must be a number and is required"
         },
-        bidderNumber: {
-          bsonType: "number",
-          description: "must be a number and is required"
+        bidders: {
+          bsonType: "string",
+          description: "must be a string and is required"
         },
         purchaseAmount: {
           bsonType: "number",
@@ -188,6 +184,10 @@ db.createCollection("Display", {
         previousSaleCheck: {
           bsonType: "boolean",
           description: "must be a boolean and is required"
+        },
+        showCurrentSale: {
+          bsonType: "boolean",
+          description: "must be a boolean in enum {Buyer, Addon} and is required"
         }
       }
     }

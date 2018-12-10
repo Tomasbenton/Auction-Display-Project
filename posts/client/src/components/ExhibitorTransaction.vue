@@ -16,6 +16,7 @@
       Bidder Number:
       <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
       <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
+      <button @click="addNewBidder">Add Another Bidder</button>
       <label class="nameLabel">Buyer Name: {{ buyerName }}</label>
       Amount:
       <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
@@ -40,7 +41,9 @@
         purchaseType: "Buyer",
         currentSaleCheck: false,
         previousSaleCheck: false,
-        displayID: 0
+        showCurrentSale: false,
+        displayID: 0,
+        bidders: []
       }
     },
     computed: {
@@ -52,6 +55,17 @@
       this.fetchDisplay()
     },
     methods: {
+      /*
+        FUNCTIONALITY
+        1) display the current exhibitor
+          - change sale number in display
+          - check for data
+          - reload paege
+        2) have an array of bidders if they want to add more
+          - store as string
+        3) add a new transaction
+        --- add input validation for bidder field
+      */
       async fetchDisplay() {
         let url = `http://${process.env.HOST_NAME}:8081/display`
         await this.axios.get(url).then(response => {
@@ -60,26 +74,47 @@
       },
       async displayCurrentExhibitor() {
         this.currentSaleCheck = true
+        this.showCurrentSale = true
         let updatedSaleNumber = {
           saleNumber: this.saleNumber,
-          currentSaleCheck: this.currentSaleCheck
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck,
+          showCurrentSale: this.showCurrentSale
         }
-        let uri = `http://${process.env.HOST_NAME}:8081/display/` + this.displayID
-        await this.axios.put(uri, updatedSaleNumber).then((response) => {
-          console.log(response)
-        })
+        console.log(this.showCurrentSale)
+        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
+        await this.axios.put(uri, updatedSaleNumber).then((response) => { })
+      },
+      async addNewBidder() {
+        this.bidders.push(this.bidderNumber)
+        this.bidderNumber = ""
       },
       async addNewTransaction() {
+        // checks how many bidders there are
+        if (this.bidders.length > 1) this.bidders = this.bidders.join('-')
+        else this.bidders = this.bidderNumber.toString()
+        console.log(this.bidders)
+
         let newTransaction = {
           saleNumber: this.saleNumber,
-          bidderNumber: this.bidderNumber,
+          bidders: this.bidders,
           purchaseAmount: this.purchaseAmount,
           purchaseType: this.purchaseType
         }
-        let url = `http://${process.env.HOST_NAME}:8081/transaction/add`
-        await this.axios.post(url, newTransaction).then((response) => {
+        let uri = `http://${process.env.HOST_NAME}:8081/transaction/add`
+        await this.axios.post(uri, newTransaction).then((response) => {
           console.log(response)
         })
+        this.previousSaleCheck = true
+        this.showCurrentSale = false
+        let updatedCheck = {
+          saleNumber: this.saleNumber,
+          currentSaleCheck: this.currentSaleCheck,
+          previousSaleCheck: this.previousSaleCheck,
+          showCurrentSale: this.showCurrentSale
+        }
+        await this.axios.put(`http://${process.env.HOST_NAME}:8081/display/` + this.displayID, updatedCheck).then(response => { })
+        this.bidders = []
       },
       async getExhibitorBySaleNum () {
         let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.saleNumber}`

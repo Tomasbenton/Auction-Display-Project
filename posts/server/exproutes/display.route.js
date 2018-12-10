@@ -36,7 +36,7 @@ displayRoutes.route('/').get(function (req, res) {
   })
 })
 
-// Update sale number
+// Update display
 displayRoutes.route('/:id').put((req, res) => {
   Display.findById(req.params.id, (err, display) => {
     if (!display)
@@ -44,6 +44,8 @@ displayRoutes.route('/:id').put((req, res) => {
     else {
         display.saleNumber = req.body.saleNumber;
         display.currentSaleCheck = req.body.currentSaleCheck;
+        display.previousSaleCheck = req.body.previousSaleCheck;
+        display.showCurrentSale = req.body.showCurrentSale;
         display.save().then( display => {
           res.json('Display updated successfully');
       })

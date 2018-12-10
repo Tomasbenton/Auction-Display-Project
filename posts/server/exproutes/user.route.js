@@ -20,7 +20,6 @@ userRoutes.route('/:id').put((req, res) => {
     if (!user)
       return next(new Error('Error getting the user!'));
     else {
-        user.saleNumber = req.body.saleNumber;
         user.save().then( user => {
           res.json('User updated successfully');
       })

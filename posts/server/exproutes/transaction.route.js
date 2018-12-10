@@ -1,20 +1,19 @@
 const express = require('express')
 const transactionRoutes = express.Router()
-
 const Transaction = require('../models/Transaction')
 
 // Add a transaction
 transactionRoutes.route('/add').post(function (req, res) {
-    var transaction = new Transaction(req.body)
-    if (transaction.saleNumber && transaction.purchaseType) {
-        transaction.save()
-        .then(transaction => {
-        res.status(200).json({'transaction': 'transaction added successfully'})
-        })
-        .catch(err => {
-        res.status(400).send("unable to save to database")
-        })
-    }
+  var transaction = new Transaction(req.body)
+  if (transaction.saleNumber && transaction.bidders) {
+    transaction.save()
+    .then(transaction => {
+      res.status(200).json({'transaction': 'transaction added successfully'})
+    })
+    .catch(err => {
+      res.status(400).send("unable to save to database")
+    })
+  }
 })
 
 // Fetch all transactions
@@ -37,22 +36,16 @@ transactionRoutes.route('/:id').get((req, res) => {
   });
 });
 
-// Update transaction
-transactionRoutes.route('/:id').put((req, res) => {
-  Transaction.findById(req.params.id, (err, transaction) => {
-    if (!transaction)
-      return next(new Error('Error getting the transaction!'));
+// Fetch all transactions with certain sale number
+transactionRoutes.route('/saleNumber/:saleNumber').get((req, res) => {
+  var saleNum = req.params.saleNumber
+  Transaction.find({ 'saleNumber' : saleNum }, (err, transaction) => {
+    if (err) {
+      console.log(err);
+      res.json(err)
+    }
     else {
-        transaction.saleNumber = req.body.saleNumber;
-        transaction.bidderNumber = req.body.bidderNumber;
-        transaction.purchaseAmount = req.body.purchaseAmount;
-        transaction.purchaseType = req.body.purchaseType;
-        transaction.save().then( transaction => {
-          res.json('Transaction updated successfully');
-      })
-      .catch(err => {
-            res.status(400).send("Error when updating the transaction");
-      });
+        res.json(transaction);
     }
   });
 });
