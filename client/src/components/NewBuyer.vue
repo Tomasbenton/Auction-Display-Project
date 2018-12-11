@@ -68,6 +68,8 @@ export default {
       var buyer
 
       this.fetchBuyers()
+      if (this.buyers.length == 0) return 1
+
       for (buyer of this.buyers) {
         existingBidderNumbers.push(buyer.bidderNumber)
       }
@@ -115,8 +117,14 @@ export default {
     getNextAvailableBidderNumber () {
       var existingBidderNumbers = []
       var buyer
-
+      
       this.fetchBuyers()
+
+      if (this.buyers.length == 0) {
+        this.isDataReady = true
+        return 1
+      }
+
       for (buyer of this.buyers) {
         existingBidderNumbers.push(buyer.bidderNumber)
       }

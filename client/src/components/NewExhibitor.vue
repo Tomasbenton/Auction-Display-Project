@@ -1,7 +1,7 @@
 <template>
   <div id="newExhibitor">
     <h1>Add Exhibitor</h1>
-    <div class=form>
+    <div v-if="this.isDataReady" class=form>
       <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
       <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" :placeholder="'Sale Number (next available: ' + nextAvailableSaleNumber + ')'" v-model="saleNumber">
@@ -68,6 +68,8 @@ export default {
       var exhibitor
 
       this.fetchExhibitors()
+      if (this.exhibitors.length == 0) return 1
+
       for (exhibitor of this.exhibitors) {
         existingSaleNumbers.push(exhibitor.saleNumber)
       }
@@ -121,6 +123,12 @@ export default {
       var exhibitor
 
       this.fetchExhibitors()
+
+      if (this.exhibitors.length == 0) {
+        this.isDataReady = true
+        return 1
+      }
+
       for (exhibitor of this.exhibitors) {
         existingSaleNumbers.push(exhibitor.saleNumber)
       }
