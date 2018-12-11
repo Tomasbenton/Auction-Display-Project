@@ -1,40 +1,48 @@
 <template>
-    <div id="display">
-      <section v-if="exhibitor && previousExhibitor">
-        <section class="currentSale" v-if="(previousSaleNumber != saleNumber)">
-          <h1>Current Sale:</h1>
-          <h2>Name: {{exhibitor.fullName}}</h2>
-          <h2>Species: {{exhibitor.species}}</h2>
-          <h2>Weight: {{exhibitor.checkInWeight}} lbs</h2>
+    <main class="display">
+      <!-- CURRENT SALE -->
+      <section class="currentsale" v-if="(previousSaleNumber != saleNumber)">
+        <h1 class="display__header--white">Current Sale:</h1>
+        <p class="display__exhibitor-name">{{exhibitor.fullName}}</p>
+        <p class="display__exhibitor-info">Species: {{exhibitor.species}}</p>
+        <p class="display__exhibitor-info">Weight: {{exhibitor.checkInWeight}} lbs</p>
+        <p class="display__exhibitor-info">Club: {{exhibitor.clubName}}</p>
+      </section>
+      <section class="currentsale" v-else>
+        <h1 class="display__header--white">Current Sale:</h1>
+        <p class="display__header--white"><em>Please wait for the next sale</em></p>
+      </section>
+      <!-- PREVIOUS SALE -->
+      <section class="previoussale" v-if="previousExhibitor">
+        <!-- EXHIBITOR -->
+        <section>
+          <h1 class="display__header">Previous Sale</h1>
+          <p class="display__exhibitor-name">{{ previousExhibitor.fullName }}</p>
+          <p class="display__exhibitor-info">Species: {{ previousExhibitor.species }}</p>
+          <p class="display__exhibitor-info">Weight: {{ previousExhibitor.checkInWeight }}</p>
         </section>
-        <section class="currentSale" v-else>
-          <h1>Current Sale:</h1>
-          <h2>Please wait for the next sale</h2>
-        </section>
-        <section class="previousSale" v-if="previousExhibitor">
-          <h1>Previous Sale</h1>
-          <h2>Name: {{ previousExhibitor.fullName }}</h2>
-          <h2>Species: {{ previousExhibitor.species }}</h2>
-          <h2>Check in weight: {{ previousExhibitor.checkInWeight }}</h2>
-          <h2>Total Purchase Amount: ${{ purchaseAmount }}</h2>
-          <h2>Buyers:</h2>
-          <section v-if="buyer !== null" v-for="buyer in buyers" :key="buyer._id">
-            <h2> {{ buyer.name }} </h2>
+        <!-- BUYER -->
+        <section class="buyers">
+          <p class="display__second-header">Buyers:</p>
+          <section class="buyer" v-if="buyer !== null" v-for="buyer in buyers" :key="buyer._id">
+            {{ buyer.name }}
           </section>
-          <!-- <h2>Addons:</h2>
-          <section v-if="addOn !== null" v-for="addOn in addOns" :key="addOn._id">
-            <h2> {{ addOn.name }} </h2>
-          </section> -->
+          <section class="purchaseAmount" v-if="transaction.purchaseType === buyer" v-for="transaction in transactions" :key="transaction._id">
+            Purchase Amount: ${{ transaction.purchaseAmount }}
+          </section>
         </section>
-        <section class="previousSale" v-else>
-          <h1>Previous Sale</h1>
-          <h2>There are no previous sales</h2>
+        <!-- ADDONS -->
+        <section class="addons">
+          <p class="display__second-header">Addons:</p>
+          <section class="addon" v-if="(transaction.purchaseType === addon) && transactions.length" v-for="transaction in transactions" :key="transaction._id">
+            <section v-if="addOn.bidderNumber == transaction.bidderNumber" v-for="addOn in addOns" :key="addOn._id">
+              {{ addOn.name }} - ${{ transaction.purchaseAmount }}
+            </section>
+          </section>
         </section>
+
       </section>
-      <section v-else>
-        Loading... Please submit a current sale.
-      </section>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -42,25 +50,25 @@
   export default {
     data() {
       return {
+        saleNumber: 0,
         exhibitor: [],
         previousExhibitor: [],
-        transaction: [],
         buyers: [],
-        // addOnNumbers: [],
-        // addOns: [],
+        addOns: [],
+        transactions: [],
         previousSaleNumber: 0,
         displayID: 0,
-        purchaseAmount: 0,
-        bidderNumber: 0,
         bidderNumbers: 0,
-        bidders: [],
         showCurrentSale: false,
-        showPreviousSale: false
+        showPreviousSale: false,
+        buyer: "Buyer",
+        addon: "Addon"
       }
     },
     computed: {
       ...mapState({
-        saleNumber: state => state.saleNumber
+        // saleNumber: state => state.saleNumber,
+        // transactions: state => state.transactions
       })
     },
     created: function() {
@@ -74,7 +82,7 @@
         await this.axios.get(uri).then(response => {
           if (response.data.length >= 1) {
             this.displayID = response.data[0]._id
-            this.setSaleNumber(response.data[0].saleNumber)
+            this.saleNumber = response.data[0].saleNumber
             this.showCurrentSale = response.data[0].showCurrentSale
             this.showPreviousSale = response.data[0].showPreviousSale
           }
@@ -92,9 +100,9 @@
         // fetches all data
         this.fetchExhibitor()
         this.fetchPreviousExhibitor()
-        this.fetchTransaction()
         this.fetchBuyers()
-        // this.fetchAddOns()
+        this.fetchTransactions()
+        this.fetchAddOns()
         // this.fetchAddOnBuyers()
       },
       async displayCurrentSale() {
@@ -128,113 +136,47 @@
         })
       },
       async fetchPreviousExhibitor() {
-        // gets sale number for most recent transaction
+        // gets the previous sale number from the most recent transaction
         await this.axios.get(`http://${process.env.HOST_NAME}:8081/transaction`).then(response => {
-          if (response.data.length > 0) {
-            this.previousSaleNumber = response.data[response.data.length - 1].saleNumber
+          let index = response.data.length - 1
+          while (response.data.length > 0) {
+            if (response.data[index].purchaseType === "Buyer") {
+              this.previousSaleNumber = response.data[index].saleNumber
+              break
+            } else index--
           }
         })
-        // fetches the previous exhibitor by its sale number
+        // fetches the previous exhibitor by the previous sale number
         let url = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.previousSaleNumber}`
         await this.axios.get(url).then(response => {
           this.previousExhibitor = response.data
         })
       },
-      async fetchTransaction() {
+      async fetchTransactions() {
         let url = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.previousSaleNumber}`
         await this.axios.get(url).then(response => {
-          if (response.data.length > 0) {
-            for (let i = 0; i < response.data.length; i++) {
-              if (response.data[i].purchaseType === "Buyer") {
-                this.bidderNumber = response.data[i].bidderNumber
-                this.purchaseAmount = response.data[0].purchaseAmount
-              }
-            }
-          }
+          this.transactions = response.data
         })
       },
       async fetchBuyers() {
         this.parseBidderNumber()
-        // bad code, it's supposed to list all bidders
-        /* if (this.bidderNumbers.length > 1) {
-          for (let i = 0; i < this.bidderNumbers.length; i++) {
-            let url = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers[i]}`
-            await this.axios.get(url).then(response => {
-              this.buyers[i] = response.data
-            })
-          }
-        } else { */
-          let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers}`
+        for (let i = 0; i < this.bidderNumbers.length; i++) {
+          let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.bidderNumbers[i]}`
           await this.axios.get(uri).then(response => {
-            if (response.data !== null) this.buyers[0] = response.data
-          })
-        // }
-      },
-      /* async fetchAddOns() {
-        let uri = `http://${process.env.HOST_NAME}:8081/transaction/saleNumber/${this.previousSaleNumber}`
-        await this.axios.get(uri).then(response => {
-          if (response.data.length > 0) {
-            for (let i = 0; i < response.data.length; i++) {
-              if (response.data[i].purchaseType === "Addon") {
-                this.addOnNumbers[i] = response.data[i].bidderNumber
-              }
-            }
-          }
-        })
-      },
-      async fetchAddOnBuyers() {
-        if (this.addOnNumbers.length > 1) {
-          for (let i = 0; i < this.addOnNumbers.length; i++) {
-            let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.addOnNumbers[i]}`
-            await this.axios.get(uri).then(response => {
-              this.addOns[i] = response.data
-            })
-          }
-        } else {
-          let uri = `http://${process.env.HOST_NAME}:8081/buyer/bidderNumber/${this.addOns[0]}`
-            await this.axios.get(uri).then(response => {
-              this.addOns[0] = response.data
+            this.buyers[i] = response.data
           })
         }
-      }, */
-      parseBidderNumber() {
-        /* if (this.bidderNumber.length > 1) {
-          let array = this.bidderNumber.split("-")
-          for (let i = 0; i < array.length; i++) {
-            // console.log(this.bidderNumbers)
-            // this.bidderNumbers[i] = array[i]
-            // console.log(typeof array[i])
-            // this.bidderNumbers[i] = parseInt(array[i])
-            // console.log(this.bidderNumbers[i])
-          }
-        } else { */
-          this.bidderNumbers = parseInt(this.bidderNumber)
-        // }
       },
-      ...mapActions(['setSaleNumber'])
+      async parseBidderNumber() {
+        this.bidderNumbers = this.transactions[0].bidderNumber.split('-')
+      },
+      async fetchAddOns() {
+        let uri = `http://${process.env.HOST_NAME}:8081/buyer`
+        await this.axios.get(uri).then(response => {
+          this.addOns = response.data
+        })
+      },
+      ...mapActions(['setSaleNumber', 'setTransactions'])
     }
   }
 </script>
-
-<style scoped>
-  .currentSale{
-    width: 40%;
-    background-color: #339966;
-  }
-  .previousSale{
-    width: 60%;
-  }
-  .currentSale, .previousSale{
-    height: 100vh;
-    padding: 25px 50px;
-    float: left;
-  }
-  .currentSale h1, .currentSale h2{
-    color: #ffffff;
-  }
-  .buyerInfo{
-    padding: 5px 10px;
-    border: 3px solid #339966;
-    text-align: center;
-  }
-</style>

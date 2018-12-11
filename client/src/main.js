@@ -8,8 +8,8 @@ import VueAxios from 'vue-axios'
 import VeeValidate, { Validator } from 'vee-validate'
 import store from './store/store'
 import Cleave from 'vue-cleave-component'
-// require('./assets/css/layout.css')
-// require('./assets/css/styling.css')
+require('./assets/css/layout.css')
+require('./assets/css/styling.css')
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)

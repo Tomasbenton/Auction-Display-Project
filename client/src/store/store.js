@@ -11,6 +11,7 @@ const BIDDER_NUMBER = 'BIDDER_NUMBER'
 const PURCHASE_AMOUNT = 'PURCHASE_AMOUNT'
 const USER_ID = 'USER_ID'
 const IS_AUTHENTICATED = 'IS_AUTHENTICATED'
+const TRANSACTIONS = 'TRANSACTIONS'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ const state = {
 	bidderNumber: 0,
 	purchaseAmount: 0,
 	userID: 0,
-	isAuthenticated: null
+	isAuthenticated: null,
+	transactions: []
 }
 
 const mutations = {
@@ -53,6 +55,9 @@ const mutations = {
 	},
 	[IS_AUTHENTICATED] (state, bool) {
 		state.isAuthenticated = bool
+	},
+	[TRANSACTIONS] (state, array) {
+		state.transactions = array
 	}
 }
 
@@ -83,6 +88,9 @@ const actions = {
 	},
 	setIsAuthenticated ({commit}, bool) {
 		commit(IS_AUTHENTICATED, bool)
+	},
+	setTransactions ({commit}, array) {
+		commit(TRANSACTIONS, array)
 	}
 }
 
