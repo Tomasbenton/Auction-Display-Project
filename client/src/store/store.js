@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist'
 
 const INDEX = 'INDEX'
 const PREVIOUS_INDEX = 'PREVIOUS_INDEX'
@@ -9,6 +10,7 @@ const PREVIOUS_SALE_NUMBER = 'PREVIOUS_SALE_NUMBER'
 const BIDDER_NUMBER = 'BIDDER_NUMBER'
 const PURCHASE_AMOUNT = 'PURCHASE_AMOUNT'
 const USER_ID = 'USER_ID'
+const IS_AUTHENTICATED = 'IS_AUTHENTICATED'
 
 Vue.use(Vuex)
 
@@ -20,7 +22,8 @@ const state = {
 	previousSaleNumber: 0,
 	bidderNumber: 0,
 	purchaseAmount: 0,
-	userID: 0
+	userID: 0,
+	isAuthenticated: null
 }
 
 const mutations = {
@@ -47,6 +50,9 @@ const mutations = {
 	},
 	[USER_ID] (state, string) {
 		state.userID = string
+	},
+	[IS_AUTHENTICATED] (state, bool) {
+		state.isAuthenticated = bool
 	}
 }
 
@@ -74,11 +80,20 @@ const actions = {
 	},
 	setUserID ({commit}, string) {
 		commit(USER_ID, string)
+	},
+	setIsAuthenticated ({commit}, bool) {
+		commit(IS_AUTHENTICATED, bool)
 	}
 }
+
+const vuexPersist = new VuexPersist({
+	key: 'my-app',
+	storage: localStorage
+})
 
 export default new Vuex.Store({
 	state,
 	mutations,
-	actions
+	actions,
+	plugins: [vuexPersist.plugin]
 })

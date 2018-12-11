@@ -2,17 +2,15 @@
   <div id='app'>
     <div id='nav'>
     </div>
-    <router-view @authenticated="setAuthenticated" />
+    <router-view />
   </div>
 </template>
 
 <script>
-var authenticatedVar = true
 export default {
   name: 'App',
   data() {
     return {
-      authenticated: authenticatedVar,
       users: []
     }
   },
@@ -22,17 +20,13 @@ export default {
   },
 
   mounted() {
-    if (!this.authenticated) {
+    if (!this.$store.state.isAuthenticated) {
       this.$router.replace({ name: 'Login' })
     }
   },
 
   methods: {
-    setAuthenticated(status) {
-      this.authenticated = status
-    },
     fetchUsers() {
-      // let uri = 'http://localhost:8081/user'
         let uri = `http://${process.env.HOST_NAME}:8081/user`
         this.axios.get(uri).then(response => {
           this.users = response.data

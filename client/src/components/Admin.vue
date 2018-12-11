@@ -10,7 +10,7 @@
   <router-link to="/transaction/buyer"><button>Buyer Transaction Table</button></router-link>
   <router-link to="/transaction/addon"><button>Addon Transaction Table</button></router-link>
   <router-link to="/admin" class-active="active" v-on:click.native="logout()" replace><button class="logout">Logout</button></router-link>
-  <router-view @authenticated="setAuthenticated" />
+  <router-view />
  </div>
 </template>
 
@@ -21,16 +21,13 @@ export default {
     return {}
   },
   methods: {
-    setAuthenticated(status) {
-      this.$parent.authenticated = status
-    },
     logout() {
       var retVal = confirm("Are you sure you want to logout?")
       if (retVal) {
-        this.setAuthenticated(false)
+        this.$store.commit('IS_AUTHENTICATED', false)
         this.$router.replace({ name: 'Login' })
       } else {
-        this.setAuthenticated(true)
+        this.$store.commit('IS_AUTHENTICATED', true)
       }
     }
   }
