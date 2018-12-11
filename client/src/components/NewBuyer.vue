@@ -1,10 +1,10 @@
 <template>
   <div id="newBuyer">
     <h1>Add Buyer</h1>
-      <div class=form>
+      <div v-if="this.isDataReady" class=form>
         <label v-if="duplicateBidderNumber" class="errorLabel" for="bidderNumber">Error: Duplicate Bidder Number. Bidder Number must be unique.</label>
         <label v-else class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
-        <input v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
+        <input v-validate="'required|numeric'" type=text name=bidderNumber :placeholder="'Bidder Number (next available: ' + nextAvailableBidderNumber + ')'" v-model=bidderNumber>
         <label class="errorLabel" for="name" >{{ errors.first('name') }}</label>
         <input v-validate="'required'" type=text name=name placeholder="Name" v-model=name>
         <label class="errorLabel" for="contactName" >{{ errors.first('contactName') }}</label>
@@ -42,7 +42,8 @@ export default {
       },
       email: null,
       logoFileName: null,
-      buyers: []
+      buyers: [],
+      isDataReady: false
     }
   },
 
@@ -53,6 +54,7 @@ export default {
 
   created () {
     this.fetchBuyers()
+    this.getNextAvailableBidderNumber()
   },
 
   computed: {
@@ -60,6 +62,20 @@ export default {
       return this.buyers.some(buyer => {
         if (this.bidderNumber == buyer.bidderNumber) return true
       })
+    },
+    nextAvailableBidderNumber () {
+      var existingBidderNumbers = []
+      var buyer
+
+      this.fetchBuyers()
+      if (this.buyers.length == 0) return 1
+
+      for (buyer of this.buyers) {
+        existingBidderNumbers.push(buyer.bidderNumber)
+      }
+
+      var max = parseInt(Math.max(...existingBidderNumbers))
+      return max + 1
     }
   },
 
@@ -101,12 +117,21 @@ export default {
     getNextAvailableBidderNumber () {
       var existingBidderNumbers = []
       var buyer
-
+      
       this.fetchBuyers()
+
+      if (this.buyers.length == 0) {
+        this.isDataReady = true
+        return 1
+      }
+
       for (buyer of this.buyers) {
         existingBidderNumbers.push(buyer.bidderNumber)
       }
-      existingBidderNumbers.push(parseInt(this.bidderNumber))
+      if (this.bidderNumber != null) {
+        existingBidderNumbers.push(parseInt(this.bidderNumber))
+      }
+      this.isDataReady = true
 
       var max = parseInt(Math.max(...existingBidderNumbers))
       return max + 1
