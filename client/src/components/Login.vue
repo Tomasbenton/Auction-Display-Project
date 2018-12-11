@@ -8,7 +8,6 @@
       <input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
       <p class='errorMsg' id="hidden"></p>
       <button type="button" name="login" v-on:click="login()">Login</button>
-      <!-- <p class="text">Forgot your login? Click <a href="#">here</a>.</p> -->
     </form>
   </div>
 </template>
@@ -21,15 +20,11 @@ export default {
       input: {
         username: "",
         password: ""
-      },
-      displayID: 0
+      }
     }
   },
   beforeCreate() {
     this.$parent.authenticated = false
-  },
-  created() {
-    this.resetDisplay()
   },
   methods: {
     login() {
@@ -47,20 +42,6 @@ export default {
         console.log("Username and password are required")
         document.getElementById("hidden").innerHTML = "Username and password are required"
       }
-    },
-    async resetDisplay() {
-      let url = `http://${process.env.HOST_NAME}:8081/display`
-        await this.axios.get(url).then(response => {
-          if (response.data.length >= 1) this.displayID = response.data[0]._id
-        })
-        let state = {
-          saleNumber: 0,
-          previousSaleNumber: 0,
-          showCurrentSale: false,
-          showPreviousSale: false
-        }
-        let uri = `http://${process.env.HOST_NAME}:8081/display/${this.displayID}`
-        await this.axios.put(uri, state).then((response) => { })
     }
   }
 }
