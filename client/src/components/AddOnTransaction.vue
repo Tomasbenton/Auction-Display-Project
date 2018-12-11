@@ -1,28 +1,32 @@
 <template>
-  <div id="addonTransaction">
+  <main class="transaction">
     <router-link v-bind:to="{ name: 'Admin' }">
-      <button class="topBtn dashboardBtn"><span class="arrow">&#8592;</span> Return to Dashboard</button>
+      <button class="transaction__top-button--yellow"><span class="button-arrow">&#8592;</span> Return to Dashboard</button>
     </router-link>
     <router-link to="/transaction/buyer">
-      <button class="topBtn"><span class="arrow">&#8596;</span> Go to Buyer Transaction Table</button>
+      <button class="transaction__top-button"><span class="button-arrow">&#8596;</span> Go to Buyer Transaction Table</button>
     </router-link>
-    <main class="container">
+    <main class="transaction__form">
       <h1>Create Addon Transaction</h1>
-      Sale Number:
-      <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
-      <label class="nameLabel">Exhibitor Name: {{ exhibitorName }}</label>
-      <button @click="displayCurrentExhibitor">Submit Current Sale</button>
-      Bidder Number:
-      <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
-      <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
-      <label class="nameLabel">Buyer Name: {{ buyerName }}</label>
-      Amount:
-      <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
-      <input v-validate="'required|numeric'" type="number" name="purchaseAmount" v-model="purchaseAmount">
-      <button name="addBtn" @click="addNewTransaction">Submit & Go To Next Sale</button>
+      <section class="form__section">
+        <p class="input-field__label">Sale Number</p>
+        <input v-validate="'required|numeric'" type="number" v-on:input="getExhibitorBySaleNum" name="saleNumber" v-model="saleNumber">
+        <label class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
+        <label class="input__name-label">Exhibitor Name: {{ exhibitorName }}</label>
+        <button class="form__button" @click="displayCurrentExhibitor">Submit Current Sale</button>
+      </section>
+      <section class="form__section">
+        <p class="input-field__label">Bidder Number</p>
+        <input v-validate="'required|numeric'" type="number" v-on:input="getBuyerByBidderNum" name="bidderNumber" v-model="bidderNumber">
+        <label class="errorLabel" for="saleNumber" >{{ errors.first('bidderNumber') }}</label>
+        <label class="input__name-label">Buyer Name: {{ buyerName }}</label>
+        <p class="input-field__label">Amount</p>
+        <label class="errorLabel" for="purchaseAmount" >{{ errors.first('purchaseAmount') }}</label>
+        <input v-validate="'required|numeric'" type="number" name="purchaseAmount" v-model="purchaseAmount">
+        <button class="form__button" name="addBtn" @click="addNewTransaction">Submit & Go To Next Sale</button>
+      </section>
     </main>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -101,55 +105,3 @@
     }
   }
 </script>
-
-<style scoped>
-  #addonTransaction{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    color: #404040;
-    font-size: 14px;
-    padding-top: 100px;
-  }
-  .container{
-    width: 500px;
-    display: block;
-    margin: 75px auto 25px auto;
-    text-align: left;
-    border:1px solid #bfbfbf;
-    padding: 25px 25px 50px 25px;
-    border-radius: 5px;
-  }
-  h1{
-    text-align: left;
-  }
-  input{
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    border: 1px solid #f1f1f1;
-    font-weight: 600;
-  }
-  button{
-    display: block;
-    padding: 5px 10px;
-    width: 100%;
-    height: 50px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 0px;
-  }
-  .topBtn{
-    width: 300px;
-    height: 60px;
-    padding-bottom: 10px;
-    display: inline-block;
-  }
-  .arrow{
-    font-size: 25px;
-  }
-  .errorLabel{
-    font-size: 12px;
-    color: #ff0000;
-  }
-</style>

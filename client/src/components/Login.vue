@@ -1,15 +1,17 @@
 <template>
-  <div id='login'>
+  <main class="login">
     <img class='logo' src='../assets/4H_Logo.png'>
     <img class='logo' src='../assets/FFA_Logo.png'>
     <h1>Admin Login</h1>
     <form>
-      <input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
+      <div class="login-input">
+        <input type="text" name="username" v-model="input.username" placeholder="Username" @keyup.enter="login()">
+      </div>
       <input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()">
+      <button class="form__button" type="button" name="login" v-on:click="login()">Login</button>
       <p class='errorMsg' id="hidden"></p>
-      <button type="button" name="login" v-on:click="login()">Login</button>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -45,34 +47,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  #login{
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    margin-top: 100px;
-    text-align: center;
-    font-family: 'Open Sans', Arial, sans-serif;
-  }
-  h1{
-    color: #339966;
-  }
-  button{
-    display: block;
-    margin-left: auto;
-    padding: 10px 15px;
-    height: 50px;
-    width: 100%;
-  }
-  .errorMsg{
-    color: #ff0000;
-    font-size: 14px;
-    float: left;
-  }
-  input{
-    height: 50px;
-    border-bottom:1px solid #339966;
-    font-weight: 600;
-  }
-</style>
