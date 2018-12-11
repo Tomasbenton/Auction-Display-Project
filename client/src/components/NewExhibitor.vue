@@ -4,7 +4,7 @@
     <div class=form>
       <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
       <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
-      <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
+      <input v-validate="'required|numeric'" type="text" name="saleNumber" :placeholder="'Sale Number (next available: ' + nextAvailableSaleNumber + ')'" v-model="saleNumber">
       <label class="errorLabel" for="fullName" >{{ errors.first('fullName') }}</label>
       <input v-validate="'required|alpha_spaces'" type="text" name="fullName" placeholder="Full Name" v-model=fullName>
       <label class="errorLabel" for="tag" >{{ errors.first('tag') }}</label>
@@ -37,22 +37,24 @@ export default {
   name: 'NewExhibitor',
   data () {
     return {
-      saleNumber: '',
-      fullName: '',
-      tag: '',
-      species: '',
-      animalDescription: '',
-      checkInWeight: '',
-      clubName: '',
-      showClassName: '',
-      placing: '',
-      buyback: '',
-      exhibitors: []
+      saleNumber: null,
+      fullName: null,
+      tag: null,
+      species: null,
+      animalDescription: null,
+      checkInWeight: null,
+      clubName: null,
+      showClassName: null,
+      placing: null,
+      buyback: null,
+      exhibitors: [],
+      isDataReady: false
     }
   },
 
   created () {
       this.fetchExhibitors()
+      this.getNextAvailableSaleNumber()
   },
 
   computed: {
@@ -60,6 +62,18 @@ export default {
       return this.exhibitors.some(exhibitor => {
         if (this.saleNumber == exhibitor.saleNumber) return true
       })
+    },
+    nextAvailableSaleNumber () {
+      var existingSaleNumbers = []
+      var exhibitor
+
+      this.fetchExhibitors()
+      for (exhibitor of this.exhibitors) {
+        existingSaleNumbers.push(exhibitor.saleNumber)
+      }
+
+      var max = parseInt(Math.max(...existingSaleNumbers))
+      return max + 1
     }
   },
 
@@ -110,7 +124,10 @@ export default {
       for (exhibitor of this.exhibitors) {
         existingSaleNumbers.push(exhibitor.saleNumber)
       }
-      existingSaleNumbers.push(parseInt(this.saleNumber))
+      if (this.saleNumber != null) {
+        existingSaleNumbers.push(parseInt(this.saleNumber))
+      }
+      this.isDataReady = true
 
       var max = parseInt(Math.max(...existingSaleNumbers))
       return max + 1
