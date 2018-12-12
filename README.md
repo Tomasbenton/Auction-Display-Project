@@ -22,7 +22,7 @@ npm install -g vue-cli
 ```
 * Clone the GitHub repository
 ```bash
-git clone https://github.com/Cahough/Auction-Display-Project.git
+git clone https://github.com/Tomasbenton/MesaCounty4H.git
 ```
 * Install node modules for front and back-end servers
 
