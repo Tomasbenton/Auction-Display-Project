@@ -85,7 +85,7 @@ Although the web application has built-in functionality on the `Manage Data` pag
 
 ---
 ## Contributors
-Here are the awesome [contributors](https://github.com/Cahough/Auction-Display-Project/graphs/contributors) to this project.
+Here are the awesome [contributors](https://github.com/Tomasbenton/MesaCounty4H/graphs/contributors) to this project.
 
 ## License
 Code licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
