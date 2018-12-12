@@ -9,7 +9,7 @@
   <router-link to="/buyer"><button class="admin-button">Buyer/Addons Display</button></router-link>
   <router-link to="/transaction/buyer"><button class="admin-button">Buyer Transaction Table</button></router-link>
   <router-link to="/transaction/addon"><button class="admin-button">Addon Transaction Table</button></router-link>
-  <router-link to="/admin" class-active="active" v-on:click.native="logout()" replace><button class="admin-button-logout"">Logout</button></router-link>
+  <router-link to="/admin" class-active="active" v-on:click.native="logout()" replace><button class="admin-button-logout">Logout</button></router-link>
   <router-view />
  </main>
 </template>
