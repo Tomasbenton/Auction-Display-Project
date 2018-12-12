@@ -1,7 +1,7 @@
 <template>
-  <div id="editBuyer">
+  <div class="form">
     <h1>Edit Buyer: {{ name }}</h1>
-      <div class=form>
+      <div>
         <label v-if="duplicateBidderNumber" class="errorLabel" for="bidderNumber">Error: Duplicate Bidder Number. Bidder Number must be unique.</label>
         <label v-else class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
         <input v-validate="'required|numeric'" type=text name=bidderNumber placeholder="Bidder Number" v-model=bidderNumber>
@@ -15,9 +15,9 @@
         <input v-validate="'email'" data-vv-as="email" type=text name=email placeholder="Email" v-model=email>
         <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
         <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
-        <button class="app_post_btn" @click=validate>Update</button>
+        <button class="manage__button" @click=validate>Update</button>
         <router-link v-bind:to="{ name: 'Manage', params: { view: false } }">
-          <button>Cancel</button>
+          <button class="manage__button">Cancel</button>
         </router-link>
       </div>
   </div>
@@ -111,27 +111,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  #editBuyer{
-    width: 450px;
-    margin: 0 auto;
-    padding-bottom: 50px;
-  }
-
-  input{
-    height: 50px;
-    border: 1px solid #f1f1f1;
-  }
-
-  button{
-    width: 200px;
-    height: 40px;
-    border-radius: 0px;
-  }
-
-  .errorLabel{
-    font-size: 12px;
-    color: #ff0000;
-  }
-</style>

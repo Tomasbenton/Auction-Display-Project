@@ -1,7 +1,7 @@
 <template>
-  <div id="newExhibitor">
+  <main class="form">
     <h1>Add Exhibitor</h1>
-    <div v-if="this.isDataReady" class=form>
+    <div v-if="this.isDataReady">
       <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
       <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" :placeholder="'Sale Number (next available: ' + nextAvailableSaleNumber + ')'" v-model="saleNumber">
@@ -24,12 +24,12 @@
       <label class="errorLabel" for="buyback" >{{ errors.first('buyback') }}</label>
       <input v-validate="'numeric'" type="text" name="buyback" placeholder="Buyback" v-model=buyback>
       <div class="confirmLabelContainer"><label id="confirmLabel"></label></div>
-      <button class=app_post_btn @click=validate>Add</button>
+      <button class="manage__button" @click=validate>Add</button>
       <router-link v-bind:to="{ name: 'Manage', params: {view: true } }">
-        <button>Return to Manage</button>
+        <button class="manage__button">Return to Manage</button>
       </router-link>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -164,29 +164,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  #newExhibitor{
-    width: 400px;
-    margin: 0 auto;
-    padding-bottom: 50px;
-  }
-  .confirmLabelContainer{
-    margin-bottom: 10px;
-    color: #32CD32;
-  }
-  input{
-    border: 1px solid #f1f1f1;
-    height: 50px;
-  }
-
-  button{
-    width: 150px;
-    height: 40px;
-    border-radius: 0px;
-  }
-
-  .errorLabel{
-    font-size: 12px;
-    color: #ff0000;
-  }
-</style>

@@ -3,14 +3,16 @@
     <div id="control">
       <h1>Exhibitors</h1>
       <router-link v-bind:to="{ name: 'NewExhibitor' }">
-        <button class="add">Add New Exhibitor</button>
+        <button class="manage__button">Add New Exhibitor</button>
       </router-link>
-      <button @click=deleteAll()>Delete All Exhibitors</button>
-      <button class="importExport" @click=getCsvReport()>Export All Exhibitors</button>
-      <button class="importExport" onclick="document.getElementById('file').click();">Import Exhibitors</button>
+      <button class="manage__button" @click=deleteAll()>Delete All Exhibitors</button>
+      <section class="importExport">
+        <button class="manage__button" @click=getCsvReport()>Export All Exhibitors</button>
+        <button class="manage__button" onclick="document.getElementById('file').click();">Import Exhibitors</button>
+      </section>
       <input type="file" style="display:none;" id="file" name="file" @change="loadCSV($event)">
     </div>
-    <table class="dataTable">
+    <table class="manage__table">
       <thead>
         <tr>
           <td @click="sort('saleNumber')" class="clickable"><strong>Sale #</strong></td>
@@ -253,58 +255,3 @@
     }
   }
 </script>
-
-<style scoped>
-  button{
-    width: 200px;
-    height: 60px;
-    background-color: #f1f1f1;
-    color: #339966;
-    border: none;
-    margin: 2px;
-  }
-
-  button:hover{
-    background-color: #339966;
-    color: #f1f1f1;
-  }
-
-  #control{
-    text-align: left;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .dataTable{
-    margin: 15px 0px;
-    padding: 10px 15px;
-    border: 1px solid #339966;
-    color: #404040;
-    width: 100%;
-  }
-
-  td{
-    margin: 5px 10px;
-    padding: 5px 10px;
-  }
-
-  strong{
-    color: #339966;
-    font-size: 14px;
-    text-transform: uppercase;
-  }
-
-  .clickable:hover strong{
-    cursor: pointer;
-    color: #fadc23;
-    text-decoration: underline;
-  }
-
-  #deleteBtn:hover strong{
-    color: red;
-  }
-
-  .importExport{
-    float: right;
-  }
-</style>

@@ -1,11 +1,11 @@
 <template>
-  <div class="manage">
+  <main class="manage">
     <nav>
       <h1>Manage Data</h1>
       <router-link v-bind:to="{ name: 'Admin' }">
-        <button class="dashboardBtn">Return to Dashboard</button>
+        <button class="dashboard-button">Return to Dashboard</button>
       </router-link>
-      <button @click='view = !view'>Toggle View</button>
+      <button class="manage__button" @click='view = !view'>Toggle View</button>
     </nav>
     <template v-if="view">
       <manageExhibitors></manageExhibitors>
@@ -13,7 +13,7 @@
     <template v-else>
       <manageBuyers></manageBuyers>
     </template>
-  </div>
+  </main>
 </template>
 
 
@@ -43,45 +43,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-  #manage{
-    width: 100%;
-    height: 100%;
-  }
-
-  nav{
-    padding: 10px 20px;
-  }
-
-  button{
-    width: 200px;
-    height: 60px;
-    background-color: #f1f1f1;
-    color: #339966;
-    border: none;
-    margin: 2px;
-  }
-
-  button:hover{
-    background-color: #339966;
-    color: #f1f1f1;
-  }
-
-  h1{
-    line-height: 0%;
-  }
-
-  #manageExhibitors, #manageBuyers{
-    margin: 0px 25px;
-  }
-
-  .dashboardBtn{
-    background-color: #fadc23;
-    color: #339966;
-  }
-  .dashboardBtn:hover{
-    background-color: #f1f1f1;
-    color: #339966;
-  }
-</style>

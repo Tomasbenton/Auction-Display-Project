@@ -1,7 +1,7 @@
 <template>
-  <div id="editExhibitor">
+  <div class="form">
     <h1>Edit Exhibitor: {{ fullName }}</h1>
-    <div class=form>
+    <div>
       <label v-if="duplicateSaleNumber" class="errorLabel" for="saleNumber">Error: Duplicate Sale Number. Sale Number must be unique.</label>
       <label v-else class="errorLabel" for="saleNumber" >{{ errors.first('saleNumber') }}</label>
       <input v-validate="'required|numeric'" type="text" name="saleNumber" placeholder="Sale Number" v-model="saleNumber">
@@ -23,9 +23,9 @@
       <input v-validate="''" type="text" name="placing" placeholder="Placing" v-model=placing>
       <label class="errorLabel" for="buyback" >{{ errors.first('buyback') }}</label>
       <input v-validate="'numeric'" type="text" name="buyback" placeholder="Buyback" v-model=buyback>
-      <button class=app_post_btn @click=validate>Update</button>
+      <button class="manage__button" @click=validate>Update</button>
       <router-link v-bind:to="{ name: 'Manage', params: { view: true } }">
-        <button>Cancel</button>
+        <button class="manage__button">Cancel</button>
       </router-link>
     </div>
   </div>
@@ -123,27 +123,3 @@ export default {
 }
 </script>
 
-<style scoped>
-  #editExhibitor{
-    width: 450px;
-    margin: 0 auto;
-    padding-bottom: 50px;
-  }
-
-  input{
-    height: 50px;
-    border: 1px solid #f1f1f1;
-  }
-
-  button{
-    width: 200px;
-    height: 40px;
-    border-radius: 0px;
-    display: inline-block;
-  }
-
-  .errorLabel{
-    font-size: 12px;
-    color: #ff0000;
-  }
-</style>

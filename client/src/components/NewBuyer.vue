@@ -1,7 +1,7 @@
 <template>
-  <div id="newBuyer">
+  <main class="form">
     <h1>Add Buyer</h1>
-      <div v-if="this.isDataReady" class=form>
+      <div v-if="this.isDataReady">
         <label v-if="duplicateBidderNumber" class="errorLabel" for="bidderNumber">Error: Duplicate Bidder Number. Bidder Number must be unique.</label>
         <label v-else class="errorLabel" for="bidderNumber" >{{ errors.first('bidderNumber') }}</label>
         <input v-validate="'required|numeric'" type=text name=bidderNumber :placeholder="'Bidder Number (next available: ' + nextAvailableBidderNumber + ')'" v-model=bidderNumber>
@@ -16,12 +16,12 @@
         <label class="errorLabel" for="logoFileName" >{{ errors.first('logoFileName') }}</label>
         <input v-validate="''" type=text name=logoFileName placeholder="Logo Filename" v-model=logoFileName>
         <div class="confirmLabelContainer"><label id="confirmLabel"></label></div>
-        <button class=app_post_btn @click=validate>Add</button>
+        <button class="manage__button" @click=validate>Add</button>
         <router-link v-bind:to="{ name: 'Manage', params: {view: false} }">
-          <button>Return to Manage</button>
+          <button class="manage__button">Return to Manage</button>
         </router-link>
       </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -161,29 +161,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  #newBuyer{
-    width: 400px;
-    margin: 0 auto;
-  }
-
-  .confirmLabelContainer{
-    margin-bottom: 10px;
-    color: #32CD32;
-  }
-  input{
-    border: 1px solid #f1f1f1;
-    height: 50px;
-  }
-
-  button{
-    width: 150px;
-    height: 40px;
-    border-radius: 0px;
-  }
-
-  .errorLabel{
-    font-size: 12px;
-    color: #ff0000;
-  }
-</style>

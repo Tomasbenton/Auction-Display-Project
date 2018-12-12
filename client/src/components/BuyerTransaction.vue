@@ -110,7 +110,6 @@
 
         // sets flag to show previous sale
         this.showPreviousSale = true
-        console.log(this.previousSaleNumber)
         let state = {
           saleNumber: this.saleNumber,
           previousSaleNumber: this.previousSaleNumber,
@@ -120,6 +119,7 @@
         await this.axios.put(`http://${process.env.HOST_NAME}:8081/display/` + this.displayID, state).then(response => { })
         // empties array of bidders
         this.bidders = []
+        this.saleNumber++
       },
       async getExhibitorBySaleNum () {
         let uri = `http://${process.env.HOST_NAME}:8081/exhibitor/saleNumber/${this.saleNumber}`
